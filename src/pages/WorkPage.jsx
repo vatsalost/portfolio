@@ -124,10 +124,11 @@ export function WorkPage() {
           {/* Project 01: Dominant Featured Layout */}
           {filteredProjects[0] && (
             <section aria-labelledby={`title-${filteredProjects[0].id}`}>
-              <SpotlightCard
-                className="group relative w-full overflow-hidden border border-[#F2F0EA]/10 rounded-xl"
-                spotlightColor="rgba(225, 6, 0, 0.15)"
-                borderColor="rgba(225, 6, 0, 0.4)"
+              <BorderGlow
+                borderRadius={16}
+                glowRadius={32}
+                backgroundColor="#101010"
+                className="group relative w-full overflow-hidden"
                 onMouseEnter={playHover}
               >
                 <article className="p-6 sm:p-8 md:p-10 lg:p-12">
@@ -228,7 +229,7 @@ export function WorkPage() {
                     </div>
                   </div>
                 </article>
-              </SpotlightCard>
+              </BorderGlow>
             </section>
           )}
 

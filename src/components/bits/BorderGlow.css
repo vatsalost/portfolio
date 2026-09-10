@@ -13,7 +13,7 @@
   transform: translate3d(0, 0, 0.01px);
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(245, 245, 240, 0.1);
+  border: 1px solid rgba(242, 240, 234, 0.1);
   background: var(--card-bg, #101010);
   overflow: visible;
   box-shadow:
@@ -28,120 +28,84 @@
     rgb(24 24 27 / 5%) 0 8px 24px;
 }
 
-.border-glow-card--light::after,
-.border-glow-card--light > .edge-light {
-  mix-blend-mode: normal;
+/* 
+ * CRITICAL: Completely eliminate card-level ::before and ::after pseudo-elements.
+ * They previously drew opaque dark padding-box backgrounds that covered the card contents on hover.
+ */
+.border-glow-card::before,
+.border-glow-card::after {
+  display: none !important;
+  content: none !important;
 }
 
-/* Layer transitions and initial state */
-.border-glow-card::before,
-.border-glow-card::after,
+/* Edge Light Container - masked to illuminate ONLY along the edge facing the cursor */
 .border-glow-card > .edge-light {
   content: "";
   position: absolute;
-  border-radius: inherit;
-  pointer-events: none;
-  transition: opacity 0.3s ease-out;
-}
-
-.border-glow-card:not(:hover):not(.sweep-active)::before,
-.border-glow-card:not(:hover):not(.sweep-active)::after,
-.border-glow-card:not(:hover):not(.sweep-active) > .edge-light {
-  opacity: 0;
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* 1. Dynamic glowing border overlay */
-.border-glow-card::before {
-  inset: -1px;
-  z-index: 2;
-  border: 1.5px solid transparent;
-  background:
-    linear-gradient(var(--card-bg, #101010) 0 100%) padding-box,
-    linear-gradient(to right, #E10600, #FF3333, #E10600) border-box;
-
-  opacity: 0.85;
-
-  mask-image:
-    conic-gradient(
-      from var(--cursor-angle) at center,
-      black calc(var(--cone-spread, 28) * 1%),
-      transparent calc((var(--cone-spread, 28) + 16) * 1%),
-      transparent calc((100 - var(--cone-spread, 28) - 16) * 1%),
-      black calc((100 - var(--cone-spread, 28)) * 1%)
-    );
-  -webkit-mask-image:
-    conic-gradient(
-      from var(--cursor-angle) at center,
-      black calc(var(--cone-spread, 28) * 1%),
-      transparent calc((var(--cone-spread, 28) + 16) * 1%),
-      transparent calc((100 - var(--cone-spread, 28) - 16) * 1%),
-      black calc((100 - var(--cone-spread, 28)) * 1%)
-    );
-}
-
-/* 2. Soft interior radial ambient glow */
-.border-glow-card::after {
-  inset: 0;
-  z-index: 1;
-  background:
-    radial-gradient(
-      circle at calc(50% + 40% * sin(var(--cursor-angle))) calc(50% - 40% * cos(var(--cursor-angle))),
-      rgba(225, 6, 0, 0.12) 0%,
-      transparent 60%
-    );
-  opacity: 0.7;
-}
-
-/* 3. Radiant bloom flare tracking the edge */
-.border-glow-card > .edge-light {
   inset: calc(var(--glow-padding, 30px) * -1);
-  z-index: 3;
+  z-index: 10;
   pointer-events: none;
+  border-radius: inherit;
 
   mask-image:
     conic-gradient(
-      from var(--cursor-angle) at center,
+      from var(--cursor-angle, 0deg) at center,
+      black 0%,
       black calc(var(--cone-spread, 28) * 0.75%),
-      transparent calc((var(--cone-spread, 28) + 15) * 1%),
-      transparent calc((100 - var(--cone-spread, 28) - 15) * 1%),
-      black calc((100 - var(--cone-spread, 28) * 0.75) * 1%)
+      transparent calc((var(--cone-spread, 28) + 16) * 1%),
+      transparent calc((100 - var(--cone-spread, 28) - 16) * 1%),
+      black calc((100 - var(--cone-spread, 28) * 0.75) * 1%),
+      black 100%
     );
   -webkit-mask-image:
     conic-gradient(
-      from var(--cursor-angle) at center,
+      from var(--cursor-angle, 0deg) at center,
+      black 0%,
       black calc(var(--cone-spread, 28) * 0.75%),
-      transparent calc((var(--cone-spread, 28) + 15) * 1%),
-      transparent calc((100 - var(--cone-spread, 28) - 15) * 1%),
-      black calc((100 - var(--cone-spread, 28) * 0.75) * 1%)
+      transparent calc((var(--cone-spread, 28) + 16) * 1%),
+      transparent calc((100 - var(--cone-spread, 28) - 16) * 1%),
+      black calc((100 - var(--cone-spread, 28) * 0.75) * 1%),
+      black 100%
     );
 
-  opacity: 0.9;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   mix-blend-mode: plus-lighter;
 }
 
+/* Show edge light strictly when hovered or programmatic sweep active */
+.border-glow-card:hover > .edge-light,
+.border-glow-card.sweep-active > .edge-light {
+  opacity: 1;
+  transition: opacity 0.15s ease-out;
+}
+
+/* The actual glowing perimeter light (box-shadow only, completely transparent interior) */
 .border-glow-card > .edge-light::before {
   content: "";
   position: absolute;
   inset: var(--glow-padding, 30px);
-  border-radius: inherit;
+  border-radius: var(--border-radius, 16px);
+  pointer-events: none;
+  background: transparent !important;
   box-shadow:
-    inset 0 0 0 1px var(--glow-color, #E10600),
-    inset 0 0 3px 0 var(--glow-color-60, rgba(225, 6, 0, 0.7)),
-    inset 0 0 8px 0 var(--glow-color-40, rgba(225, 6, 0, 0.4)),
+    inset 0 0 0 1.5px var(--glow-color, #E10600),
+    inset 0 0 4px 0 var(--glow-color-60, rgba(225, 6, 0, 0.7)),
     0 0 4px 0 var(--glow-color-60, rgba(225, 6, 0, 0.7)),
     0 0 12px 1px var(--glow-color-50, rgba(225, 6, 0, 0.5)),
     0 0 24px 2px var(--glow-color-30, rgba(225, 6, 0, 0.3)),
     0 0 48px 4px var(--glow-color-10, rgba(225, 6, 0, 0.15));
 }
 
+/* Inner content: sits on top, fully visible, interactive, never darkened */
 .border-glow-inner {
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  z-index: 1;
+  z-index: 2;
   border-radius: inherit;
   width: 100%;
   height: 100%;
+  background: transparent;
 }
