@@ -26,6 +26,28 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ==========================================================================
+   Custom Cursor System
+   Completely remove default PC / OS cursor everywhere on desktop/fine-pointer
+   devices so only the cybernetic custom cursor is visible.
+   ========================================================================== */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html,
+  body,
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+}
+
+body.custom-cursor-active,
+body.custom-cursor-active *,
+body.custom-cursor-active *::before,
+body.custom-cursor-active *::after {
+  cursor: none !important;
+}
+
 /* Accessible visible focus styles */
 :focus-visible {
   outline: 2px solid #E10600;

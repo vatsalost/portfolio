@@ -18,11 +18,17 @@ export function CustomCursor() {
     let mouseY = window.innerHeight / 2;
     let ringX = mouseX;
     let ringY = mouseY;
+    let hasMoved = false;
     let rafId;
 
     const onMouseMove = (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+      if (!hasMoved) {
+        ringX = mouseX;
+        ringY = mouseY;
+        hasMoved = true;
+      }
       setIsVisible(true);
 
       // Instant update for the dot for zero latency
@@ -135,7 +141,7 @@ export function CustomCursor() {
         <div
           className="w-2.5 h-2.5 rounded-full bg-[#E10600] pointer-events-none transition-transform duration-100"
           style={{
-            transform: `translate(-50%, -50%) scale(${isClicking ? 0.5 : isHovered ? 0 : 1})`,
+            transform: `translate(-50%, -50%) scale(${cursorText ? 0 : isClicking ? 0.5 : isHovered ? 0.85 : 1})`,
             boxShadow: '0 0 8px #E10600, 0 0 16px rgba(225, 6, 0, 0.6)'
           }}
         />
