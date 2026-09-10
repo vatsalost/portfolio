@@ -4,35 +4,37 @@ import gsap from 'gsap';
 export function Magnet({
   children,
   className = '',
-  strength = 0.22,
-  maxDistance = 75,
+  strength = 0.35,
+  reach = 45,
   as: Component = 'div',
   ...props
 }) {
   const ref = useRef(null);
 
   useEffect(() => {
-    // Disable on touch or small devices or reduced motion
-    const isTouch = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
+    // Only check reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isTouch || prefersReducedMotion) return;
+    if (prefersReducedMotion) return;
 
     const el = ref.current;
     if (!el) return;
 
-    const xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' });
-    const yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3.out' });
+    const xTo = gsap.quickTo(el, 'x', { duration: 0.35, ease: 'power2.out' });
+    const yTo = gsap.quickTo(el, 'y', { duration: 0.35, ease: 'power2.out' });
 
-    const handleMouseMove = (e) => {
+    const handlePointerMove = (e) => {
       const rect = el.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
       const deltaX = e.clientX - centerX;
       const deltaY = e.clientY - centerY;
-      const distance = Math.hypot(deltaX, deltaY);
 
-      if (distance < maxDistance) {
+      // Check if within bounds of the element plus magnetic reach
+      const maxReachX = rect.width / 2 + reach;
+      const maxReachY = rect.height / 2 + reach;
+
+      if (Math.abs(deltaX) <= maxReachX && Math.abs(deltaY) <= maxReachY) {
         xTo(deltaX * strength);
         yTo(deltaY * strength);
       } else {
@@ -41,21 +43,25 @@ export function Magnet({
       }
     };
 
-    const handleMouseLeave = () => {
+    const handlePointerLeave = () => {
       xTo(0);
       yTo(0);
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    el.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('mousemove', handlePointerMove, { passive: true });
+    el.addEventListener('pointerleave', handlePointerLeave);
+    el.addEventListener('mouseleave', handlePointerLeave);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      el.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('mousemove', handlePointerMove);
+      el.removeEventListener('pointerleave', handlePointerLeave);
+      el.removeEventListener('mouseleave', handlePointerLeave);
       xTo(0);
       yTo(0);
     };
-  }, [strength, maxDistance]);
+  }, [strength, reach]);
 
   return (
     <Component ref={ref} className={`inline-block ${className}`} {...props}>

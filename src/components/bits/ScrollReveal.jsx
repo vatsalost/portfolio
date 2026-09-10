@@ -3,9 +3,9 @@ import React, { useRef, useState, useEffect } from 'react';
 export function ScrollReveal({
   children,
   className = '',
-  threshold = 0.15,
+  threshold = 0.05,
   delay = 0,
-  duration = 0.65,
+  duration = 0.7,
   direction = 'up',
   as: Component = 'div',
   ...props
@@ -21,28 +21,37 @@ export function ScrollReveal({
       return;
     }
 
+    const el = ref.current;
+    if (!el) return;
+
+    // Check if already in viewport on mount
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      const timer = setTimeout(() => setIsVisible(true), Math.max(delay * 1000, 30));
+      return () => clearTimeout(timer);
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          if (ref.current) observer.unobserve(ref.current);
+          observer.unobserve(el);
         }
       },
       {
         threshold,
-        rootMargin: '0px 0px -40px 0px'
+        rootMargin: '0px 0px -20px 0px'
       }
     );
 
-    const el = ref.current;
-    if (el) observer.observe(el);
+    observer.observe(el);
 
     return () => {
-      if (el) observer.unobserve(el);
+      observer.unobserve(el);
     };
-  }, [threshold]);
+  }, [threshold, delay]);
 
-  const translateY = direction === 'up' ? 18 : direction === 'down' ? -18 : 0;
+  const translateY = direction === 'up' ? 24 : direction === 'down' ? -24 : 0;
 
   const style = {
     opacity: isVisible ? 1 : 0,

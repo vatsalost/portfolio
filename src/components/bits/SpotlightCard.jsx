@@ -3,70 +3,63 @@ import React, { useRef, useState } from 'react';
 export function SpotlightCard({
   children,
   className = '',
-  spotlightColor = 'rgba(225, 6, 0, 0.22)',
-  borderColor = 'rgba(225, 6, 0, 0.45)',
+  spotlightColor = 'rgba(225, 6, 0, 0.16)',
+  borderColor = 'rgba(225, 6, 0, 0.55)',
+  borderRadius = '12px',
   ...props
 }) {
   const divRef = useRef(null);
-  const [isFocused, setIsFocused] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
-  const handleMouseMove = (e) => {
+  const handlePointerMove = (e) => {
     if (!divRef.current) return;
-
-    const div = divRef.current;
-    const rect = div.getBoundingClientRect();
-
+    const rect = divRef.current.getBoundingClientRect();
     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
-  const handleFocus = () => {
-    setIsFocused(true);
+  const handlePointerEnter = (e) => {
+    handlePointerMove(e);
     setOpacity(1);
   };
 
-  const handleBlur = () => {
-    setIsFocused(false);
-    setOpacity(0);
-  };
-
-  const handleMouseEnter = () => {
-    setOpacity(1);
-  };
-
-  const handleMouseLeave = () => {
+  const handlePointerLeave = () => {
     setOpacity(0);
   };
 
   return (
     <div
       ref={divRef}
-      onMouseMove={handleMouseMove}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className={`relative rounded-none border border-[#F5F5F0]/10 bg-[#121212] overflow-hidden transition-all duration-300 ${className}`}
+      onPointerMove={handlePointerMove}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+      className={`relative border border-[#F2F0EA]/10 bg-[#101010] overflow-hidden transition-colors duration-300 ${className}`}
+      style={{ borderRadius }}
       {...props}
     >
-      {/* Dynamic Cursor Spotlight Gradient */}
+      {/* 1. Dynamic Cursor Spotlight Radial Glow */}
       <div
-        className="pointer-events-none absolute -inset-px transition-opacity duration-300"
+        className="pointer-events-none absolute -inset-px transition-opacity duration-200"
         style={{
           opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 40%)`,
+          borderRadius,
+          background: `radial-gradient(650px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 60%)`,
         }}
       />
-      {/* Dynamic Border Glow */}
+      {/* 2. Spotlight Border Accent */}
       <div
-        className="pointer-events-none absolute inset-0 transition-opacity duration-300 border"
+        className="pointer-events-none absolute inset-0 transition-opacity duration-200"
         style={{
           opacity,
-          borderColor: borderColor,
+          borderRadius,
+          border: `1.5px solid ${borderColor}`,
+          maskImage: `radial-gradient(350px circle at ${position.x}px ${position.y}px, black, transparent 75%)`,
+          WebkitMaskImage: `radial-gradient(350px circle at ${position.x}px ${position.y}px, black, transparent 75%)`,
         }}
       />
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 w-full h-full">{children}</div>
     </div>
   );
 }
+
+export default SpotlightCard;

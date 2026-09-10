@@ -3,9 +3,9 @@ import React, { useRef, useEffect } from 'react';
 export function VariableProximity({
   label = '',
   className = '',
-  radius = 130,
-  maxLift = 3.5,
-  maxScale = 1.025,
+  radius = 160,
+  maxLift = 7,
+  maxScale = 1.1,
   dotColor = '#E10600',
   ...props
 }) {
@@ -13,77 +13,78 @@ export function VariableProximity({
   const letterRefs = useRef([]);
 
   useEffect(() => {
-    // Disable on touch devices, small screens, or reduced motion
-    const isTouch = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
+    // Only disable if user explicitly requested reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
 
-    if (isTouch || prefersReducedMotion) return;
-
-    const container = containerRef.current;
-    if (!container) return;
-
-    let rafId = null;
     let targetX = -9999;
     let targetY = -9999;
     let isHovered = false;
+    let rafId = null;
 
-    const updateLetterTransforms = () => {
+    const updateTransforms = () => {
       letterRefs.current.forEach((el) => {
         if (!el) return;
 
         if (!isHovered) {
           el.style.transform = 'translateY(0px) scale(1)';
+          el.style.color = '';
           return;
         }
 
         const rect = el.getBoundingClientRect();
-        const letterCenterX = rect.left + rect.width / 2;
-        const letterCenterY = rect.top + rect.height / 2;
-
-        const distance = Math.hypot(targetX - letterCenterX, targetY - letterCenterY);
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const distance = Math.hypot(targetX - centerX, targetY - centerY);
 
         if (distance < radius) {
-          // Smooth cosine falloff
           const factor = Math.cos((distance / radius) * (Math.PI / 2));
           const translateY = -factor * maxLift;
           const scale = 1 + factor * (maxScale - 1);
           el.style.transform = `translateY(${translateY.toFixed(2)}px) scale(${scale.toFixed(3)})`;
+          if (factor > 0.5) {
+            el.style.color = '#FFFFFF';
+          } else {
+            el.style.color = '';
+          }
         } else {
           el.style.transform = 'translateY(0px) scale(1)';
+          el.style.color = '';
         }
       });
     };
 
-    const handleMouseMove = (e) => {
+    const onPointerMove = (e) => {
       targetX = e.clientX;
       targetY = e.clientY;
       isHovered = true;
 
       if (!rafId) {
         rafId = requestAnimationFrame(() => {
-          updateLetterTransforms();
+          updateTransforms();
           rafId = null;
         });
       }
     };
 
-    const handleMouseLeave = () => {
+    const onPointerLeave = () => {
       isHovered = false;
-      updateLetterTransforms();
+      updateTransforms();
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    document.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('mousemove', onPointerMove, { passive: true });
+    document.addEventListener('mouseleave', onPointerLeave);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('mousemove', onPointerMove);
+      document.removeEventListener('mouseleave', onPointerLeave);
       if (rafId) cancelAnimationFrame(rafId);
     };
   }, [radius, maxLift, maxScale]);
 
   letterRefs.current = [];
-
   const words = label.split(' ');
 
   return (
