@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowUpRight, Github, Mail, Terminal, Layers, BookOpen, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAudio } from '../context/AudioContext';
+import { ScrollReveal } from '../components/bits/ScrollReveal';
 
 export function AboutPage() {
   const { playClick, playHover } = useAudio();
@@ -9,19 +10,21 @@ export function AboutPage() {
   return (
     <div className="pt-32 pb-32 px-6 md:px-12 max-w-5xl mx-auto min-h-screen text-[#F2F0EA]">
       {/* 1. Category Tag & Large Statement */}
-      <div className="border-b border-[#F2F0EA]/10 pb-16 mb-16">
-        <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase mb-4">
-          // ABOUT VATSAL
-        </span>
+      <ScrollReveal threshold={0.15}>
+        <div className="border-b border-[#F2F0EA]/10 pb-16 mb-16">
+          <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase mb-4">
+            // ABOUT VATSAL
+          </span>
 
-        <h1 className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight uppercase leading-[0.95] mb-8 text-[#F2F0EA]">
-          BUILDING, EXPERIMENTING & LEARNING BY DOING<span className="text-[#E10600]">.</span>
-        </h1>
+          <h1 className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight uppercase leading-[0.95] mb-8 text-[#F2F0EA]">
+            BUILDING, EXPERIMENTING & LEARNING BY DOING<span className="text-[#E10600]">.</span>
+          </h1>
 
-        <p className="text-xl sm:text-2xl md:text-3xl font-sans font-light text-[#A3A39B] leading-relaxed max-w-3xl">
-          I am Vatsal Chaudhary, currently pursuing a B.Tech in Computer Science & Engineering at Symbiosis Institute of Technology, Pune.
-        </p>
-      </div>
+          <p className="text-xl sm:text-2xl md:text-3xl font-sans font-light text-[#A3A39B] leading-relaxed max-w-3xl">
+            I am Vatsal Chaudhary, currently pursuing a B.Tech in Computer Science & Engineering at Symbiosis Institute of Technology, Pune.
+          </p>
+        </div>
+      </ScrollReveal>
 
       {/* 2. Narrative Body */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20 text-base sm:text-lg font-sans font-light text-[#A3A39B] leading-relaxed">

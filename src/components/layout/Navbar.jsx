@@ -23,6 +23,17 @@ export function Navbar() {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
+  // Handle Escape key to close mobile drawer
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { label: 'WORK', href: '/work' },
     { label: 'ABOUT', href: '/about' },
@@ -136,8 +147,9 @@ export function Navbar() {
           <span className="font-mono text-xs text-[#E10600] uppercase tracking-widest block mb-4">
             // DIRECTORY
           </span>
-          {navLinks.map((link) => {
+          {navLinks.map((link, idx) => {
             const isActive = location.pathname === link.href;
+            const delays = ['delay-[75ms]', 'delay-[125ms]', 'delay-[175ms]'];
             return (
               <Link
                 key={link.label}
@@ -146,7 +158,11 @@ export function Navbar() {
                   playClick();
                   setMobileMenuOpen(false);
                 }}
-                className={`block font-display font-black text-3xl tracking-tight transition-colors ${
+                className={`block font-display font-black text-3xl tracking-tight transition-all duration-300 ${
+                  delays[idx] || 'delay-[100ms]'
+                } ${
+                  mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+                } ${
                   isActive ? 'text-[#E10600]' : 'text-[#F2F0EA] hover:text-[#E10600]'
                 }`}
               >
@@ -158,14 +174,20 @@ export function Navbar() {
             href="https://github.com/vatsalost"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 font-display font-bold text-2xl text-[#8E8E8E] hover:text-[#F2F0EA] pt-4"
+            className={`inline-flex items-center gap-2 font-display font-bold text-2xl text-[#8E8E8E] hover:text-[#F2F0EA] pt-4 transition-all duration-300 delay-[225ms] ${
+              mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+            }`}
           >
             <span>GITHUB</span>
             <ArrowUpRight className="w-5 h-5" />
           </a>
         </div>
 
-        <div className="border-t border-[#F2F0EA]/10 pt-6 font-mono text-xs text-[#8E8E8E] space-y-1">
+        <div
+          className={`border-t border-[#F2F0EA]/10 pt-6 font-mono text-xs text-[#8E8E8E] space-y-1 transition-all duration-300 delay-[275ms] ${
+            mobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+          }`}
+        >
           <p className="text-[#F2F0EA] font-semibold">Vatsal Chaudhary</p>
           <p>B.Tech CSE · Symbiosis Institute of Technology, Pune</p>
           <p className="text-[#E10600] font-bold pt-1">OPEN TO HACKATHONS</p>

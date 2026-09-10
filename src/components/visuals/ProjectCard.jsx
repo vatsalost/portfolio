@@ -4,6 +4,7 @@ import { ArrowUpRight, Github, Globe, Cpu } from 'lucide-react';
 import { useAudio } from '../../context/AudioContext';
 import { Badge } from '../untitled/Badge';
 import { BorderGlow } from '../bits/BorderGlow';
+import { GlareHover } from '../bits/GlareHover';
 
 export function ProjectCard({ project, index, layout = 'card' }) {
   const { playHover, playClick } = useAudio();
@@ -169,20 +170,22 @@ export function ProjectCard({ project, index, layout = 'card' }) {
             </h3>
           </Link>
 
-          {/* Dominant Large Visual Display */}
+          {/* Dominant Large Visual Display with GlareHover */}
           <Link
             to={`/project/${project.id}`}
             onClick={playClick}
             className="relative block aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-[#111111] border border-[#F2F0EA]/10 group-hover:border-[#E10600] transition-colors duration-500 rounded-lg mb-8"
             data-cursor="view"
           >
-            <img
-              src={project.thumbnail}
-              alt={project.title}
-              className="w-full h-full object-cover duotone-hover group-hover:scale-105 transition-all duration-700 ease-out"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-[#0A0A0A]/20 group-hover:bg-[#E10600]/10 transition-colors duration-500" />
+            <GlareHover borderRadius="8px" glareColor="rgba(225, 6, 0, 0.16)" glareMaxOpacity={0.2} className="w-full h-full">
+              <img
+                src={project.thumbnail}
+                alt={project.title}
+                className="w-full h-full object-cover duotone-hover group-hover:scale-105 transition-all duration-700 ease-out"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-[#0A0A0A]/20 group-hover:bg-[#E10600]/10 transition-colors duration-500 pointer-events-none" />
+            </GlareHover>
           </Link>
 
           {/* Narrative & Action Grid */}
@@ -343,16 +346,18 @@ export function ProjectCard({ project, index, layout = 'card' }) {
                 className="relative block aspect-[16/10] overflow-hidden bg-[#141414] border border-[#F5F5F0]/10 group-hover:border-[#E10600] transition-colors rounded-lg"
                 data-cursor="view"
               >
-                <img
-                  src={project.thumbnail}
-                  alt={project.title}
-                  className="w-full h-full object-cover duotone-hover group-hover:scale-105 transition-all duration-700 ease-out"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-[#0A0A0A]/40 group-hover:bg-[#E10600]/10 transition-colors duration-500" />
-                <div className="absolute top-3 right-3 p-2 bg-[#0A0A0A]/80 backdrop-blur-md border border-[#F5F5F0]/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-sm">
-                  <ArrowUpRight className="w-4 h-4" />
-                </div>
+                <GlareHover borderRadius="8px" glareColor="rgba(225, 6, 0, 0.16)" glareMaxOpacity={0.2} className="w-full h-full">
+                  <img
+                    src={project.thumbnail}
+                    alt={project.title}
+                    className="w-full h-full object-cover duotone-hover group-hover:scale-105 transition-all duration-700 ease-out"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-[#0A0A0A]/40 group-hover:bg-[#E10600]/10 transition-colors duration-500 pointer-events-none" />
+                  <div className="absolute top-3 right-3 p-2 bg-[#0A0A0A]/80 backdrop-blur-md border border-[#F5F5F0]/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-sm">
+                    <ArrowUpRight className="w-4 h-4" />
+                  </div>
+                </GlareHover>
               </Link>
             </div>
           </div>

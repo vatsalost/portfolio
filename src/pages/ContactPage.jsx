@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Mail, Github, Linkedin, Copy, Check, ArrowUpRight, ArrowRight, Send, User, Sparkles } from 'lucide-react';
 import { useAudio } from '../context/AudioContext';
 import { BorderGlow } from '../components/bits/BorderGlow';
+import { Magnet } from '../components/bits/Magnet';
 
 export function ContactPage() {
   const { playClick, playHover } = useAudio();
@@ -290,14 +291,16 @@ export function ContactPage() {
               </div>
 
               <div className="pt-2">
-                <button
-                  type="submit"
-                  onClick={playClick}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#181818] border border-[#E10600]/60 text-[#F2F0EA] font-mono text-xs uppercase tracking-widest font-bold hover:bg-[#E10600] hover:text-white transition-all rounded-sm group cursor-pointer"
-                >
-                  <span>SEND VIA EMAIL CLIENT</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-[#E10600] group-hover:text-white transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </button>
+                <Magnet strength={0.2} maxDistance={70}>
+                  <button
+                    type="submit"
+                    onClick={playClick}
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#181818] border border-[#E10600]/60 text-[#F2F0EA] font-mono text-xs uppercase tracking-widest font-bold hover:bg-[#E10600] hover:text-white transition-all rounded-sm group cursor-pointer"
+                  >
+                    <span>SEND VIA EMAIL CLIENT</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-[#E10600] group-hover:text-white transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </button>
+                </Magnet>
               </div>
             </form>
           )}
@@ -327,14 +330,16 @@ export function ContactPage() {
               </p>
 
               <div className="pt-1">
-                <button
-                  type="button"
-                  onClick={handleFocusForm}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#181818] text-[#F2F0EA] border border-[#F2F0EA]/15 font-mono text-xs tracking-wider uppercase font-bold hover:border-[#E10600] hover:text-[#E10600] transition-colors rounded-sm group"
-                >
-                  <span>LET'S BUILD</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                </button>
+                <Magnet strength={0.2} maxDistance={70}>
+                  <button
+                    type="button"
+                    onClick={handleFocusForm}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#181818] text-[#F2F0EA] border border-[#F2F0EA]/15 font-mono text-xs tracking-wider uppercase font-bold hover:border-[#E10600] hover:text-[#E10600] transition-colors rounded-sm group cursor-pointer"
+                  >
+                    <span>LET'S BUILD</span>
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  </button>
+                </Magnet>
               </div>
 
               <div className="h-px bg-[#F2F0EA]/10 my-6" />

@@ -4,6 +4,10 @@ import { LayoutGrid, List, ArrowUpRight, Github, Cpu, ArrowRight } from 'lucide-
 import { useProjects } from '../context/ProjectContext';
 import { useAudio } from '../context/AudioContext';
 import { BorderGlow } from '../components/bits/BorderGlow';
+import { SpotlightCard } from '../components/bits/SpotlightCard';
+import { GlareHover } from '../components/bits/GlareHover';
+import { AnimatedList } from '../components/bits/AnimatedList';
+import { Magnet } from '../components/bits/Magnet';
 
 export function WorkPage() {
   const { projects } = useProjects();
@@ -120,11 +124,10 @@ export function WorkPage() {
           {/* Project 01: Dominant Featured Layout */}
           {filteredProjects[0] && (
             <section aria-labelledby={`title-${filteredProjects[0].id}`}>
-              <BorderGlow
-                borderRadius={18}
-                glowRadius={36}
-                backgroundColor="#0E0E0E"
-                className="group relative w-full overflow-hidden"
+              <SpotlightCard
+                className="group relative w-full overflow-hidden border border-[#F2F0EA]/10 rounded-xl"
+                spotlightColor="rgba(225, 6, 0, 0.15)"
+                borderColor="rgba(225, 6, 0, 0.4)"
                 onMouseEnter={playHover}
               >
                 <article className="p-6 sm:p-8 md:p-10 lg:p-12">
@@ -158,19 +161,21 @@ export function WorkPage() {
                     </h2>
                   </Link>
 
-                  {/* Large Prominent Visual */}
+                  {/* Large Prominent Visual with GlareHover */}
                   <Link
                     to={`/project/${filteredProjects[0].id}`}
                     onClick={playClick}
                     className="relative block aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-[#141414] border border-[#F2F0EA]/10 group-hover:border-[#E10600]/50 transition-colors rounded-lg mb-8"
                   >
-                    <img
-                      src={filteredProjects[0].thumbnail}
-                      alt={filteredProjects[0].title}
-                      className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent pointer-events-none" />
+                    <GlareHover borderRadius="8px" glareColor="rgba(225, 6, 0, 0.16)" glareMaxOpacity={0.2} className="w-full h-full">
+                      <img
+                        src={filteredProjects[0].thumbnail}
+                        alt={filteredProjects[0].title}
+                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 via-transparent to-transparent pointer-events-none" />
+                    </GlareHover>
                   </Link>
 
                   {/* Narrative & Action Bar */}
@@ -223,7 +228,7 @@ export function WorkPage() {
                     </div>
                   </div>
                 </article>
-              </BorderGlow>
+              </SpotlightCard>
             </section>
           )}
 
@@ -631,63 +636,10 @@ export function WorkPage() {
         </div>
       )}
 
-      {/* 5. Work Index / List View (LIST Mode) */}
+      {/* 5. Work Index / List View (LIST Mode) using AnimatedList */}
       {viewMode === 'list' && filteredProjects.length > 0 && (
-        <section aria-label="Technical Project Directory" className="border border-[#F2F0EA]/10 bg-[#0D0D0D] rounded-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left font-mono text-xs">
-              <thead>
-                <tr className="border-b border-[#F2F0EA]/10 text-[#8E8E8E] uppercase tracking-wider bg-[#121212]">
-                  <th scope="col" className="py-4 px-5">#</th>
-                  <th scope="col" className="py-4 px-5">YEAR</th>
-                  <th scope="col" className="py-4 px-5">PROJECT</th>
-                  <th scope="col" className="py-4 px-5">CATEGORY</th>
-                  <th scope="col" className="py-4 px-5 hidden md:table-cell">CORE STACK</th>
-                  <th scope="col" className="py-4 px-5 text-right">ACTION</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#F2F0EA]/5">
-                {filteredProjects.map((project, idx) => {
-                  const numStr = idx < 9 ? `0${idx + 1}` : `${idx + 1}`;
-                  return (
-                    <tr
-                      key={project.id}
-                      className="hover:bg-[#161616] transition-colors group cursor-pointer"
-                      onMouseEnter={playHover}
-                    >
-                      <td className="py-4 px-5 text-[#8E8E8E] group-hover:text-[#E10600] transition-colors">
-                        [ {numStr} ]
-                      </td>
-                      <td className="py-4 px-5 text-[#8E8E8E]">{project.year}</td>
-                      <td className="py-4 px-5 font-display font-bold text-base text-[#F2F0EA] group-hover:text-[#E10600] group-hover:translate-x-1 transition-all duration-200">
-                        <Link to={`/project/${project.id}`} onClick={playClick} className="flex items-center gap-2">
-                          <span>{project.title}</span>
-                        </Link>
-                      </td>
-                      <td className="py-4 px-5">
-                        <span className="px-2.5 py-0.5 bg-[#141414] border border-[#F2F0EA]/10 text-[#F2F0EA] text-[10px] uppercase font-semibold">
-                          {project.category}
-                        </span>
-                      </td>
-                      <td className="py-4 px-5 text-[#8E8E8E] hidden md:table-cell">
-                        {project.stack?.slice(0, 3).join(' · ')}
-                      </td>
-                      <td className="py-4 px-5 text-right">
-                        <Link
-                          to={`/project/${project.id}`}
-                          onClick={playClick}
-                          className="inline-flex items-center gap-1 text-[#F2F0EA] group-hover:text-[#E10600] font-bold transition-colors"
-                        >
-                          <span>CASE STUDY</span>
-                          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+        <section aria-label="Technical Project Directory">
+          <AnimatedList items={filteredProjects} />
         </section>
       )}
 
@@ -711,24 +663,28 @@ export function WorkPage() {
             I'm open to hackathons, project collaborations, and interesting engineering challenges. If you're looking for a teammate or want to build something together, get in touch.
           </p>
           <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              to="/contact"
-              onClick={playClick}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#E10600] text-white font-mono text-xs tracking-wider uppercase font-bold hover:bg-[#B00500] transition-colors rounded-sm shadow-lg shadow-[#E10600]/20"
-            >
-              <span>GET IN TOUCH</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </Link>
-            <a
-              href="https://github.com/vatsalost"
-              target="_blank"
-              rel="noreferrer"
-              onClick={playClick}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#171717] text-[#F2F0EA] border border-[#F2F0EA]/15 font-mono text-xs tracking-wider uppercase font-bold hover:border-[#E10600] hover:text-[#E10600] transition-colors rounded-sm"
-            >
-              <Github className="w-4 h-4" />
-              <span>GITHUB PROFILE ↗</span>
-            </a>
+            <Magnet strength={0.22} maxDistance={75}>
+              <Link
+                to="/contact"
+                onClick={playClick}
+                className="inline-flex items-center gap-2 px-8 py-4 bg-[#E10600] text-white font-mono text-xs tracking-wider uppercase font-bold hover:bg-[#B00500] transition-colors rounded-sm shadow-lg shadow-[#E10600]/20"
+              >
+                <span>GET IN TOUCH</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            </Magnet>
+            <Magnet strength={0.22} maxDistance={75}>
+              <a
+                href="https://github.com/vatsalost"
+                target="_blank"
+                rel="noreferrer"
+                onClick={playClick}
+                className="inline-flex items-center gap-2 px-8 py-4 bg-[#171717] text-[#F2F0EA] border border-[#F2F0EA]/15 font-mono text-xs tracking-wider uppercase font-bold hover:border-[#E10600] hover:text-[#E10600] transition-colors rounded-sm"
+              >
+                <Github className="w-4 h-4" />
+                <span>GITHUB PROFILE ↗</span>
+              </a>
+            </Magnet>
           </div>
         </BorderGlow>
       </section>

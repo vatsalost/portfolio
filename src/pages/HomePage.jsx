@@ -11,8 +11,11 @@ import { ProjectCard } from '../components/visuals/ProjectCard';
 import { MagneticButton } from '../components/ui/MagneticButton';
 import { useProjects } from '../context/ProjectContext';
 import { useAudio } from '../context/AudioContext';
-import { Badge } from '../components/untitled/Badge';
 import { BorderGlow } from '../components/bits/BorderGlow';
+import { VariableProximity } from '../components/bits/VariableProximity';
+import { DecryptedText } from '../components/bits/DecryptedText';
+import { ScrollReveal } from '../components/bits/ScrollReveal';
+import { Magnet } from '../components/bits/Magnet';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -81,11 +84,17 @@ export function HomePage() {
         <div ref={titleRef} className="relative z-10 my-auto py-8 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left Column: Identity, Narrative, Stack, CTAs */}
           <div className="lg:col-span-8 space-y-6">
-            {/* Main Headline */}
+            {/* Main Headline with Variable Proximity */}
             <div className="space-y-3">
               <h1 className="hero-reveal font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[6.8rem] tracking-tight text-[#F2F0EA] leading-[0.92] uppercase">
-                VATSAL<br />
-                CHAUDHARY<span className="text-[#E10600]">.</span>
+                <VariableProximity
+                  label="VATSAL CHAUDHARY"
+                  className="font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[6.8rem] tracking-tight text-[#F2F0EA] leading-[0.92] uppercase"
+                  radius={130}
+                  maxLift={3.5}
+                  maxScale={1.025}
+                  dotColor="#E10600"
+                />
               </h1>
               <p className="hero-reveal font-display font-semibold text-xl sm:text-2xl md:text-3xl text-[#F2F0EA] tracking-tight pt-1">
                 Computer Science student building things, experimenting with technology, and learning by doing.
@@ -110,39 +119,50 @@ export function HomePage() {
               ))}
             </div>
 
-            {/* Availability Indicator */}
+            {/* Availability Indicator with DecryptedText Scramble */}
             <div className="hero-reveal flex items-center gap-2.5 font-mono text-xs text-[#E10600] pt-1">
               <span className="w-2 h-2 rounded-full bg-[#E10600] animate-pulse" />
               <span className="tracking-wide font-bold uppercase">
-                OPEN TO HACKATHONS + COLLABORATIONS
+                <DecryptedText
+                  text="OPEN TO HACKATHONS + COLLABORATIONS"
+                  speed={24}
+                  maxIterations={5}
+                  animateOn="always"
+                />
               </span>
             </div>
 
-            {/* Action CTAs */}
+            {/* Action CTAs with Magnet interaction */}
             <div className="hero-reveal pt-4 flex flex-wrap items-center gap-4 font-mono text-xs">
-              <MagneticButton href="#selected-work" variant="primary">
-                VIEW WORK <ArrowDown className="w-3.5 h-3.5" />
-              </MagneticButton>
-              <a
-                href="https://github.com/vatsalost"
-                target="_blank"
-                rel="noreferrer"
-                onClick={playClick}
-                onMouseEnter={playHover}
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#141414] text-[#F2F0EA] border border-[#F2F0EA]/15 uppercase font-bold hover:border-[#E10600] hover:text-[#E10600] transition-colors rounded-sm tracking-wider"
-              >
-                <Github className="w-4 h-4" />
-                <span>GITHUB ↗</span>
-              </a>
-              <Link
-                to="/contact"
-                onClick={playClick}
-                onMouseEnter={playHover}
-                className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#141414] text-[#8E8E8E] hover:text-[#F2F0EA] border border-[#F2F0EA]/10 hover:border-[#F2F0EA]/30 uppercase font-bold transition-colors rounded-sm tracking-wider"
-              >
-                <Mail className="w-3.5 h-3.5" />
-                <span>CONTACT ↗</span>
-              </Link>
+              <Magnet strength={0.22} maxDistance={75}>
+                <MagneticButton href="#selected-work" variant="primary">
+                  VIEW WORK <ArrowDown className="w-3.5 h-3.5" />
+                </MagneticButton>
+              </Magnet>
+              <Magnet strength={0.22} maxDistance={75}>
+                <a
+                  href="https://github.com/vatsalost"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={playClick}
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#141414] text-[#F2F0EA] border border-[#F2F0EA]/15 uppercase font-bold hover:border-[#E10600] hover:text-[#E10600] transition-colors rounded-sm tracking-wider"
+                >
+                  <Github className="w-4 h-4" />
+                  <span>GITHUB ↗</span>
+                </a>
+              </Magnet>
+              <Magnet strength={0.22} maxDistance={75}>
+                <Link
+                  to="/contact"
+                  onClick={playClick}
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#141414] text-[#8E8E8E] hover:text-[#F2F0EA] border border-[#F2F0EA]/10 hover:border-[#F2F0EA]/30 uppercase font-bold transition-colors rounded-sm tracking-wider"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>CONTACT ↗</span>
+                </Link>
+              </Magnet>
             </div>
           </div>
 
@@ -212,18 +232,20 @@ export function HomePage() {
 
       {/* 2. INTRO / PERSONAL STATEMENT SECTION */}
       <section className="py-24 md:py-36 px-6 md:px-12 max-w-7xl mx-auto border-t border-[#F2F0EA]/10">
-        <div className="max-w-4xl space-y-6">
-          <span className="font-mono text-xs text-[#E10600] uppercase tracking-widest block">
-            // PERSONAL STATEMENT
-          </span>
-          <h2 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-[#F2F0EA] tracking-tight leading-[1.08] uppercase">
-            I LIKE BUILDING THINGS<br />
-            I WANT TO UNDERSTAND<span className="text-[#E10600]">.</span>
-          </h2>
-          <p className="text-base sm:text-xl md:text-2xl font-sans font-light text-[#A3A39B] leading-relaxed max-w-3xl pt-2">
-            I’m a Computer Science student interested in building software, problem solving, and hands-on experimentation. I learn best by writing code, breaking things, and turning ideas into working prototypes. I especially enjoy hackathons because they combine problem solving, rapid iteration, and teamwork under real constraints.
-          </p>
-        </div>
+        <ScrollReveal threshold={0.15}>
+          <div className="max-w-4xl space-y-6">
+            <span className="font-mono text-xs text-[#E10600] uppercase tracking-widest block">
+              // PERSONAL STATEMENT
+            </span>
+            <h2 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-[#F2F0EA] tracking-tight leading-[1.08] uppercase">
+              I LIKE BUILDING THINGS<br />
+              I WANT TO UNDERSTAND<span className="text-[#E10600]">.</span>
+            </h2>
+            <p className="text-base sm:text-xl md:text-2xl font-sans font-light text-[#A3A39B] leading-relaxed max-w-3xl pt-2">
+              I’m a Computer Science student interested in building software, problem solving, and hands-on experimentation. I learn best by writing code, breaking things, and turning ideas into working prototypes. I especially enjoy hackathons because they combine problem solving, rapid iteration, and teamwork under real constraints.
+            </p>
+          </div>
+        </ScrollReveal>
       </section>
 
       {/* 3. SELECTED WORK (3 STRONGEST PROJECTS) */}
@@ -608,19 +630,23 @@ export function HomePage() {
             Open to hackathons, project collaborations, and discussing interesting software ideas. If you're building something or want to team up, reach out.
           </p>
           <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-            <MagneticButton href="/contact" variant="primary">
-              GET IN TOUCH <ArrowUpRight className="w-4 h-4" />
-            </MagneticButton>
-            <a
-              href="https://github.com/vatsalost"
-              target="_blank"
-              rel="noreferrer"
-              onClick={playClick}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#171717] text-[#F2F0EA] border border-[#F2F0EA]/15 font-mono text-xs tracking-wider uppercase font-bold hover:border-[#E10600] hover:text-[#E10600] transition-colors rounded-sm"
-            >
-              <Github className="w-4 h-4" />
-              <span>GITHUB ↗</span>
-            </a>
+            <Magnet strength={0.22} maxDistance={75}>
+              <MagneticButton href="/contact" variant="primary">
+                GET IN TOUCH <ArrowUpRight className="w-4 h-4" />
+              </MagneticButton>
+            </Magnet>
+            <Magnet strength={0.22} maxDistance={75}>
+              <a
+                href="https://github.com/vatsalost"
+                target="_blank"
+                rel="noreferrer"
+                onClick={playClick}
+                className="inline-flex items-center gap-2 px-8 py-4 bg-[#171717] text-[#F2F0EA] border border-[#F2F0EA]/15 font-mono text-xs tracking-wider uppercase font-bold hover:border-[#E10600] hover:text-[#E10600] transition-colors rounded-sm"
+              >
+                <Github className="w-4 h-4" />
+                <span>GITHUB ↗</span>
+              </a>
+            </Magnet>
           </div>
         </BorderGlow>
       </section>
