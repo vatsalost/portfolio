@@ -28,13 +28,13 @@ export function ProjectDetailPage() {
           RECORD NOT LOCATED
         </h2>
         <p className="font-mono text-xs text-[#8E8E8E] mb-8">
-          The project record you requested does not exist or has been removed from the archive.
+          The project you are looking for does not exist or has been moved.
         </p>
         <Link
           to="/work"
           className="inline-flex items-center gap-2 px-6 py-3 bg-[#E10600] text-white font-mono text-xs uppercase font-bold tracking-wider hover:bg-[#B00500] transition-colors"
         >
-          RETURN TO DIRECTORY
+          BACK TO PROJECTS
         </Link>
       </div>
     );
@@ -53,7 +53,7 @@ export function ProjectDetailPage() {
             data-cursor="back"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>RETURN TO ARCHIVE</span>
+            <span>BACK TO PROJECTS</span>
           </Link>
         </div>
 
@@ -177,7 +177,7 @@ export function ProjectDetailPage() {
               {/* Technologies */}
               <div className="space-y-3 pt-4 border-t border-[#F2F0EA]/10">
                 <span className="text-[10px] text-[#8E8E8E] tracking-widest block uppercase">
-                  // APPLIED TECHNOLOGIES
+                  // TECHNOLOGIES USED
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {project.stack?.map((tech, idx) => (
@@ -259,7 +259,7 @@ export function ProjectDetailPage() {
             {project.gallery && project.gallery.length > 0 && (
               <div className="space-y-6 pt-4">
                 <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
-                  SYSTEM ARTIFACTS & VISUALS
+                  PROJECT SCREENSHOTS & PREVIEWS
                 </span>
                 <div className="space-y-6">
                   {project.gallery.map((imgUrl, i) => (
@@ -274,7 +274,7 @@ export function ProjectDetailPage() {
                         loading="lazy"
                       />
                       <div className="p-3 bg-[#0A0A0A] border-t border-[#F2F0EA]/10 font-mono text-[11px] text-[#8E8E8E] flex justify-between">
-                        <span>PLATE 0{i + 1}</span>
+                        <span>SCREENSHOT 0{i + 1}</span>
                         <span>{project.title.toUpperCase()}</span>
                       </div>
                     </div>
@@ -357,9 +357,9 @@ export function ProjectDetailPage() {
             data-cursor="next"
           >
             <div className="flex items-center justify-between mb-4 font-mono text-xs text-[#8E8E8E]">
-              <span className="text-[#E10600] uppercase tracking-widest">// NEXT CASE STUDY</span>
+              <span className="text-[#E10600] uppercase tracking-widest">// NEXT PROJECT</span>
               <span className="group-hover:translate-x-2 transition-transform duration-300 flex items-center gap-1 text-[#F2F0EA]">
-                PROCEED <ChevronRight className="w-4 h-4 text-[#E10600]" />
+                VIEW PROJECT <ChevronRight className="w-4 h-4 text-[#E10600]" />
               </span>
             </div>
             <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-[#F2F0EA] group-hover:text-[#E10600] transition-colors tracking-tight uppercase">

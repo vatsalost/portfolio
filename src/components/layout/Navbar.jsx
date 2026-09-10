@@ -145,7 +145,7 @@ export function Navbar() {
       >
         <div className="space-y-6">
           <span className="font-mono text-xs text-[#E10600] uppercase tracking-widest block mb-4">
-            // DIRECTORY
+            // MENU
           </span>
           {navLinks.map((link, idx) => {
             const isActive = location.pathname === link.href;
