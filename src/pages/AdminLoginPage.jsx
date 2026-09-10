@@ -25,7 +25,7 @@ export function AdminLoginPage() {
 
     // Mock biometric / cryptographic verification
     setTimeout(() => {
-      if (passcode.trim().toLowerCase() === 'admin2026' || passcode.trim().toLowerCase() === 'matrix') {
+      if (passcode.trim() === 'vatsal9144ccc') {
         localStorage.setItem('kaien_admin_auth', 'true');
         playSuccess();
         navigate('/admin/dashboard');
@@ -80,7 +80,7 @@ export function AdminLoginPage() {
                   required
                   value={passcode}
                   onChange={(e) => { setPasscode(e.target.value); setError(false); }}
-                  placeholder="DEFAULT KEY: admin2026"
+                  placeholder="Enter authorization key"
                   className="w-full bg-[#050505] border border-[#F5F5F0]/20 px-4 py-3 text-sm text-[#F5F5F0] placeholder-[#8E8E8E]/40 focus:outline-none focus:border-[#E10600] tracking-widest"
                 />
                 <Key className="w-4 h-4 text-[#8E8E8E] absolute right-3.5 top-1/2 -translate-y-1/2" />
