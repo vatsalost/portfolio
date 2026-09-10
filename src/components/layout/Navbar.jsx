@@ -20,33 +20,25 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Animate full-screen takeover menu
+  // Animate menu links and manage body scroll
   useEffect(() => {
-    const overlay = menuOverlayRef.current;
-    const linkItems = linksContainerRef.current?.querySelectorAll('.menu-item');
-    if (!overlay) return;
-
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      const tl = gsap.timeline();
-      tl.to(overlay, {
-        yPercent: 0,
-        duration: 0.6,
-        ease: 'power4.inOut',
-      })
-      .fromTo(linkItems, 
-        { y: 60, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power3.out' },
-        '-=0.2'
-      );
+      const linkItems = linksContainerRef.current?.querySelectorAll('.menu-item');
+      if (linkItems && linkItems.length > 0) {
+        gsap.fromTo(
+          linkItems,
+          { y: 50, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.45, stagger: 0.07, ease: 'power3.out', delay: 0.15 }
+        );
+      }
     } else {
       document.body.style.overflow = '';
-      gsap.to(overlay, {
-        yPercent: -100,
-        duration: 0.5,
-        ease: 'power4.inOut'
-      });
     }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   // Close menu on route change
@@ -54,9 +46,26 @@ export function Navbar() {
     setIsOpen(false);
   }, [location.pathname]);
 
+  // Close menu on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        playClick();
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, playClick]);
+
   const toggleMenu = () => {
     playClick();
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
+  };
+
+  const handleNavClick = () => {
+    playClick();
+    setIsOpen(false);
   };
 
   const navLinks = [
@@ -70,7 +79,7 @@ export function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-[990] transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full z-[1000] transition-all duration-500 ${
           isScrolled
             ? 'py-3.5 bg-[#0A0A0A]/90 backdrop-blur-xl border-b border-[#F5F5F0]/10 shadow-2xl'
             : 'py-6 bg-transparent'
@@ -160,7 +169,9 @@ export function Navbar() {
             {/* Menu Trigger Button */}
             <button
               onClick={toggleMenu}
-              className="p-2 text-[#F5F5F0] hover:text-[#E10600] transition-colors flex items-center gap-2 border border-[#F5F5F0]/15 bg-[#121212] px-3 py-1.5 font-mono text-xs tracking-widest"
+              aria-expanded={isOpen}
+              aria-label="Toggle navigation menu"
+              className="p-2 text-[#F5F5F0] hover:text-[#E10600] transition-colors flex items-center gap-2 border border-[#F5F5F0]/15 bg-[#121212] px-3 py-1.5 font-mono text-xs tracking-widest cursor-pointer"
               data-cursor="menu"
             >
               <span className="hidden sm:inline">MENU</span>
@@ -173,7 +184,14 @@ export function Navbar() {
       {/* Fullscreen Takeover Menu */}
       <div
         ref={menuOverlayRef}
-        className="fixed inset-0 z-[9995] bg-[#0A0A0A] text-[#F5F5F0] flex flex-col justify-between p-8 md:p-16 transform -translate-y-full will-change-transform"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation Menu"
+        className={`fixed inset-0 z-[9995] bg-[#0A0A0A] text-[#F5F5F0] flex flex-col justify-between p-8 md:p-16 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-y-auto ${
+          isOpen
+            ? 'translate-y-0 opacity-100 pointer-events-auto visible'
+            : '-translate-y-full opacity-0 pointer-events-none invisible'
+        }`}
       >
         {/* Overlay Top Bar */}
         <div className="flex items-center justify-between border-b border-[#F5F5F0]/10 pb-6">
@@ -182,7 +200,8 @@ export function Navbar() {
           </div>
           <button
             onClick={toggleMenu}
-            className="p-2 border border-[#F5F5F0]/20 hover:border-[#E10600] hover:text-[#E10600] transition-colors font-mono text-xs flex items-center gap-2"
+            aria-label="Close menu"
+            className="p-2 border border-[#F5F5F0]/20 hover:border-[#E10600] hover:text-[#E10600] transition-colors font-mono text-xs flex items-center gap-2 cursor-pointer"
             data-cursor="close"
           >
             <span>CLOSE</span>
@@ -196,7 +215,7 @@ export function Navbar() {
             <div key={idx} className="menu-item overflow-hidden">
               <Link
                 to={item.href}
-                onClick={toggleMenu}
+                onClick={handleNavClick}
                 onMouseEnter={playHover}
                 className="group flex items-baseline justify-between py-2 border-b border-[#F5F5F0]/5 hover:border-[#E10600] transition-colors"
                 data-cursor="go"
