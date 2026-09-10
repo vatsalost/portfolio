@@ -1,17 +1,18 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { LayoutGrid, List, ArrowUpRight, Search, Filter } from 'lucide-react';
+import { LayoutGrid, List, Layers, ArrowUpRight, Search, Filter } from 'lucide-react';
 import { ProjectCard } from '../components/visuals/ProjectCard';
 import { useProjects } from '../context/ProjectContext';
 import { useAudio } from '../context/AudioContext';
 import { Badge } from '../components/untitled/Badge';
 import { DecryptedText } from '../components/bits/DecryptedText';
+import { ScrollStack, ScrollStackItem } from '../components/bits/ScrollStack';
 
 export function WorkPage() {
   const { projects } = useProjects();
   const { playClick, playHover } = useAudio();
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'index'
+  const [viewMode, setViewMode] = useState('stack'); // 'stack' | 'grid' | 'index'
   const [searchQuery, setSearchQuery] = useState('');
 
   // Dynamically derive unique categories from the projects dataset
@@ -89,20 +90,31 @@ export function WorkPage() {
 
           <div className="flex items-center border border-[#F5F5F0]/10 bg-[#121212]">
             <button
+              onClick={() => { playClick(); setViewMode('stack'); }}
+              className={`p-2 transition-colors flex items-center gap-1.5 px-2.5 ${viewMode === 'stack' ? 'bg-[#E10600] text-white font-bold' : 'text-[#8E8E8E] hover:text-white'}`}
+              title="ReactBits Scroll Stack View"
+              data-cursor="click"
+            >
+              <Layers className="w-4 h-4" />
+              <span className="text-[10px] hidden sm:inline tracking-wider">STACK</span>
+            </button>
+            <button
               onClick={() => { playClick(); setViewMode('grid'); }}
-              className={`p-2 transition-colors ${viewMode === 'grid' ? 'bg-[#E10600] text-white' : 'text-[#8E8E8E] hover:text-white'}`}
+              className={`p-2 transition-colors flex items-center gap-1.5 px-2.5 ${viewMode === 'grid' ? 'bg-[#E10600] text-white font-bold' : 'text-[#8E8E8E] hover:text-white'}`}
               title="Cards Grid View"
               data-cursor="click"
             >
               <LayoutGrid className="w-4 h-4" />
+              <span className="text-[10px] hidden sm:inline tracking-wider">GRID</span>
             </button>
             <button
               onClick={() => { playClick(); setViewMode('index'); }}
-              className={`p-2 transition-colors ${viewMode === 'index' ? 'bg-[#E10600] text-white' : 'text-[#8E8E8E] hover:text-white'}`}
+              className={`p-2 transition-colors flex items-center gap-1.5 px-2.5 ${viewMode === 'index' ? 'bg-[#E10600] text-white font-bold' : 'text-[#8E8E8E] hover:text-white'}`}
               title="Brutalist Index Table View"
               data-cursor="click"
             >
               <List className="w-4 h-4" />
+              <span className="text-[10px] hidden sm:inline tracking-wider">INDEX</span>
             </button>
           </div>
         </div>
@@ -120,6 +132,28 @@ export function WorkPage() {
           >
             RESET ALL FILTERS
           </button>
+        </div>
+      ) : viewMode === 'stack' ? (
+        /* ScrollStack Mode */
+        <div className="py-4">
+          <ScrollStack
+            itemDistance={45}
+            itemScale={0.035}
+            itemStackDistance={28}
+            stackPosition="14%"
+            baseScale={0.92}
+            useWindowScroll={true}
+          >
+            {filteredProjects.map((project, idx) => (
+              <ScrollStackItem key={project.id}>
+                <ProjectCard
+                  project={project}
+                  index={idx}
+                  layout="stack"
+                />
+              </ScrollStackItem>
+            ))}
+          </ScrollStack>
         </div>
       ) : viewMode === 'grid' ? (
         /* Grid Mode */

@@ -1,0 +1,58 @@
+.scroll-stack-scroller {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.scroll-stack-inner {
+  position: relative;
+  width: 100%;
+}
+
+.scroll-stack-card-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 3.5rem;
+}
+
+.scroll-stack-card {
+  transform-origin: top center;
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  border-radius: 16px;
+  background: #101010;
+  border: 1px solid rgba(245, 245, 240, 0.1);
+  box-shadow:
+    0 15px 35px -10px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(245, 245, 240, 0.05);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+}
+
+.scroll-stack-card:hover {
+  border-color: rgba(225, 6, 0, 0.4);
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.9),
+    0 0 30px rgba(225, 6, 0, 0.18);
+}
+
+.scroll-stack-end {
+  width: 100%;
+  height: 2px;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .scroll-stack-card-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  .scroll-stack-card {
+    border-radius: 12px;
+  }
+}

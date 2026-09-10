@@ -16,6 +16,7 @@ import { ShinyText } from '../components/bits/ShinyText';
 import { Badge } from '../components/untitled/Badge';
 import { SpotlightCard } from '../components/bits/SpotlightCard';
 import { BorderGlow } from '../components/bits/BorderGlow';
+import { ScrollStack, ScrollStackItem } from '../components/bits/ScrollStack';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -432,17 +433,25 @@ export function HomePage() {
           </Link>
         </div>
 
-        {/* Flagship Project Cards */}
-        <div className="space-y-12">
+        {/* Flagship Project Cards Stack with ReactBits ScrollStack */}
+        <ScrollStack
+          itemDistance={45}
+          itemScale={0.035}
+          itemStackDistance={28}
+          stackPosition="14%"
+          baseScale={0.92}
+          useWindowScroll={true}
+        >
           {featuredProjects.map((project, idx) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={idx}
-              layout="featured"
-            />
+            <ScrollStackItem key={project.id}>
+              <ProjectCard
+                project={project}
+                index={idx}
+                layout="stack"
+              />
+            </ScrollStackItem>
           ))}
-        </div>
+        </ScrollStack>
 
         <div className="mt-16 text-center">
           <MagneticButton href="/work" variant="outline">
