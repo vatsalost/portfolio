@@ -56,7 +56,8 @@ body.custom-cursor-active *::after {
 
 /* Typography Utilities */
 .font-display {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.025em;
 }
 
 .font-sans {
