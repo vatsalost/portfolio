@@ -435,12 +435,11 @@ export function HomePage() {
 
         {/* Flagship Project Cards Stack with ReactBits ScrollStack */}
         <ScrollStack
-          itemDistance={45}
-          itemScale={0.035}
-          itemStackDistance={28}
-          stackPosition="14%"
-          baseScale={0.92}
-          useWindowScroll={true}
+          topOffset={96}
+          itemStackDistance={34}
+          itemScale={0.045}
+          baseScale={0.88}
+          scrollRunway={40}
         >
           {featuredProjects.map((project, idx) => (
             <ScrollStackItem key={project.id}>

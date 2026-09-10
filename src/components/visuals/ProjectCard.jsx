@@ -12,97 +12,116 @@ export function ProjectCard({ project, index, layout = 'card' }) {
   // Stack Layout (Used in ScrollStack for pinned 3D stacking)
   if (layout === 'stack') {
     return (
-      <div className="p-8 md:p-12 bg-gradient-to-br from-[#141414] via-[#101010] to-[#0A0A0A] border border-[#F5F5F0]/10 hover:border-[#E10600]/40 transition-colors">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Col 1: Index, Tag & Meta */}
-          <div className="lg:col-span-3 flex flex-col justify-between space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#E10600] animate-pulse" />
-              <span className="font-mono text-xs tracking-widest text-[#E10600] font-bold">
-                [ {formattedIndex} // FEATURED BUILD ]
-              </span>
-            </div>
-            <div>
-              <div className="mb-2">
-                <Badge variant={index === 0 ? "crimson" : "default"} size="sm">
-                  {project.category}
-                </Badge>
-              </div>
-              <p className="font-mono text-xs text-[#8E8E8E]">
-                {project.year} // {project.role || "Developer"}
-              </p>
-            </div>
-            {project.technicalHighlight && (
-              <div>
-                <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#F5F5F0] bg-[#161616] px-3 py-1.5 border border-[#F5F5F0]/10">
-                  <Cpu className="w-3.5 h-3.5 text-[#E10600]" />
-                  <span>{project.technicalHighlight}</span>
-                </span>
-              </div>
-            )}
+      <div 
+        className="group/card bg-[#111111] border border-[#F5F5F0]/12 hover:border-[#E10600]/50 transition-all duration-300 rounded-2xl overflow-hidden shadow-2xl"
+        onMouseEnter={playHover}
+      >
+        {/* Persistent Stack Header Bar (stays visible as top tab when subsequent cards stack) */}
+        <div className="flex items-center justify-between px-6 py-2.5 bg-[#161616] border-b border-[#F5F5F0]/10 font-mono text-xs select-none">
+          <div className="flex items-center gap-3">
+            <span className="w-2 h-2 rounded-full bg-[#E10600] animate-pulse" />
+            <span className="font-bold text-[#F5F5F0] tracking-wider group-hover/card:text-[#E10600] transition-colors">
+              [ {formattedIndex} // {project.title.toUpperCase()} ]
+            </span>
+            <span className="hidden sm:inline-block text-[11px] text-[#8E8E8E]">
+              • {project.category}
+            </span>
           </div>
+          <div className="flex items-center gap-3 text-[11px] text-[#8E8E8E]">
+            <span className="hidden md:inline">{project.year}</span>
+            <span className="px-2 py-0.5 bg-[#1F1F1F] text-[#F5F5F0] border border-[#F5F5F0]/10 text-[10px] font-bold">
+              {project.role || "BUILD"}
+            </span>
+          </div>
+        </div>
 
-          {/* Col 2: Title, Overview, Stack, Links */}
-          <div className="lg:col-span-5 space-y-4">
-            <Link
-              to={`/project/${project.id}`}
-              onClick={playClick}
-              className="block group-hover:text-[#E10600] transition-colors"
-            >
-              <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[#F5F5F0] group-hover:text-[#E10600] transition-colors leading-tight">
-                {project.title}
-              </h3>
-            </Link>
-            <p className="text-sm text-[#A3A39B] font-sans font-light leading-relaxed">
-              {project.tagline || project.overview}
-            </p>
-            <div className="flex flex-wrap gap-1.5 pt-1 font-mono text-xs text-[#8E8E8E]">
-              {project.stack?.map((tech, i) => (
-                <span key={i} className="px-2 py-0.5 bg-[#181818] border border-[#F5F5F0]/5 text-[11px] text-[#A3A39B]">
-                  {tech}
-                </span>
-              ))}
+        {/* Main Card Body */}
+        <div className="p-6 md:p-10 bg-gradient-to-br from-[#131313] via-[#0F0F0F] to-[#0A0A0A]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Col 1: Index, Tag & Meta */}
+            <div className="lg:col-span-3 flex flex-col justify-between space-y-4">
+              <div>
+                <div className="mb-2">
+                  <Badge variant={index === 0 ? "crimson" : "default"} size="sm">
+                    {project.category}
+                  </Badge>
+                </div>
+                <p className="font-mono text-xs text-[#8E8E8E]">
+                  {project.year} // {project.role || "Developer"}
+                </p>
+              </div>
+              {project.technicalHighlight && (
+                <div>
+                  <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#F5F5F0] bg-[#161616] px-3 py-1.5 border border-[#F5F5F0]/10">
+                    <Cpu className="w-3.5 h-3.5 text-[#E10600]" />
+                    <span>{project.technicalHighlight}</span>
+                  </span>
+                </div>
+              )}
             </div>
-            <div className="pt-2 flex items-center gap-4 font-mono text-xs">
+
+            {/* Col 2: Title, Overview, Stack, Links */}
+            <div className="lg:col-span-5 space-y-4">
               <Link
                 to={`/project/${project.id}`}
                 onClick={playClick}
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#E10600] text-white font-bold tracking-wider hover:bg-[#B00500] transition-colors"
-                data-cursor="explore"
+                className="block group-hover/card:text-[#E10600] transition-colors"
               >
-                <span>EXPLORE CASE STUDY</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[#F5F5F0] group-hover/card:text-[#E10600] transition-colors leading-tight">
+                  {project.title}
+                </h3>
               </Link>
-              {project.githubUrl && (
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1 px-3 py-2 bg-[#161616] text-[#8E8E8E] hover:text-[#F5F5F0] border border-[#F5F5F0]/10 transition-colors"
+              <p className="text-sm text-[#A3A39B] font-sans font-light leading-relaxed">
+                {project.tagline || project.overview}
+              </p>
+              <div className="flex flex-wrap gap-1.5 pt-1 font-mono text-xs text-[#8E8E8E]">
+                {project.stack?.map((tech, i) => (
+                  <span key={i} className="px-2 py-0.5 bg-[#181818] border border-[#F5F5F0]/5 text-[11px] text-[#A3A39B]">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <div className="pt-2 flex items-center gap-4 font-mono text-xs">
+                <Link
+                  to={`/project/${project.id}`}
+                  onClick={playClick}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#E10600] text-white font-bold tracking-wider hover:bg-[#B00500] transition-colors"
+                  data-cursor="explore"
                 >
-                  <Github className="w-3.5 h-3.5" />
-                  <span>SRC</span>
-                </a>
-              )}
+                  <span>EXPLORE CASE STUDY</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 px-3 py-2 bg-[#161616] text-[#8E8E8E] hover:text-[#F5F5F0] border border-[#F5F5F0]/10 transition-colors"
+                  >
+                    <Github className="w-3.5 h-3.5" />
+                    <span>SRC</span>
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
 
-          {/* Col 3: Visual Canvas Preview */}
-          <div className="lg:col-span-4">
-            <Link
-              to={`/project/${project.id}`}
-              onClick={playClick}
-              className="relative block aspect-[16/10] overflow-hidden bg-[#161616] border border-[#F5F5F0]/10 group-hover:border-[#E10600] transition-colors"
-              data-cursor="view"
-            >
-              <img
-                src={project.thumbnail}
-                alt={project.title}
-                className="w-full h-full object-cover duotone-hover group-hover:scale-105 transition-all duration-700 ease-out"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-[#0A0A0A]/30 group-hover:bg-[#E10600]/10 transition-colors duration-500" />
-            </Link>
+            {/* Col 3: Visual Canvas Preview */}
+            <div className="lg:col-span-4">
+              <Link
+                to={`/project/${project.id}`}
+                onClick={playClick}
+                className="relative block aspect-[16/10] overflow-hidden bg-[#161616] border border-[#F5F5F0]/10 group-hover/card:border-[#E10600] transition-colors rounded-lg"
+                data-cursor="view"
+              >
+                <img
+                  src={project.thumbnail}
+                  alt={project.title}
+                  className="w-full h-full object-cover duotone-hover group-hover/card:scale-105 transition-all duration-700 ease-out"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-[#0A0A0A]/30 group-hover/card:bg-[#E10600]/10 transition-colors duration-500" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

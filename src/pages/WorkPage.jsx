@@ -137,12 +137,11 @@ export function WorkPage() {
         /* ScrollStack Mode */
         <div className="py-4">
           <ScrollStack
-            itemDistance={45}
-            itemScale={0.035}
-            itemStackDistance={28}
-            stackPosition="14%"
-            baseScale={0.92}
-            useWindowScroll={true}
+            topOffset={96}
+            itemStackDistance={34}
+            itemScale={0.04}
+            baseScale={0.86}
+            scrollRunway={36}
           >
             {filteredProjects.map((project, idx) => (
               <ScrollStackItem key={project.id}>
