@@ -52,7 +52,7 @@ export function ProjectCard({ project, index, layout = 'card' }) {
                     </Badge>
                   </div>
                   <p className="font-mono text-xs text-[#8E8E8E]">
-                    {project.year} // {project.role || "Developer"}
+                    {project.year} · {project.role || "Personal Project"}
                   </p>
                 </div>
                 <div>
@@ -91,7 +91,7 @@ export function ProjectCard({ project, index, layout = 'card' }) {
                     className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#E10600] text-white font-bold tracking-wider hover:bg-[#B00500] transition-colors"
                     data-cursor="explore"
                   >
-                    <span>EXPLORE CASE STUDY</span>
+                    <span>CASE STUDY</span>
                     <ArrowUpRight className="w-4 h-4" />
                   </Link>
                   {project.githubUrl && (
@@ -147,15 +147,15 @@ export function ProjectCard({ project, index, layout = 'card' }) {
           <div className="flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-[#8E8E8E] mb-6">
             <div className="flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-[#E10600] animate-pulse" />
-              <span className="text-[#E10600] font-bold tracking-widest">[ 01 // DOMINANT BUILD ]</span>
+              <span className="text-[#E10600] font-bold tracking-widest">[ 01 // PROJECT ]</span>
               <span className="px-2 py-0.5 bg-[#171717] border border-[#F2F0EA]/10 text-[#F2F0EA] text-[10px]">
                 {project.category}
               </span>
             </div>
             <div className="flex items-center gap-3">
               <span>{project.year}</span>
-              <span>//</span>
-              <span>{project.role || "Developer"}</span>
+              <span>·</span>
+              <span>{project.role || "Personal Project"}</span>
             </div>
           </div>
 
@@ -223,7 +223,7 @@ export function ProjectCard({ project, index, layout = 'card' }) {
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#E10600] text-white font-bold tracking-wider hover:bg-[#B00500] transition-colors"
                   data-cursor="explore"
                 >
-                  <span>EXPLORE CASE STUDY</span>
+                  <span>CASE STUDY</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </Link>
                 {project.githubUrl && (
@@ -260,7 +260,7 @@ export function ProjectCard({ project, index, layout = 'card' }) {
             {/* Col 1: Index & Category */}
             <div className="lg:col-span-3 flex flex-col justify-between space-y-3">
               <span className="font-mono text-xs tracking-widest text-[#8E8E8E] group-hover:text-[#E10600] transition-colors">
-                [ {formattedIndex} // FEATURED BUILD ]
+                [ {formattedIndex} // PROJECT ]
               </span>
               <div>
                 <div className="mb-2">
@@ -269,7 +269,7 @@ export function ProjectCard({ project, index, layout = 'card' }) {
                   </Badge>
                 </div>
                 <p className="font-mono text-xs text-[#8E8E8E] leading-relaxed">
-                  {project.year} // {project.role || "Developer"}
+                  {project.year} · {project.role || "Personal Project"}
                 </p>
               </div>
 
@@ -321,7 +321,7 @@ export function ProjectCard({ project, index, layout = 'card' }) {
                   className="inline-flex items-center gap-1.5 text-[#F5F5F0] hover:text-[#E10600] font-bold tracking-wider transition-colors"
                   data-cursor="explore"
                 >
-                  <span>EXPLORE CASE STUDY</span>
+                  <span>CASE STUDY</span>
                   <ArrowUpRight className="w-4 h-4 text-[#E10600]" />
                 </Link>
                 {project.githubUrl && (

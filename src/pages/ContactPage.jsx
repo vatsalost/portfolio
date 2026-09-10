@@ -198,7 +198,7 @@ export function ContactPage() {
               <span>// DIRECT INQUIRY</span>
             </div>
             <h2 className="font-display font-black text-2xl sm:text-3xl text-[#F2F0EA] uppercase tracking-tight">
-              SEND A DIRECT MESSAGE
+              SEND ME A MESSAGE
             </h2>
             <p className="font-sans text-xs text-[#8E8E8E] mt-1 leading-relaxed">
               Have a project idea, hackathon invite, or just want to connect? Draft a message below to open in your mail client.
@@ -291,7 +291,7 @@ export function ContactPage() {
               </div>
 
               <div className="pt-2">
-                <Magnet strength={0.2} maxDistance={70}>
+                <Magnet strength={0.35} reach={40}>
                   <button
                     type="submit"
                     onClick={playClick}
@@ -330,7 +330,7 @@ export function ContactPage() {
               </p>
 
               <div className="pt-1">
-                <Magnet strength={0.2} maxDistance={70}>
+                <Magnet strength={0.35} reach={40}>
                   <button
                     type="button"
                     onClick={handleFocusForm}

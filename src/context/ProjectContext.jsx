@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { INITIAL_PROJECTS } from '../data/initialProjects';
+import { INITIAL_PROJECTS, INITIAL_EXPERIMENTS } from '../data/initialProjects';
 
 const ProjectContext = createContext();
 
-const STORAGE_KEY = 'vatsal_portfolio_projects_v4';
+const STORAGE_KEY = 'vatsal_portfolio_projects_v5';
 
 export function ProjectProvider({ children }) {
   const [projects, setProjects] = useState(() => {
@@ -81,6 +81,7 @@ export function ProjectProvider({ children }) {
   return (
     <ProjectContext.Provider value={{
       projects,
+      experiments: INITIAL_EXPERIMENTS,
       addProject,
       updateProject,
       deleteProject,

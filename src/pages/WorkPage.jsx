@@ -35,10 +35,6 @@ export function WorkPage() {
           <span className="font-mono text-xs text-[#E10600] tracking-widest uppercase">
             // SELECTED WORK
           </span>
-          <span className="h-px w-12 bg-[#F2F0EA]/10" />
-          <span className="font-mono text-[10px] text-[#8E8E8E] uppercase tracking-widest hidden sm:inline">
-            [ 06 BUILDS CATALOGUED ]
-          </span>
         </div>
         <h1 className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight uppercase text-[#F2F0EA] leading-none">
           THINGS I'VE BUILT<span className="text-[#E10600]">.</span>
@@ -136,7 +132,7 @@ export function WorkPage() {
                   <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-[#8E8E8E] mb-6">
                     <div className="flex items-center gap-2.5">
                       <span className="w-2 h-2 rounded-full bg-[#E10600] animate-pulse" />
-                      <span className="text-[#E10600] font-bold tracking-widest">[ 01 // FEATURED BUILD ]</span>
+                      <span className="text-[#E10600] font-bold tracking-widest">[ 01 // PROJECT ]</span>
                       <span className="px-2 py-0.5 bg-[#181818] border border-[#F2F0EA]/10 text-[#F2F0EA] text-[10px] uppercase font-semibold">
                         {filteredProjects[0].category}
                       </span>
@@ -637,6 +633,86 @@ export function WorkPage() {
         </div>
       )}
 
+      {/* 4.5 Small Experiments & Prototypes (GRID Mode) */}
+      {viewMode === 'grid' && (
+        <section aria-label="Small Things & Experiments" className="mt-20 pt-16 border-t border-[#F2F0EA]/10">
+          <div className="mb-8">
+            <span className="font-mono text-xs text-[#E10600] uppercase tracking-widest block mb-2">// EXPERIMENTS</span>
+            <h2 className="font-display font-black text-2xl sm:text-4xl text-[#F2F0EA] uppercase tracking-tight">
+              SMALL THINGS & PROTOTYPES<span className="text-[#E10600]">.</span>
+            </h2>
+            <p className="mt-2 text-sm text-[#8E8E8E] font-sans font-light max-w-xl">
+              Smaller experiments, weekend scripts, and things I built to test concepts.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              {
+                title: "C++ Memory Allocator Toy",
+                category: "Systems",
+                year: "2024",
+                desc: "A simple bump allocator and free-list to understand how malloc actually works under the hood.",
+                stack: ["C++17", "CMake", "GDB"],
+                github: "https://github.com/vatsalost/allocator-toy"
+              },
+              {
+                title: "Terminal Matrix Rain in C",
+                category: "CLI",
+                year: "2024",
+                desc: "Terminal digital rain using ANSI escape sequences and POSIX termios in pure C.",
+                stack: ["C", "POSIX", "Terminal ANSI"],
+                github: "https://github.com/vatsalost/c-matrix-rain"
+              },
+              {
+                title: "Audio FFT Spectrum",
+                category: "Audio",
+                year: "2024",
+                desc: "Web Audio API experiment testing AnalyserNode frequency bins and harmonic peaks.",
+                stack: ["JavaScript", "Web Audio API", "Canvas"],
+                github: "https://github.com/vatsalost/audio-fft-sandbox"
+              },
+              {
+                title: "GLSL Raymarching Sphere",
+                category: "Graphics",
+                year: "2025",
+                desc: "First attempt at writing an SDF raymarched sphere with soft shadows in a WebGL fragment shader.",
+                stack: ["GLSL", "WebGL", "Math"],
+                github: "https://github.com/vatsalost/glsl-sdf-sphere"
+              }
+            ].map((exp, idx) => (
+              <div key={idx} className="p-5 bg-[#111111] border border-[#F2F0EA]/10 hover:border-[#E10600]/40 transition-colors rounded-md space-y-3">
+                <div className="flex items-center justify-between font-mono text-xs text-[#8E8E8E]">
+                  <span className="px-2 py-0.5 bg-[#161616] border border-[#F2F0EA]/10 text-[10px] text-[#F2F0EA] uppercase font-semibold">
+                    {exp.category}
+                  </span>
+                  <span>{exp.year}</span>
+                </div>
+                <h3 className="font-display font-bold text-lg text-[#F2F0EA]">
+                  {exp.title}
+                </h3>
+                <p className="text-xs text-[#A3A39B] font-sans font-light leading-relaxed">
+                  {exp.desc}
+                </p>
+                <div className="flex items-center justify-between pt-2 border-t border-[#F2F0EA]/5 font-mono text-[11px]">
+                  <span className="text-[#8E8E8E]">{exp.stack.join(' · ')}</span>
+                  <a
+                    href={exp.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={playClick}
+                    className="text-[#8E8E8E] hover:text-[#F2F0EA] inline-flex items-center gap-1 transition-colors"
+                  >
+                    <span>SRC</span>
+                    <ArrowUpRight className="w-3 h-3 text-[#E10600]" />
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* 5. Work Index / List View (LIST Mode) using AnimatedList */}
       {viewMode === 'list' && filteredProjects.length > 0 && (
         <section aria-label="Technical Project Directory">
@@ -655,16 +731,16 @@ export function WorkPage() {
         >
           <div className="flex items-center justify-center gap-2 font-mono text-xs text-[#E10600] tracking-widest uppercase">
             <span className="w-1.5 h-1.5 rounded-full bg-[#E10600]" />
-            <span>// NEXT STEP</span>
+            <span>// CONNECT</span>
           </div>
           <h2 id="cta-heading" className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-[#F2F0EA] uppercase tracking-tight">
-            HAVE AN IDEA<span className="text-[#E10600]">?</span>
+            LET'S BUILD SOMETHING<span className="text-[#E10600]">.</span>
           </h2>
           <p className="text-base sm:text-lg font-light text-[#A3A39B] max-w-xl mx-auto font-sans leading-relaxed">
-            I'm open to hackathons, project collaborations, and interesting engineering challenges. If you're looking for a teammate or want to build something together, get in touch.
+            I'm open to hackathons, project collaborations, and interesting software ideas. If you have an idea or want to team up, reach out.
           </p>
           <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
-            <Magnet strength={0.22} maxDistance={75}>
+            <Magnet strength={0.35} reach={40}>
               <Link
                 to="/contact"
                 onClick={playClick}
@@ -674,7 +750,7 @@ export function WorkPage() {
                 <ArrowUpRight className="w-4 h-4" />
               </Link>
             </Magnet>
-            <Magnet strength={0.22} maxDistance={75}>
+            <Magnet strength={0.35} reach={40}>
               <a
                 href="https://github.com/vatsalost"
                 target="_blank"
@@ -683,7 +759,7 @@ export function WorkPage() {
                 className="inline-flex items-center gap-2 px-8 py-4 bg-[#171717] text-[#F2F0EA] border border-[#F2F0EA]/15 font-mono text-xs tracking-wider uppercase font-bold hover:border-[#E10600] hover:text-[#E10600] transition-colors rounded-sm"
               >
                 <Github className="w-4 h-4" />
-                <span>GITHUB PROFILE ↗</span>
+                <span>GITHUB ↗</span>
               </a>
             </Magnet>
           </div>

@@ -7,7 +7,7 @@ export function Footer() {
 
   const links = [
     { label: 'GITHUB', href: 'https://github.com/vatsalost' },
-    { label: 'LINKEDIN', href: 'https://linkedin.com' },
+    { label: 'LINKEDIN', href: 'https://linkedin.com/in/vatsalost' },
     { label: 'EMAIL', href: 'mailto:vatslchaudhary@gmail.com' }
   ];
 
@@ -33,7 +33,7 @@ export function Footer() {
           {/* Links Block */}
           <div className="flex flex-col md:items-end space-y-4 font-mono text-xs">
             <span className="text-[11px] text-[#8E8E8E] uppercase tracking-widest block md:text-right">
-              // DIRECT CHANNELS
+              // CONNECT
             </span>
             <div className="flex flex-wrap items-center gap-6">
               {links.map((link) => (
@@ -57,12 +57,12 @@ export function Footer() {
         {/* Bottom Colophon Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono text-[11px] text-[#666666]">
           <div className="flex items-center gap-4">
-            <span>DESIGNED & BUILT WITH PRECISION</span>
+            <span>DESIGNED & BUILT BY VATSAL CHAUDHARY</span>
             <span>•</span>
-            <span>NO TEMPLATES</span>
+            <span>PUNE, INDIA</span>
           </div>
           <div className="tracking-widest">
-            © 2026 VATSAL CHAUDHARY // ALL RIGHTS RESERVED
+            © 2026 VATSAL CHAUDHARY
           </div>
         </div>
       </div>
