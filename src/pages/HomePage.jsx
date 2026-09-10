@@ -12,6 +12,7 @@ import { MagneticButton } from '../components/ui/MagneticButton';
 import { useProjects } from '../context/ProjectContext';
 import { useAudio } from '../context/AudioContext';
 import { Badge } from '../components/untitled/Badge';
+import { BorderGlow } from '../components/bits/BorderGlow';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -280,7 +281,13 @@ export function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Languages */}
-          <div className="p-8 bg-[#111111] border border-[#F2F0EA]/10 rounded-lg space-y-6">
+          <BorderGlow
+            borderRadius={16}
+            glowRadius={36}
+            backgroundColor="#111111"
+            className="p-8 space-y-6"
+            onMouseEnter={playHover}
+          >
             <div className="flex items-center justify-between border-b border-[#F2F0EA]/10 pb-4">
               <div className="flex items-center gap-3">
                 <Terminal className="w-5 h-5 text-[#E10600]" />
@@ -310,10 +317,16 @@ export function HomePage() {
                 </div>
               ))}
             </div>
-          </div>
+          </BorderGlow>
 
           {/* Web Technologies */}
-          <div className="p-8 bg-[#111111] border border-[#F2F0EA]/10 rounded-lg space-y-6">
+          <BorderGlow
+            borderRadius={16}
+            glowRadius={36}
+            backgroundColor="#111111"
+            className="p-8 space-y-6"
+            onMouseEnter={playHover}
+          >
             <div className="flex items-center justify-between border-b border-[#F2F0EA]/10 pb-4">
               <div className="flex items-center gap-3">
                 <Layers className="w-5 h-5 text-[#E10600]" />
@@ -342,7 +355,7 @@ export function HomePage() {
                 </div>
               ))}
             </div>
-          </div>
+          </BorderGlow>
         </div>
 
         <div className="mt-4 p-4 bg-[#0E0E0E] border border-[#F2F0EA]/5 font-mono text-[11px] text-[#8E8E8E] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -353,7 +366,13 @@ export function HomePage() {
 
       {/* 6. HACKATHONS DEDICATED SECTION */}
       <section className="py-16 md:py-24 px-6 md:px-12 max-w-7xl mx-auto border-t border-[#F2F0EA]/10">
-        <div className="p-8 md:p-14 bg-[#111111] border border-[#F2F0EA]/15 rounded-xl">
+        <BorderGlow
+          borderRadius={20}
+          glowRadius={38}
+          backgroundColor="#111111"
+          className="p-8 md:p-14"
+          onMouseEnter={playHover}
+        >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-8 space-y-6">
               <div className="flex items-center gap-2 text-[#E10600] font-mono text-xs font-bold uppercase tracking-widest">
@@ -409,7 +428,7 @@ export function HomePage() {
               </Link>
             </div>
           </div>
-        </div>
+        </BorderGlow>
       </section>
 
       {/* 7. "NOW" SECTION */}
@@ -423,68 +442,82 @@ export function HomePage() {
           </h3>
         </div>
 
-        <div className="p-6 md:p-8 bg-[#111111] border border-[#F2F0EA]/10 rounded-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs">
-          {/* Studying */}
-          <div className="space-y-2 border-b sm:border-b-0 sm:border-r border-[#F2F0EA]/10 pb-4 sm:pb-0 sm:pr-4">
-            <div className="flex items-center gap-2 text-[#E10600] font-bold">
-              <BookOpen className="w-3.5 h-3.5" />
-              <span>CURRENTLY STUDYING</span>
+        <BorderGlow
+          borderRadius={16}
+          glowRadius={36}
+          backgroundColor="#111111"
+          className="p-6 md:p-8"
+          onMouseEnter={playHover}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs">
+            {/* Studying */}
+            <div className="space-y-2 border-b sm:border-b-0 sm:border-r border-[#F2F0EA]/10 pb-4 sm:pb-0 sm:pr-4">
+              <div className="flex items-center gap-2 text-[#E10600] font-bold">
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>CURRENTLY STUDYING</span>
+              </div>
+              <p className="text-sm font-sans font-semibold text-[#F2F0EA]">
+                B.Tech Computer Science & Engineering
+              </p>
+              <span className="text-[11px] text-[#8E8E8E] block">
+                Symbiosis Institute of Technology, Pune
+              </span>
             </div>
-            <p className="text-sm font-sans font-semibold text-[#F2F0EA]">
-              B.Tech Computer Science & Engineering
-            </p>
-            <span className="text-[11px] text-[#8E8E8E] block">
-              Symbiosis Institute of Technology, Pune
-            </span>
-          </div>
 
-          {/* Building */}
-          <div className="space-y-2 border-b lg:border-b-0 lg:border-r border-[#F2F0EA]/10 pb-4 sm:pb-0 sm:pr-4">
-            <div className="flex items-center gap-2 text-[#F2F0EA] font-bold">
-              <Code2 className="w-3.5 h-3.5 text-[#E10600]" />
-              <span>CURRENTLY BUILDING</span>
+            {/* Building */}
+            <div className="space-y-2 border-b lg:border-b-0 lg:border-r border-[#F2F0EA]/10 pb-4 sm:pb-0 sm:pr-4">
+              <div className="flex items-center gap-2 text-[#F2F0EA] font-bold">
+                <Code2 className="w-3.5 h-3.5 text-[#E10600]" />
+                <span>CURRENTLY BUILDING</span>
+              </div>
+              <p className="text-sm font-sans font-normal text-[#F2F0EA]">
+                Projects + experiments
+              </p>
+              <span className="text-[11px] text-[#8E8E8E] block">
+                Software tools, algorithms, and web applications.
+              </span>
             </div>
-            <p className="text-sm font-sans font-normal text-[#F2F0EA]">
-              Projects + experiments
-            </p>
-            <span className="text-[11px] text-[#8E8E8E] block">
-              Software tools, algorithms, and web applications.
-            </span>
-          </div>
 
-          {/* Learning */}
-          <div className="space-y-2 border-b sm:border-b-0 sm:border-r border-[#F2F0EA]/10 pb-4 sm:pb-0 sm:pr-4">
-            <div className="flex items-center gap-2 text-[#F2F0EA] font-bold">
-              <Compass className="w-3.5 h-3.5 text-[#E10600]" />
-              <span>CURRENTLY LEARNING</span>
+            {/* Learning */}
+            <div className="space-y-2 border-b sm:border-b-0 sm:border-r border-[#F2F0EA]/10 pb-4 sm:pb-0 sm:pr-4">
+              <div className="flex items-center gap-2 text-[#F2F0EA] font-bold">
+                <Compass className="w-3.5 h-3.5 text-[#E10600]" />
+                <span>CURRENTLY LEARNING</span>
+              </div>
+              <p className="text-sm font-sans font-normal text-[#F2F0EA]">
+                Programming through hands-on work
+              </p>
+              <span className="text-[11px] text-[#8E8E8E] block">
+                Tackling problems that challenge and teach me.
+              </span>
             </div>
-            <p className="text-sm font-sans font-normal text-[#F2F0EA]">
-              Programming through hands-on work
-            </p>
-            <span className="text-[11px] text-[#8E8E8E] block">
-              Tackling problems that challenge and teach me.
-            </span>
-          </div>
 
-          {/* Open to */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-[#E10600] font-bold">
-              <Zap className="w-3.5 h-3.5 text-[#E10600]" />
-              <span>OPEN TO</span>
+            {/* Open to */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-[#E10600] font-bold">
+                <Zap className="w-3.5 h-3.5 text-[#E10600]" />
+                <span>OPEN TO</span>
+              </div>
+              <p className="text-sm font-sans font-semibold text-[#F2F0EA]">
+                Hackathons · Collaborations · Interesting ideas
+              </p>
+              <span className="text-[11px] text-[#8E8E8E] block">
+                Looking for teammates and interesting challenges.
+              </span>
             </div>
-            <p className="text-sm font-sans font-semibold text-[#F2F0EA]">
-              Hackathons · Collaborations · Interesting ideas
-            </p>
-            <span className="text-[11px] text-[#8E8E8E] block">
-              Looking for teammates and interesting challenges.
-            </span>
           </div>
-        </div>
+        </BorderGlow>
       </section>
 
       {/* 8. CONTACT CALLOUT */}
       <section className="py-20 md:py-28 px-6 md:px-12 max-w-7xl mx-auto border-t border-[#F2F0EA]/10">
-        <div className="p-8 md:p-16 bg-[#111111] border border-[#F2F0EA]/15 rounded-xl text-center space-y-6">
+        <BorderGlow
+          borderRadius={20}
+          glowRadius={44}
+          backgroundColor="#111111"
+          className="p-8 md:p-16 text-center space-y-6"
+          onMouseEnter={playHover}
+        >
           <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
             // CONNECT
           </span>
@@ -509,7 +542,7 @@ export function HomePage() {
               <span>GITHUB ↗</span>
             </a>
           </div>
-        </div>
+        </BorderGlow>
       </section>
     </div>
   );

@@ -64,16 +64,18 @@ export function BorderGlow({
   children,
   className = '',
   style,
-  edgeSensitivity = 25,
+  edgeSensitivity = 0,
   glowColor = '0 100 50', // Crimson red
   backgroundColor = '#101010',
   borderRadius = 16,
-  glowRadius = 30,
+  glowRadius = 32,
   glowIntensity = 1.0,
-  coneSpread = 25,
+  coneSpread = 28,
   animated = false,
   colors = ['#E10600', '#FF3333', '#8B0000'],
   fillOpacity = 0.35,
+  onMouseEnter,
+  onMouseLeave,
   ...props
 }) {
   const cardRef = useRef(null);
@@ -105,7 +107,7 @@ export function BorderGlow({
     return degrees;
   }, [getCenterOfElement]);
 
-  const handlePointerMove = useCallback((e) => {
+  const updateCardPosition = useCallback((e) => {
     const card = cardRef.current;
     if (!card) return;
 
@@ -119,6 +121,19 @@ export function BorderGlow({
     card.style.setProperty('--edge-proximity', `${(edge * 100).toFixed(3)}`);
     card.style.setProperty('--cursor-angle', `${angle.toFixed(3)}deg`);
   }, [getEdgeProximity, getCursorAngle]);
+
+  const handlePointerMove = useCallback((e) => {
+    updateCardPosition(e);
+  }, [updateCardPosition]);
+
+  const handlePointerEnter = useCallback((e) => {
+    updateCardPosition(e);
+    if (onMouseEnter) onMouseEnter(e);
+  }, [updateCardPosition, onMouseEnter]);
+
+  const handlePointerLeave = useCallback((e) => {
+    if (onMouseLeave) onMouseLeave(e);
+  }, [onMouseLeave]);
 
   useEffect(() => {
     if (!animated || !cardRef.current) return;
@@ -148,6 +163,8 @@ export function BorderGlow({
     <div
       ref={cardRef}
       onPointerMove={handlePointerMove}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
       className={`border-glow-card${lightSurface ? ' border-glow-card--light' : ''} ${className}`}
       style={{
         '--card-bg': backgroundColor,
