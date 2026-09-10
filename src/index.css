@@ -4,13 +4,14 @@
 
 :root {
   --bg-obsidian: #0A0A0A;
-  --text-bone: #F5F5F0;
+  --text-bone: #F2F0EA;
+  --text-muted: #8E8E8E;
   --accent-crimson: #E10600;
 }
 
 html {
   background-color: #0A0A0A;
-  color: #F5F5F0;
+  color: #F2F0EA;
   scroll-behavior: auto !important; /* Managed by Lenis */
 }
 
@@ -18,43 +19,26 @@ body {
   margin: 0;
   padding: 0;
   background-color: #0A0A0A;
-  color: #F5F5F0;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #F2F0EA;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom minimal scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-track {
-  background: #0A0A0A;
-}
-::-webkit-scrollbar-thumb {
-  background: #262626;
-  border-radius: 2px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #E10600;
-}
-
-/* Desktop Custom Cursor - hide default cursor when fine pointer is active */
-@media (pointer: fine) {
-  body.custom-cursor-active,
-  body.custom-cursor-active * {
-    cursor: none !important;
-  }
+/* Accessible visible focus styles */
+:focus-visible {
+  outline: 2px solid #E10600;
+  outline-offset: 3px;
 }
 
 /* Typography Utilities */
 .font-display {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
-.font-cinzel {
-  font-family: 'Cinzel Decorative', serif;
+.font-sans {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .font-mono {
@@ -137,4 +121,17 @@ body {
     background-position: -200% 0;
   }
 }
+
+/* Accessibility: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 

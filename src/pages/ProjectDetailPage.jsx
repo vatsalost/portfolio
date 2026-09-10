@@ -1,53 +1,47 @@
 import React, { useEffect, useRef } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowUpRight, Github, Globe, CheckCircle2, ChevronRight, Cpu, Layers, BookOpen, Sparkles } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft, ArrowUpRight, Github, Globe, ChevronRight, Cpu } from 'lucide-react';
 import { useProjects } from '../context/ProjectContext';
-import { MagneticButton } from '../components/ui/MagneticButton';
 import { useAudio } from '../context/AudioContext';
 import { Badge } from '../components/untitled/Badge';
-import { DecryptedText } from '../components/bits/DecryptedText';
-import { SpotlightCard } from '../components/bits/SpotlightCard';
-import { TiltedCard } from '../components/bits/TiltedCard';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export function ProjectDetailPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { getProjectById, projects } = useProjects();
   const { playClick, playHover } = useAudio();
   const project = getProjectById(id);
 
   const stickyColRef = useRef(null);
-  const narrativeRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
 
   const currentIndex = projects.findIndex(p => p.id === id);
+  const formattedIndex = currentIndex >= 0 ? (currentIndex < 9 ? `0${currentIndex + 1}` : `${currentIndex + 1}`) : '01';
   const nextProject = projects[(currentIndex + 1) % projects.length];
 
   if (!project) {
     return (
-      <div className="pt-48 pb-36 text-center max-w-lg mx-auto px-6">
-        <h2 className="font-display text-4xl font-bold text-[#F5F5F0] mb-4">
+      <div className="pt-48 pb-36 text-center max-w-lg mx-auto px-6 text-[#F2F0EA]">
+        <h2 className="font-display text-4xl font-bold mb-4">
           RECORD NOT LOCATED
         </h2>
         <p className="font-mono text-xs text-[#8E8E8E] mb-8">
           The project record you requested does not exist or has been removed from the archive.
         </p>
-        <MagneticButton href="/work" variant="primary">
+        <Link
+          to="/work"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#E10600] text-white font-mono text-xs uppercase font-bold tracking-wider hover:bg-[#B00500] transition-colors"
+        >
           RETURN TO DIRECTORY
-        </MagneticButton>
+        </Link>
       </div>
     );
   }
 
   return (
-    <div className="w-full relative pt-28 pb-32">
+    <div className="w-full relative pt-28 pb-32 text-[#F2F0EA]">
       {/* 1. Project Hero Header */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
         {/* Back link */}
@@ -63,9 +57,13 @@ export function ProjectDetailPage() {
           </Link>
         </div>
 
-        {/* Category & Title */}
-        <div className="border-b border-[#F5F5F0]/10 pb-12">
+        {/* Project Hero Identity */}
+        <div className="border-b border-[#F2F0EA]/10 pb-12">
           <div className="flex flex-wrap items-center gap-4 mb-4 font-mono text-xs">
+            <span className="text-[#E10600] font-bold tracking-widest">
+              PROJECT {formattedIndex}
+            </span>
+            <span className="text-[#555555]">/</span>
             <Badge variant="crimson" size="sm">
               {project.category}
             </Badge>
@@ -73,207 +71,211 @@ export function ProjectDetailPage() {
               YEAR // {project.year}
             </span>
             <span className="text-[#8E8E8E]">
-              ROLE // {project.role || 'Sole Developer'}
+              ROLE // {project.role || 'Developer'}
             </span>
           </div>
 
-          <h1 className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#F5F5F0] tracking-tight uppercase leading-none mb-6">
-            <DecryptedText
-              text={project.title}
-              speed={30}
-              animateOn="hover"
-            />
+          <h1 className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#F2F0EA] tracking-tight uppercase leading-none mb-6">
+            {project.title}
           </h1>
 
-          <p className="font-mono text-sm md:text-base text-[#E10600] tracking-wide max-w-3xl">
-            {project.tagline}
+          <p className="text-lg sm:text-xl font-sans font-light text-[#A3A39B] max-w-3xl leading-relaxed mb-6">
+            {project.tagline || project.overview}
           </p>
+
+          {/* Action Links & Tech Pills */}
+          <div className="flex flex-wrap items-center justify-between gap-6 pt-4 border-t border-[#F2F0EA]/10">
+            <div className="flex flex-wrap gap-2 font-mono text-xs">
+              {project.stack?.map((tech, i) => (
+                <span
+                  key={i}
+                  className="px-2.5 py-1 bg-[#141414] border border-[#F2F0EA]/10 text-[#F2F0EA]"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-4 font-mono text-xs">
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={playClick}
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#141414] text-[#F2F0EA] border border-[#F2F0EA]/15 font-bold hover:border-[#E10600] hover:text-[#E10600] transition-colors"
+                >
+                  <Github className="w-3.5 h-3.5" />
+                  <span>GITHUB ↗</span>
+                </a>
+              )}
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={playClick}
+                  onMouseEnter={playHover}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#E10600] text-white font-bold hover:bg-[#B00500] transition-colors"
+                >
+                  <Globe className="w-3.5 h-3.5" />
+                  <span>LIVE DEMO ↗</span>
+                </a>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* 2. Full-Bleed Hero Image with TiltedCard */}
+      {/* 2. Hero Image */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-20">
-        <TiltedCard maxRotation={3} scale={1.01} className="w-full">
-          <div className="relative w-full aspect-[21/9] md:aspect-[24/10] overflow-hidden border border-[#F5F5F0]/10 bg-[#121212]">
-            <img
-              src={project.heroImage || project.thumbnail}
-              alt={project.title}
-              className="w-full h-full object-cover duotone-hover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent opacity-50" />
-          </div>
-        </TiltedCard>
+        <div className="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden border border-[#F2F0EA]/10 bg-[#111111] rounded-lg">
+          <img
+            src={project.heroImage || project.thumbnail}
+            alt={project.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
       </div>
 
-      {/* 3. Storytelling Layout: Sticky Column + Narrative Content */}
+      {/* 3. Case Study Structure */}
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Pinned Sticky Metadata Sidebar with SpotlightCard */}
+          {/* Sticky Sidebar */}
           <div 
             ref={stickyColRef}
             className="lg:col-span-4 lg:sticky lg:top-28 space-y-6"
           >
-            <SpotlightCard
-              spotlightColor="rgba(225, 6, 0, 0.25)"
-              className="p-8 space-y-6 bg-[#121212]/90 backdrop-blur-md border border-[#F5F5F0]/10 font-mono text-xs"
-            >
+            <div className="p-8 space-y-6 bg-[#111111] border border-[#F2F0EA]/10 font-mono text-xs rounded-lg">
               <div>
                 <span className="text-[10px] text-[#E10600] tracking-widest block uppercase mb-1">
-                  // ROLE
+                  // ROLE & SCOPE
                 </span>
-                <p className="font-display font-bold text-base text-[#F5F5F0]">
-                  {project.role || "Systems Developer"}
+                <p className="font-display font-bold text-base text-[#F2F0EA]">
+                  {project.role || "Developer"}
+                </p>
+                <p className="text-[#8E8E8E] text-[11px] pt-1">
+                  {project.category} · {project.year}
                 </p>
               </div>
 
               {project.technicalHighlight && (
-                <div className="pt-4 border-t border-[#F5F5F0]/10">
+                <div className="pt-4 border-t border-[#F2F0EA]/10">
                   <span className="text-[10px] text-[#E10600] tracking-widest block uppercase mb-1">
-                    // TECHNICAL HIGHLIGHT
+                    // CORE HIGHLIGHT
                   </span>
-                  <p className="font-mono text-xs text-[#F5F5F0] leading-relaxed">
-                    {project.technicalHighlight}
-                  </p>
+                  <div className="flex items-start gap-2 pt-1">
+                    <Cpu className="w-4 h-4 text-[#E10600] shrink-0 mt-0.5" />
+                    <p className="font-mono text-xs text-[#F2F0EA] leading-relaxed">
+                      {project.technicalHighlight}
+                    </p>
+                  </div>
                 </div>
               )}
 
-              {/* Live & Repository links */}
-              <div className="space-y-3 pt-4 border-t border-[#F5F5F0]/10">
-                {project.liveUrl && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    onMouseEnter={playHover}
-                    className="flex items-center justify-between px-4 py-3 bg-[#E10600] text-white hover:bg-[#B00500] transition-colors font-bold tracking-wider"
-                    data-cursor="open"
-                  >
-                    <span className="flex items-center gap-2">
-                      <Globe className="w-4 h-4" /> LIVE DEMO / BUILD
-                    </span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </a>
-                )}
-                {project.githubUrl && (
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    onMouseEnter={playHover}
-                    className="flex items-center justify-between px-4 py-3 border border-[#F5F5F0]/20 text-[#F5F5F0] hover:border-[#E10600] hover:text-[#E10600] transition-colors tracking-wider"
-                    data-cursor="code"
-                  >
-                    <span className="flex items-center gap-2">
-                      <Github className="w-4 h-4" /> GITHUB SOURCE
-                    </span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </a>
-                )}
-              </div>
-
               {/* Technologies */}
-              <div className="space-y-3 pt-4 border-t border-[#F5F5F0]/10">
+              <div className="space-y-3 pt-4 border-t border-[#F2F0EA]/10">
                 <span className="text-[10px] text-[#8E8E8E] tracking-widest block uppercase">
-                  // APPLIED STACK
+                  // APPLIED TECHNOLOGIES
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {project.stack?.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="text-[11px] px-2.5 py-1 bg-[#1A1A1A] border border-[#F5F5F0]/10 text-[#F5F5F0]"
+                      className="text-[11px] px-2.5 py-1 bg-[#171717] border border-[#F2F0EA]/10 text-[#F2F0EA]"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
               </div>
-            </SpotlightCard>
+            </div>
           </div>
 
-          {/* Scrolling Case Study Narrative Column */}
-          <div ref={narrativeRef} className="lg:col-span-8 space-y-12">
-            {/* 1. Overview */}
+          {/* Structured Case Study Narrative */}
+          <div className="lg:col-span-8 space-y-12">
+            {/* 01 — OVERVIEW */}
             {project.overview && (
               <div className="space-y-3">
                 <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
-                  // 01 // OVERVIEW
+                  01 — OVERVIEW
                 </span>
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F5F5F0]">
-                  WHAT IS THIS BUILD?
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F2F0EA]">
+                  PROJECT SUMMARY
                 </h2>
-                <p className="text-base md:text-lg font-light text-[#8E8E8E] font-sans leading-relaxed">
+                <p className="text-base md:text-lg font-light text-[#A3A39B] font-sans leading-relaxed">
                   {project.overview}
                 </p>
               </div>
             )}
 
-            {/* 2. Problem Statement */}
+            {/* 02 — THE IDEA */}
             {project.problem && (
-              <div className="space-y-3 p-6 md:p-8 bg-[#121212] border-l-2 border-[#E10600] border-y border-r border-[#F5F5F0]/10">
+              <div className="space-y-3 p-6 md:p-8 bg-[#111111] border-l-2 border-[#E10600] border-y border-r border-[#F2F0EA]/10 rounded-r-lg">
                 <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
-                  // 02 // THE PROBLEM & MOTIVATION
+                  02 — THE IDEA & MOTIVATION
                 </span>
-                <h2 className="font-display text-xl md:text-2xl font-bold text-[#F5F5F0]">
-                  WHY DID I BUILD THIS?
+                <h2 className="font-display text-xl md:text-2xl font-bold text-[#F2F0EA]">
+                  WHY I BUILT THIS
                 </h2>
-                <p className="text-sm md:text-base font-light text-[#8E8E8E] font-sans leading-relaxed">
+                <p className="text-sm md:text-base font-light text-[#A3A39B] font-sans leading-relaxed">
                   {project.problem}
                 </p>
               </div>
             )}
 
-            {/* 3. Architecture & Approach */}
+            {/* 03 — HOW IT WORKS */}
             {(project.architecture || project.approach) && (
               <div className="space-y-3">
                 <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
-                  // 03 // ARCHITECTURE & APPROACH
+                  03 — HOW IT WORKS
                 </span>
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F5F5F0]">
-                  SYSTEM DESIGN & DATA FLOW
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F2F0EA]">
+                  SYSTEM DESIGN & FLOW
                 </h2>
-                <p className="text-base md:text-lg font-light text-[#8E8E8E] font-sans leading-relaxed">
+                <p className="text-base md:text-lg font-light text-[#A3A39B] font-sans leading-relaxed">
                   {project.architecture || project.approach}
                 </p>
               </div>
             )}
 
-            {/* 4. Technical Details */}
+            {/* 04 — TECHNICAL DETAILS */}
             {project.technicalDetails && (
-              <div className="space-y-3 p-6 md:p-8 bg-[#121212] border border-[#F5F5F0]/10">
+              <div className="space-y-3 p-6 md:p-8 bg-[#111111] border border-[#F2F0EA]/10 rounded-lg">
                 <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
-                  // 04 // TECHNICAL IMPLEMENTATION
+                  04 — TECHNICAL DETAILS
                 </span>
-                <h2 className="font-display text-xl md:text-2xl font-bold text-[#F5F5F0]">
-                  ENGINEERING DETAILS & CONSTRAINTS
+                <h2 className="font-display text-xl md:text-2xl font-bold text-[#F2F0EA]">
+                  IMPLEMENTATION & ALGORITHMS
                 </h2>
-                <p className="text-sm md:text-base font-light text-[#8E8E8E] font-sans leading-relaxed">
+                <p className="text-sm md:text-base font-light text-[#A3A39B] font-sans leading-relaxed">
                   {project.technicalDetails}
                 </p>
               </div>
             )}
 
-            {/* 5. Visual Evidence Gallery */}
+            {/* Visual Artifacts Gallery */}
             {project.gallery && project.gallery.length > 0 && (
               <div className="space-y-6 pt-4">
                 <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
-                  // 05 // SYSTEM VISUALS & ARTIFACTS
+                  SYSTEM ARTIFACTS & VISUALS
                 </span>
                 <div className="space-y-6">
                   {project.gallery.map((imgUrl, i) => (
                     <div 
                       key={i} 
-                      className="overflow-hidden border border-[#F5F5F0]/10 bg-[#121212] group relative"
-                      data-cursor="inspect"
+                      className="overflow-hidden border border-[#F2F0EA]/10 bg-[#111111] rounded-lg"
                     >
                       <img
                         src={imgUrl}
-                        alt={`${project.title} plate ${i + 1}`}
-                        className="w-full h-auto object-cover duotone-hover group-hover:scale-105 transition-transform duration-700"
+                        alt={`${project.title} screenshot ${i + 1}`}
+                        className="w-full h-auto object-cover"
                         loading="lazy"
                       />
-                      <div className="p-3 bg-[#0A0A0A] border-t border-[#F5F5F0]/10 font-mono text-[11px] text-[#8E8E8E] flex justify-between">
-                        <span>PLATE // 0{i + 1}</span>
-                        <span>SYSTEM ARTIFACT</span>
+                      <div className="p-3 bg-[#0A0A0A] border-t border-[#F2F0EA]/10 font-mono text-[11px] text-[#8E8E8E] flex justify-between">
+                        <span>PLATE 0{i + 1}</span>
+                        <span>{project.title.toUpperCase()}</span>
                       </div>
                     </div>
                   ))}
@@ -281,55 +283,86 @@ export function ProjectDetailPage() {
               </div>
             )}
 
-            {/* 6. Real Results & Validation */}
+            {/* 05 — RESULTS */}
             {(project.results || project.solution) && (
               <div className="space-y-3">
                 <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
-                  // 06 // RESULTS & OUTCOMES
+                  05 — RESULTS
                 </span>
-                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F5F5F0]">
-                  REAL WORKING RESULTS
+                <h2 className="font-display text-2xl md:text-3xl font-bold text-[#F2F0EA]">
+                  OUTCOMES & FUNCTIONALITY
                 </h2>
-                <p className="text-base md:text-lg font-light text-[#8E8E8E] font-sans leading-relaxed">
+                <p className="text-base md:text-lg font-light text-[#A3A39B] font-sans leading-relaxed">
                   {project.results || project.solution}
                 </p>
               </div>
             )}
 
-            {/* 7. Lessons Learned */}
+            {/* 06 — WHAT I LEARNED */}
             {project.lessons && (
-              <div className="space-y-3 p-6 md:p-8 bg-[#121212] border-l-2 border-[#E10600] border-y border-r border-[#F5F5F0]/10">
+              <div className="space-y-3 p-6 md:p-8 bg-[#111111] border-l-2 border-[#E10600] border-y border-r border-[#F2F0EA]/10 rounded-r-lg">
                 <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
-                  // 07 // WHAT I LEARNED
+                  06 — WHAT I LEARNED
                 </span>
-                <h2 className="font-display text-xl md:text-2xl font-bold text-[#F5F5F0]">
-                  ENGINEERING RETROSPECTIVE
+                <h2 className="font-display text-xl md:text-2xl font-bold text-[#F2F0EA]">
+                  KEY TAKEAWAYS & RETROSPECTIVE
                 </h2>
-                <p className="text-sm md:text-base font-light text-[#8E8E8E] font-sans leading-relaxed">
+                <p className="text-sm md:text-base font-light text-[#A3A39B] font-sans leading-relaxed">
                   {project.lessons}
                 </p>
               </div>
             )}
+
+            {/* 07 — LINKS */}
+            <div className="pt-6 border-t border-[#F2F0EA]/10 space-y-4">
+              <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
+                07 — LINKS
+              </span>
+              <div className="flex flex-wrap gap-4 font-mono text-xs">
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#171717] border border-[#F2F0EA]/15 text-[#F2F0EA] hover:border-[#E10600] hover:text-[#E10600] transition-colors"
+                  >
+                    <Github className="w-4 h-4" />
+                    <span>VIEW SOURCE CODE ON GITHUB ↗</span>
+                  </a>
+                )}
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#E10600] text-white font-bold hover:bg-[#B00500] transition-colors"
+                  >
+                    <Globe className="w-4 h-4" />
+                    <span>OPEN LIVE DEMO ↗</span>
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* 4. Next Project Launcher */}
+      {/* 4. Next Project Navigation */}
       {nextProject && (
-        <div className="max-w-7xl mx-auto px-6 md:px-12 mt-32 pt-16 border-t border-[#F5F5F0]/10">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 mt-28 pt-16 border-t border-[#F2F0EA]/10">
           <Link
             to={`/project/${nextProject.id}`}
             onClick={playClick}
-            className="group block p-8 md:p-16 bg-[#121212] border border-[#F5F5F0]/10 hover:border-[#E10600] transition-colors duration-500"
+            className="group block p-8 md:p-14 bg-[#111111] border border-[#F2F0EA]/10 hover:border-[#E10600] transition-colors duration-500 rounded-xl"
             data-cursor="next"
           >
             <div className="flex items-center justify-between mb-4 font-mono text-xs text-[#8E8E8E]">
               <span className="text-[#E10600] uppercase tracking-widest">// NEXT CASE STUDY</span>
-              <span className="group-hover:translate-x-2 transition-transform duration-300 flex items-center gap-1 text-[#F5F5F0]">
+              <span className="group-hover:translate-x-2 transition-transform duration-300 flex items-center gap-1 text-[#F2F0EA]">
                 PROCEED <ChevronRight className="w-4 h-4 text-[#E10600]" />
               </span>
             </div>
-            <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-[#F5F5F0] group-hover:text-[#E10600] transition-colors tracking-tight uppercase">
+            <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-[#F2F0EA] group-hover:text-[#E10600] transition-colors tracking-tight uppercase">
               {nextProject.title}
             </h3>
             <p className="font-mono text-xs text-[#8E8E8E] mt-3">{nextProject.tagline}</p>
@@ -339,3 +372,5 @@ export function ProjectDetailPage() {
     </div>
   );
 }
+
+export default ProjectDetailPage;

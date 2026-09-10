@@ -65,7 +65,7 @@ export function ParticleText({
   trigger = 'mount',
   fontSize = 'clamp(2.5rem, 6.5vw, 5.5rem)',
   fontWeight = 900,
-  fontFamily = "'Syne', sans-serif",
+  fontFamily = "'Space Grotesk', sans-serif",
   glow = true,
   align = 'left',
   className = '',

@@ -9,25 +9,24 @@ export default {
       colors: {
         obsidian: {
           DEFAULT: '#0A0A0A',
-          card: '#121212',
-          lighter: '#1A1A1A',
-          border: 'rgba(245, 245, 240, 0.1)',
+          card: '#111111',
+          lighter: '#171717',
+          border: 'rgba(242, 240, 234, 0.08)',
         },
         bone: {
-          DEFAULT: '#F5F5F0',
+          DEFAULT: '#F2F0EA',
           dim: '#A3A39B',
-          muted: '#666660',
+          muted: '#8E8E8E',
         },
         crimson: {
           DEFAULT: '#E10600',
           dark: '#B00500',
-          glow: 'rgba(225, 6, 0, 0.4)',
+          glow: 'rgba(225, 6, 0, 0.35)',
         }
       },
       fontFamily: {
-        display: ['Syne', 'sans-serif'],
-        cinzel: ['"Cinzel Decorative"', 'serif'],
-        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+        display: ['"Space Grotesk"', 'sans-serif'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       letterSpacing: {

@@ -10,12 +10,11 @@ export function Preloader({ onComplete }) {
   const monogramRef = useRef(null);
 
   useEffect(() => {
-    // Animate counter from 0 to 100
+    // Fast, non-blocking counter
     const counterObj = { value: 0 };
     
     const tl = gsap.timeline({
       onComplete: () => {
-        // Dramatic curtain exit
         const exitTl = gsap.timeline({
           onComplete: () => {
             if (onComplete) onComplete();
@@ -24,47 +23,52 @@ export function Preloader({ onComplete }) {
 
         exitTl
           .to(textRef.current, {
-            y: -40,
+            y: -20,
             opacity: 0,
-            duration: 0.35,
-            ease: 'power3.in'
+            duration: 0.2,
+            ease: 'power2.in'
           })
-          .to(monogramRef.current, {
-            scale: 0.85,
-            opacity: 0,
-            duration: 0.3,
-            ease: 'power3.in'
-          }, '-=0.2')
           .to(redCurtainRef.current, {
             yPercent: -100,
-            duration: 0.6,
-            ease: 'power4.inOut'
+            duration: 0.35,
+            ease: 'power3.inOut'
           }, 'curtain')
           .to(blackCurtainRef.current, {
             yPercent: -100,
-            duration: 0.65,
-            ease: 'power4.inOut',
-            delay: 0.08
+            duration: 0.4,
+            ease: 'power3.inOut',
+            delay: 0.04
           }, 'curtain')
           .to(containerRef.current, {
             opacity: 0,
             pointerEvents: 'none',
-            duration: 0.2
+            duration: 0.15
           });
       }
     });
 
     tl.to(counterObj, {
       value: 100,
-      duration: 1.2,
-      ease: 'power2.inOut',
+      duration: 0.35,
+      ease: 'power2.out',
       onUpdate: () => {
         setCount(Math.floor(counterObj.value));
       }
     });
 
+    // Instant dismiss on click or keypress
+    const dismiss = () => {
+      tl.progress(1);
+      if (onComplete) onComplete();
+    };
+
+    window.addEventListener('keydown', dismiss, { once: true });
+    window.addEventListener('click', dismiss, { once: true });
+
     return () => {
       tl.kill();
+      window.removeEventListener('keydown', dismiss);
+      window.removeEventListener('click', dismiss);
     };
   }, [onComplete]);
 

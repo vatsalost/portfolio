@@ -126,6 +126,112 @@ export function ProjectCard({ project, index, layout = 'card' }) {
     );
   }
 
+  // Dominant Flagship Layout (Hero project on HomePage)
+  if (layout === 'dominant') {
+    return (
+      <article
+        className="group relative w-full border-t border-[#F2F0EA]/10 pt-10 pb-16 transition-colors duration-500 hover:border-[#E10600]"
+        onMouseEnter={playHover}
+      >
+        {/* Top Meta Line */}
+        <div className="flex flex-wrap items-center justify-between gap-4 font-mono text-xs text-[#8E8E8E] mb-6">
+          <div className="flex items-center gap-3">
+            <span className="w-2 h-2 rounded-full bg-[#E10600] animate-pulse" />
+            <span className="text-[#E10600] font-bold tracking-widest">[ 01 // DOMINANT BUILD ]</span>
+            <span className="px-2 py-0.5 bg-[#171717] border border-[#F2F0EA]/10 text-[#F2F0EA] text-[10px]">
+              {project.category}
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span>{project.year}</span>
+            <span>//</span>
+            <span>{project.role || "Developer"}</span>
+          </div>
+        </div>
+
+        {/* Big Headline */}
+        <Link
+          to={`/project/${project.id}`}
+          onClick={playClick}
+          className="block group-hover:text-[#E10600] transition-colors duration-300 mb-8"
+        >
+          <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-[#F2F0EA] group-hover:text-[#E10600] tracking-tight leading-none uppercase">
+            {project.title}
+          </h3>
+        </Link>
+
+        {/* Dominant Large Visual Display */}
+        <Link
+          to={`/project/${project.id}`}
+          onClick={playClick}
+          className="relative block aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-[#111111] border border-[#F2F0EA]/10 group-hover:border-[#E10600] transition-colors duration-500 rounded-lg mb-8"
+          data-cursor="view"
+        >
+          <img
+            src={project.thumbnail}
+            alt={project.title}
+            className="w-full h-full object-cover duotone-hover group-hover:scale-105 transition-all duration-700 ease-out"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-[#0A0A0A]/20 group-hover:bg-[#E10600]/10 transition-colors duration-500" />
+        </Link>
+
+        {/* Narrative & Action Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          <div className="md:col-span-8 space-y-3">
+            <p className="text-base sm:text-lg text-[#A3A39B] font-sans font-light leading-relaxed">
+              {project.tagline || project.overview}
+            </p>
+            {project.technicalHighlight && (
+              <div className="pt-1">
+                <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#F2F0EA] bg-[#141414] px-3 py-1 border border-[#F2F0EA]/10">
+                  <Cpu className="w-3.5 h-3.5 text-[#E10600]" />
+                  <span>{project.technicalHighlight}</span>
+                </span>
+              </div>
+            )}
+          </div>
+
+          <div className="md:col-span-4 flex flex-col md:items-end gap-4">
+            <div className="flex flex-wrap gap-1.5 font-mono text-xs">
+              {project.stack?.map((tech, i) => (
+                <span
+                  key={i}
+                  className="px-2.5 py-1 bg-[#141414] border border-[#F2F0EA]/10 text-[11px] text-[#A3A39B]"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-4 font-mono text-xs pt-2">
+              <Link
+                to={`/project/${project.id}`}
+                onClick={playClick}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#E10600] text-white font-bold tracking-wider hover:bg-[#B00500] transition-colors"
+                data-cursor="explore"
+              >
+                <span>EXPLORE CASE STUDY</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 px-3 py-2 bg-[#141414] text-[#8E8E8E] hover:text-[#F2F0EA] border border-[#F2F0EA]/10 transition-colors"
+                >
+                  <Github className="w-3.5 h-3.5" />
+                  <span>SRC</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </article>
+    );
+  }
+
   // Featured Full-Bleed Layout (Top 3 on HomePage)
   if (layout === 'full-bleed' || layout === 'featured') {
     return (
