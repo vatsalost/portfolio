@@ -7,6 +7,7 @@ export function VariableProximity({
   maxLift = 7,
   maxScale = 1.1,
   dotColor = '#E10600',
+  disableOnMobile = true,
   ...props
 }) {
   const containerRef = useRef(null);
@@ -16,6 +17,11 @@ export function VariableProximity({
     // Only disable if user explicitly requested reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
+
+    // Disable on mobile/touch screens when requested
+    if (disableOnMobile && (window.innerWidth < 768 || ('ontouchstart' in window && window.innerWidth < 1024))) {
+      return;
+    }
 
     let targetX = -9999;
     let targetY = -9999;

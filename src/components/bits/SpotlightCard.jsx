@@ -6,19 +6,25 @@ export function SpotlightCard({
   spotlightColor = 'rgba(225, 6, 0, 0.16)',
   borderColor = 'rgba(225, 6, 0, 0.55)',
   borderRadius = '12px',
+  disableOnMobile = false,
   ...props
 }) {
   const divRef = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
+  const isMobile = () => {
+    return disableOnMobile && (window.innerWidth < 768 || ('ontouchstart' in window && window.innerWidth < 1024));
+  };
+
   const handlePointerMove = (e) => {
-    if (!divRef.current) return;
+    if (isMobile() || !divRef.current) return;
     const rect = divRef.current.getBoundingClientRect();
     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
   const handlePointerEnter = (e) => {
+    if (isMobile()) return;
     handlePointerMove(e);
     setOpacity(1);
   };

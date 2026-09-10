@@ -1,11 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useAudio } from '../../context/AudioContext';
 
-export function AnimatedList({ items = [], onItemClick }) {
+export function AnimatedList({
+  items = [],
+  onItemClick,
+  variant = 'table',
+  renderItem,
+  className = '',
+  staggerMs = 80,
+  durationMs = 400,
+}) {
   const { playHover, playClick } = useAudio();
   const [hoveredIdx, setHoveredIdx] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    // Respect prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setIsVisible(true);
+      return;
+    }
+
+    const el = containerRef.current;
+    if (!el) return;
+
+    // Check if already in viewport
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    observer.observe(el);
+    return () => observer.unobserve(el);
+  }, []);
+
+  // Row / Editorial variant for Right Now & custom lists
+  if (variant === 'rows' || renderItem) {
+    return (
+      <div ref={containerRef} className={`space-y-3 ${className}`}>
+        {items.map((item, idx) => {
+          const delay = isVisible ? `${idx * staggerMs}ms` : '0ms';
+          return (
+            <div
+              key={item.id || item.number || idx}
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateY(0)' : 'translateY(14px)',
+                transition: `opacity ${durationMs}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}, transform ${durationMs}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}`,
+                willChange: isVisible ? 'auto' : 'opacity, transform',
+              }}
+            >
+              {renderItem ? renderItem(item, idx, isVisible) : (
+                <div className="p-4 sm:p-5 border border-[#F2F0EA]/10 bg-[#0F0F0F] hover:bg-[#141414] hover:border-[#F2F0EA]/20 transition-colors duration-200 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 sm:gap-6 rounded-md">
+                  <div className="font-mono text-xs text-[#F2F0EA] font-medium tracking-wide">
+                    {item.number || `0${idx + 1}`} <span className="text-[#555555]">—</span> {item.label || item.title}
+                  </div>
+                  <div className="text-sm font-sans font-light text-[#8E8E8E] sm:text-right">
+                    {item.description}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <div className="border border-[#F2F0EA]/10 bg-[#0D0D0D] rounded-lg overflow-hidden">
