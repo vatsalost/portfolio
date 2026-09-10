@@ -9,8 +9,12 @@ export function ReactiveCanvas({ className = '' }) {
 
     const ctx = canvas.getContext('2d');
     let animationFrameId;
+    let isVisible = true;
     let width = 0;
     let height = 0;
+
+    // Accessibility check: respect user reduced-motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const updateSize = () => {
       const parent = canvas.parentElement;
@@ -31,6 +35,9 @@ export function ReactiveCanvas({ className = '' }) {
 
     const handleResize = () => {
       updateSize();
+      if (prefersReducedMotion) {
+        drawFrame(0);
+      }
     };
 
     const handleMouseMove = (e) => {
@@ -46,35 +53,29 @@ export function ReactiveCanvas({ className = '' }) {
       mouse.isHovered = false;
     };
 
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize', handleResize, { passive: true });
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.addEventListener('mouseleave', handleMouseLeave);
 
-    // Grid lines for topographic / kinetic horizon
-    const cols = 26;
-    const rows = 16;
+    // Dynamic grid resolution: lightweight on mobile, detailed on desktop
+    const isMobile = window.innerWidth < 768;
+    const cols = isMobile ? 14 : 24;
+    const rows = isMobile ? 10 : 16;
     let time = 0;
 
-    const render = () => {
-      time += 0.015;
-
-      // Mouse smoothing
-      mouse.x += (mouse.targetX - mouse.x) * 0.05;
-      mouse.y += (mouse.targetY - mouse.y) * 0.05;
-
+    const drawFrame = (currentTime) => {
       ctx.clearRect(0, 0, width, height);
 
-      // Subtle ambient glow near mouse
+      // Ambient crimson glow near mouse
       const gradient = ctx.createRadialGradient(
         mouse.x, mouse.y, 10,
-        mouse.x, mouse.y, 350
+        mouse.x, mouse.y, 320
       );
-      gradient.addColorStop(0, 'rgba(225, 6, 0, 0.08)');
+      gradient.addColorStop(0, 'rgba(225, 6, 0, 0.07)');
       gradient.addColorStop(1, 'rgba(10, 10, 10, 0)');
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
 
-      // Undulating topographic grid lines
       const spacingX = width / Math.max(1, cols - 1);
       const spacingY = (height * 0.75) / Math.max(1, rows - 1);
       const startY = height * 0.18;
@@ -92,11 +93,11 @@ export function ReactiveCanvas({ className = '' }) {
           const dx = baseX - mouse.x;
           const dy = baseY - mouse.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const mouseFactor = Math.max(0, 1 - dist / 320);
+          const mouseFactor = Math.max(0, 1 - dist / 300);
 
-          const wave = Math.sin(c * 0.3 + time + r * 0.2) * 16 * Math.cos(r * 0.2 + time * 0.8);
-          const mouseDisplaceY = -Math.sin(dist * 0.015 - time * 2) * (mouseFactor * 40);
-          const mouseDisplaceX = (dx / (dist || 1)) * (mouseFactor * 20);
+          const wave = Math.sin(c * 0.3 + currentTime + r * 0.2) * 14 * Math.cos(r * 0.2 + currentTime * 0.8);
+          const mouseDisplaceY = -Math.sin(dist * 0.015 - currentTime * 2) * (mouseFactor * 35);
+          const mouseDisplaceX = (dx / (dist || 1)) * (mouseFactor * 18);
 
           points[r][c] = {
             x: baseX + mouseDisplaceX,
@@ -122,42 +123,75 @@ export function ReactiveCanvas({ className = '' }) {
         }
 
         const rowFactor = r / rows;
-        const alpha = 0.04 + rowFactor * 0.1;
+        const alpha = 0.03 + rowFactor * 0.09;
         ctx.strokeStyle = `rgba(245, 245, 240, ${alpha})`;
         ctx.stroke();
       }
 
-      // Draw connecting nodes near the mouse
+      // Draw connecting nodes near mouse
       for (let r = 0; r < rows; r += 2) {
         for (let c = 0; c < cols; c += 2) {
           const p = points[r][c];
-          if (p.factor > 0.3) {
+          if (p.factor > 0.35) {
             ctx.beginPath();
-            ctx.arc(p.x, p.y, p.factor * 2.5, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(225, 6, 0, ${p.factor * 0.8})`;
+            ctx.arc(p.x, p.y, p.factor * 2.2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(225, 6, 0, ${p.factor * 0.75})`;
             ctx.fill();
 
-            if (p.factor > 0.6) {
+            if (p.factor > 0.65) {
               ctx.beginPath();
               ctx.moveTo(p.x, p.y);
               ctx.lineTo(mouse.x, mouse.y);
-              ctx.strokeStyle = `rgba(225, 6, 0, ${(p.factor - 0.6) * 0.25})`;
+              ctx.strokeStyle = `rgba(225, 6, 0, ${(p.factor - 0.65) * 0.22})`;
               ctx.stroke();
             }
           }
         }
       }
+    };
+
+    const render = () => {
+      if (!isVisible) return;
+
+      time += 0.015;
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+
+      drawFrame(time);
 
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    // If user prefers reduced motion, draw static frame and stop
+    if (prefersReducedMotion) {
+      drawFrame(0);
+    } else {
+      render();
+    }
+
+    // IntersectionObserver to pause loop when scrolled out of view
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const wasVisible = isVisible;
+        isVisible = entry.isIntersecting;
+
+        if (isVisible && !wasVisible && !prefersReducedMotion) {
+          render();
+        } else if (!isVisible && animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(canvas);
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
@@ -165,6 +199,7 @@ export function ReactiveCanvas({ className = '' }) {
     <canvas
       ref={canvasRef}
       className={`absolute inset-0 pointer-events-none z-0 ${className}`}
+      aria-hidden="true"
     />
   );
 }

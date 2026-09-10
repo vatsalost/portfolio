@@ -29,10 +29,9 @@ export function Footer() {
   };
 
   const socialLinks = [
-    { label: 'GITHUB', href: 'https://github.com', icon: Github },
-    { label: 'TWITTER / X', href: 'https://x.com', icon: Twitter },
+    { label: 'GITHUB', href: 'https://github.com/vatsalost', icon: Github },
     { label: 'LINKEDIN', href: 'https://linkedin.com', icon: Linkedin },
-    { label: 'DISCORD', href: 'https://discord.com', icon: ArrowUpRight }
+    { label: 'EMAIL', href: 'mailto:vatslchaudhary@gmail.com', icon: Mail }
   ];
 
   return (
@@ -41,14 +40,14 @@ export function Footer() {
       <div className="py-6 border-b border-[#F5F5F0]/10 mb-16">
         <MarqueeTicker
           items={[
-            "VATSAL // 2ND YEAR CSE UNDERGRAD",
-            "OPEN FOR SUMMER 2026/2027 SDE INTERNSHIPS",
+            "VATSAL // 2ND YEAR B.TECH CSE",
             "DATA STRUCTURES & ALGORITHMS (CS201)",
+            "COMPUTER ORGANIZATION & ARCHITECTURE (CS202)",
             "LOW LEVEL C++ & RUST SYSTEMS",
-            "WEBGL & GLSL KINETIC SHADERS",
-            "COLLEGIATE HACKATHON GRAND PRIZE WINNER"
+            "GRAPHICS SHADERS & WEBGL",
+            "OPEN FOR SUMMER 2026/2027 INTERNSHIPS"
           ]}
-          speed="30s"
+          speed="32s"
           highlightRed={true}
         />
       </div>
@@ -59,14 +58,14 @@ export function Footer() {
           {/* Big CTA Column */}
           <div className="md:col-span-6 space-y-6">
             <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
-              // NEXT HORIZON
+              // COLLABORATION
             </span>
             <h2 className="font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-[#F5F5F0] leading-none">
               LET'S BUILD SOMETHING <br />
-              <span className="text-stroke-bone hover:text-[#E10600]">REMARKABLE.</span>
+              <span className="text-stroke-bone hover:text-[#E10600]">EXCEPTIONAL.</span>
             </h2>
             <p className="text-sm font-light text-[#8E8E8E] max-w-md font-sans">
-              2nd-year CSE student open for Summer 2026/2027 Software Engineering internships, open-source systems collaborations, and competitive hackathons.
+              2nd-year CSE student open for Summer 2026/2027 Software Engineering internships, open-source systems collaborations, and hackathon teams.
             </p>
             <div className="pt-2">
               <Link
@@ -75,7 +74,7 @@ export function Footer() {
                 className="inline-flex items-center gap-3 px-6 py-3.5 bg-[#E10600] text-white font-mono text-xs tracking-widest uppercase font-bold hover:bg-[#B00500] transition-colors"
                 data-cursor="transmit"
               >
-                <span>INITIATE TRANSMISSION</span>
+                <span>GET IN TOUCH</span>
                 <ArrowUpRight className="w-4 h-4" />
               </Link>
             </div>
@@ -131,15 +130,15 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Studio Timepieces */}
+            {/* Timepieces */}
             <div className="pt-4 border-t border-[#F5F5F0]/10 font-mono text-[11px] text-[#8E8E8E] space-y-1">
               <div className="flex justify-between">
-                <span>LOCAL:</span>
+                <span>SYSTEM LOCAL:</span>
                 <span className="text-[#F5F5F0]">{localTime || '--:--:--'}</span>
               </div>
               <div className="flex justify-between">
-                <span>CAMPUS / UTC:</span>
-                <span className="text-[#E10600]">{tokyoTime || '--:--:--'}</span>
+                <span>TIMEZONE:</span>
+                <span className="text-[#E10600]">IST (UTC+05:30)</span>
               </div>
             </div>
           </div>
@@ -152,7 +151,7 @@ export function Footer() {
           </div>
 
           <div className="flex items-center gap-6">
-            <span>REACT 18 • GSAP 3 • LENIS</span>
+            <span>REACT 18 • VITE • GSAP 3 • LENIS</span>
             <button
               onClick={scrollToTop}
               className="p-2 border border-[#F5F5F0]/20 hover:border-[#E10600] hover:text-[#E10600] transition-colors flex items-center gap-1.5"

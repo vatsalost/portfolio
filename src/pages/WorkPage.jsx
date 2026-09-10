@@ -14,15 +14,20 @@ export function WorkPage() {
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'index'
   const [searchQuery, setSearchQuery] = useState('');
 
-  const categories = ['All', 'Hackathons & AI', 'Digital Products', 'Brand Systems'];
+  // Dynamically derive unique categories from the projects dataset
+  const categories = useMemo(() => {
+    const cats = Array.from(new Set(projects.map(p => p.category))).filter(Boolean);
+    return ['All', ...cats];
+  }, [projects]);
 
   const filteredProjects = useMemo(() => {
     return projects.filter(p => {
       const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
       const matchesSearch = searchQuery === '' || 
         p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.overview.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.stack.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
+        p.overview?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.tagline?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.stack?.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
       return matchesCategory && matchesSearch;
     });
   }, [projects, selectedCategory, searchQuery]);
@@ -42,7 +47,7 @@ export function WorkPage() {
           />
         </h1>
         <p className="mt-4 text-sm md:text-base font-light text-[#8E8E8E] max-w-xl">
-          Comprehensive repository of collegiate hackathon grand prize builds, 3D algorithm visualizers, campus platforms, and high-velocity developer tools.
+          Systems tooling, GPU-accelerated algorithm visualizers, WebGL experiments, and real-time architectures built during undergraduate coursework and independent research.
         </p>
       </div>
 
@@ -137,7 +142,7 @@ export function WorkPage() {
                 <th className="py-4 px-6">#</th>
                 <th className="py-4 px-6">PROJECT TITLE</th>
                 <th className="py-4 px-6">CATEGORY</th>
-                <th className="py-4 px-6">CLIENT / EVENT</th>
+                <th className="py-4 px-6">FOCUS & HIGHLIGHT</th>
                 <th className="py-4 px-6">YEAR</th>
                 <th className="py-4 px-6">TECH STACK</th>
                 <th className="py-4 px-6 text-right">ACTION</th>
@@ -163,7 +168,9 @@ export function WorkPage() {
                       {project.category}
                     </span>
                   </td>
-                  <td className="py-4 px-6 text-[#8E8E8E]">{project.client}</td>
+                  <td className="py-4 px-6 text-[#8E8E8E]">
+                    {project.technicalHighlight || project.role || 'System Architecture'}
+                  </td>
                   <td className="py-4 px-6 text-[#8E8E8E]">{project.year}</td>
                   <td className="py-4 px-6 text-[#8E8E8E]">
                     {project.stack?.slice(0, 3).join(', ')}

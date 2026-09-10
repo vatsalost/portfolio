@@ -9,8 +9,8 @@ export function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Disable completely on touch devices
-    if (window.matchMedia('(pointer: coarse)').matches) return;
+    // Disable on touch devices or if user prefers reduced motion
+    if (window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     document.body.classList.add('custom-cursor-active');
 
@@ -88,7 +88,7 @@ export function CustomCursor() {
     };
   }, []);
 
-  if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
+  if (typeof window !== 'undefined' && window.matchMedia && (window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
     return null;
   }
 

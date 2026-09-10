@@ -48,28 +48,28 @@ export function AdminDashboardPage() {
     githubUrl: ''
   });
 
-  const categories = ['Hackathons & AI', 'Digital Products', 'Brand Systems'];
+  const categories = ['Systems & Tooling', 'Graphics & Systems', 'AI & Real-Time Systems', 'Algorithms & Audio', 'Web & Distributed'];
 
   const openAddModal = () => {
     playClick();
     setEditingId(null);
     setFormData({
       title: '',
-      client: 'Kaien Lab Client',
-      category: 'Digital Products',
+      client: 'Independent Project',
+      category: 'Systems & Tooling',
       year: new Date().getFullYear().toString(),
-      tagline: 'Experimental Web Application',
-      role: 'Lead Creative Technologist',
+      tagline: 'High-performance systems utility',
+      role: 'Systems Developer',
       featured: false,
-      thumbnail: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop',
-      heroImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1600&auto=format&fit=crop',
-      overview: 'A cutting-edge interactive system exploring real-time kinetic interactions.',
-      problem: 'Overcoming rendering latency and high computational bottlenecks in the client layer.',
-      process: 'Architected custom GPU shaders with decoupled UI rendering threads.',
-      solution: 'Delivered a sub-12ms latency experience scaling to global audiences.',
-      stack: 'React, GSAP, Tailwind CSS, WebGL',
-      liveUrl: 'https://example.com',
-      githubUrl: 'https://github.com'
+      thumbnail: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop',
+      heroImage: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1600&auto=format&fit=crop',
+      overview: 'A systems project exploring algorithmic performance and interactive tooling.',
+      problem: 'Optimizing computation throughput and reducing execution latency.',
+      process: 'Implemented modular data structures and memory-safe design patterns.',
+      solution: 'Delivered an efficient, verifiable implementation with minimal runtime overhead.',
+      stack: 'C++, Rust, Linux POSIX',
+      liveUrl: '',
+      githubUrl: 'https://github.com/vatsalost'
     });
     setIsModalOpen(true);
   };

@@ -90,7 +90,7 @@ export function Preloader({ onComplete }) {
             <span className="w-1.5 h-1.5 rounded-full bg-[#E10600] animate-ping" />
             SYSTEM // INITIALIZING
           </span>
-          <span>EST. 2026 // TOKYO & NYC</span>
+          <span>B.TECH CSE // CLASS OF 2027</span>
         </div>
 
         {/* Center Content: Monogram + Kinetic title */}
@@ -119,7 +119,7 @@ export function Preloader({ onComplete }) {
         {/* Bottom Bar: Monospace Progress & Counter */}
         <div className="flex items-end justify-between border-t border-[#F5F5F0]/10 pt-4">
           <div className="font-mono text-xs text-[#8E8E8E] hidden sm:block">
-            LAT: 35.6762° N // LON: 139.6503° E
+            NODE: SYSTEMS // ALGORITHMIC GRAPHICS
           </div>
           <div className="flex items-baseline gap-2 font-mono">
             <span className="text-xs text-[#E10600] tracking-widest">LOADING</span>

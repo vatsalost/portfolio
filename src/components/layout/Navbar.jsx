@@ -61,9 +61,9 @@ export function Navbar() {
 
   const navLinks = [
     { title: 'INDEX', subtitle: 'OVERVIEW // 01', href: '/' },
-    { title: 'WORK', subtitle: 'COMMISSIONS // 02', href: '/work' },
-    { title: 'ABOUT', subtitle: 'ETHOS // 03', href: '/about' },
-    { title: 'CONTACT', subtitle: 'TRANSMIT // 04', href: '/contact' },
+    { title: 'WORK', subtitle: 'PROJECTS // 02', href: '/work' },
+    { title: 'ABOUT', subtitle: 'PROFILE & ACADEMICS // 03', href: '/about' },
+    { title: 'CONTACT', subtitle: 'CONNECT // 04', href: '/contact' },
     { title: 'ADMIN', subtitle: 'SECURE CONSOLE // 05', href: '/admin' }
   ];
 
@@ -104,7 +104,7 @@ export function Navbar() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E10600] opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E10600]" />
             </span>
-            <span className="tracking-wider">2ND YR CSE • OPEN FOR INTERNSHIPS & HACKATHONS</span>
+            <span className="tracking-wider">2ND YR CSE • OPEN FOR INTERNSHIPS & COLLABORATION</span>
           </div>
 
           {/* Right Controls: Audio + Nav Links + Menu Toggle */}
@@ -125,21 +125,33 @@ export function Navbar() {
               <Link
                 to="/work"
                 onMouseEnter={playHover}
-                className={`hover:text-[#E10600] transition-colors ${location.pathname === '/work' ? 'text-[#E10600]' : 'text-[#F5F5F0]'}`}
+                className={`relative py-1 transition-colors ${
+                  location.pathname === '/work' 
+                    ? 'text-[#E10600] font-bold after:content-[""] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1px] after:bg-[#E10600]' 
+                    : 'text-[#F5F5F0] hover:text-[#E10600]'
+                }`}
               >
                 WORK
               </Link>
               <Link
                 to="/about"
                 onMouseEnter={playHover}
-                className={`hover:text-[#E10600] transition-colors ${location.pathname === '/about' ? 'text-[#E10600]' : 'text-[#F5F5F0]'}`}
+                className={`relative py-1 transition-colors ${
+                  location.pathname === '/about' 
+                    ? 'text-[#E10600] font-bold after:content-[""] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1px] after:bg-[#E10600]' 
+                    : 'text-[#F5F5F0] hover:text-[#E10600]'
+                }`}
               >
                 ABOUT
               </Link>
               <Link
                 to="/contact"
                 onMouseEnter={playHover}
-                className={`hover:text-[#E10600] transition-colors ${location.pathname === '/contact' ? 'text-[#E10600]' : 'text-[#F5F5F0]'}`}
+                className={`relative py-1 transition-colors ${
+                  location.pathname === '/contact' 
+                    ? 'text-[#E10600] font-bold after:content-[""] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1px] after:bg-[#E10600]' 
+                    : 'text-[#F5F5F0] hover:text-[#E10600]'
+                }`}
               >
                 CONTACT
               </Link>
@@ -166,7 +178,7 @@ export function Navbar() {
         {/* Overlay Top Bar */}
         <div className="flex items-center justify-between border-b border-[#F5F5F0]/10 pb-6">
           <div className="font-mono text-xs text-[#8E8E8E] tracking-widest">
-            NAVIGATION INDEX // STUDIO DIRECTORY
+            NAVIGATION INDEX // VATSAL PORTFOLIO
           </div>
           <button
             onClick={toggleMenu}
@@ -207,20 +219,20 @@ export function Navbar() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-[#F5F5F0]/10 font-mono text-xs text-[#8E8E8E]">
           <div>
             <span className="text-[#E10600] block mb-1">INQUIRIES</span>
-            <a href="mailto:kaien@vatsal.dev" className="hover:text-white transition-colors">
-              kaien@vatsal.dev
+            <a href="mailto:vatslchaudhary@gmail.com" className="hover:text-white transition-colors">
+              vatslchaudhary@gmail.com
             </a>
           </div>
           <div>
-            <span className="text-[#E10600] block mb-1">LOCATIONS</span>
-            <span>TOKYO [ UTC+9 ] // NYC [ UTC-5 ]</span>
+            <span className="text-[#E10600] block mb-1">STATUS</span>
+            <span>2ND YEAR B.TECH CSE // CLASS OF 2027</span>
           </div>
           <div className="md:text-right">
-            <span className="text-[#E10600] block mb-1">NETWORK</span>
+            <span className="text-[#E10600] block mb-1">CHANNELS</span>
             <div className="flex md:justify-end gap-4">
-              <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-white">GH</a>
-              <a href="https://x.com" target="_blank" rel="noreferrer" className="hover:text-white">TW</a>
+              <a href="https://github.com/vatsalost" target="_blank" rel="noreferrer" className="hover:text-white">GH</a>
               <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-white">LI</a>
+              <a href="mailto:vatslchaudhary@gmail.com" className="hover:text-white">MAIL</a>
             </div>
           </div>
         </div>
