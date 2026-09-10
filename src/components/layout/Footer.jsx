@@ -54,14 +54,15 @@ export function Footer() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 mb-16">
           {/* Big CTA Column */}
-          <div className="md:col-span-6 space-y-6">
+          <div className="md:col-span-6 lg:col-span-6 space-y-6">
             <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
               // COLLABORATION
             </span>
-            <h2 className="font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-[#F5F5F0] leading-none">
-              BUILD SOMETHING?
+            <h2 className="font-display text-3xl sm:text-4xl md:text-[2.1rem] lg:text-[2.75rem] xl:text-[3.25rem] font-extrabold tracking-tight text-[#F5F5F0] leading-[1.08] max-w-md">
+              BUILD<br />
+              SOMETHING?
             </h2>
             <p className="text-sm sm:text-base font-light text-[#8E8E8E] max-w-md font-sans">
               I'm open to hackathons, collaborations, and interesting projects.
@@ -89,7 +90,7 @@ export function Footer() {
           </div>
 
           {/* Navigation Links Column */}
-          <div className="md:col-span-3 space-y-4">
+          <div className="md:col-span-3 lg:col-span-3 md:pl-4 lg:pl-8 space-y-4">
             <span className="font-mono text-xs text-[#8E8E8E] tracking-widest block uppercase">
               // DIRECTORY
             </span>
