@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MagneticButton } from '../components/ui/MagneticButton';
 import { useAudio } from '../context/AudioContext';
 import { SpotlightCard } from '../components/bits/SpotlightCard';
+import { ParticleText } from '../components/bits/ParticleText';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -39,12 +40,39 @@ export function AboutPage() {
     <div className="pt-32 pb-32 px-6 md:px-12 max-w-7xl mx-auto min-h-screen">
       {/* 1. Header & Intro */}
       <div className="border-b border-[#F5F5F0]/10 pb-16 mb-20">
-        <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase mb-2">
-          // PERSONAL PROFILE
-        </span>
-        <h1 className="font-display font-black text-5xl sm:text-7xl md:text-8xl text-[#F5F5F0] tracking-tight uppercase leading-[0.9] mb-8">
-          VATSAL CHAUDHARY<br />
-          <span className="text-stroke-bone hover:text-[#E10600]">ABOUT ME.</span>
+        <div className="flex items-center justify-between gap-4 mb-2">
+          <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
+            // PERSONAL PROFILE
+          </span>
+          <span className="font-mono text-[10px] text-[#8E8E8E] tracking-widest hidden sm:inline-block">
+            [INTERACTIVE • MOVE CURSOR TO SCATTER PARTICLES]
+          </span>
+        </div>
+
+        {/* Interactive ReactBits Particle Text for Name */}
+        <div
+          className="w-full h-24 sm:h-32 md:h-40 lg:h-48 mb-2 cursor-crosshair select-none"
+          data-cursor="PARTICLES"
+        >
+          <ParticleText
+            text="VATSAL CHAUDHARY"
+            color="#F5F5F0"
+            highlightColor="#E10600"
+            fontFamily="'Syne', sans-serif"
+            fontWeight={900}
+            fontSize="clamp(2.1rem, 6.2vw, 5.5rem)"
+            particleSize={2.1}
+            density={3.2}
+            pointerRepel={50}
+            repelRadius={130}
+            idleDrift={0.5}
+            align="left"
+            className="w-full h-full"
+          />
+        </div>
+
+        <h1 className="font-display font-black text-4xl sm:text-6xl md:text-7xl text-[#F5F5F0] tracking-tight uppercase leading-[0.9] mb-8">
+          <span className="text-stroke-bone hover:text-[#E10600] transition-colors">ABOUT ME.</span>
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-8">
