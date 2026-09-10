@@ -1,0 +1,318 @@
+.card-nav-container {
+  position: fixed;
+  top: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 94%;
+  max-width: 1100px;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.card-nav {
+  display: block;
+  height: 60px;
+  padding: 0;
+  background-color: #0D0D0D;
+  border: 1px solid rgba(245, 245, 240, 0.12);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(245, 245, 240, 0.05);
+  position: relative;
+  overflow: hidden;
+  will-change: height;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-nav:hover,
+.card-nav.open {
+  border-color: rgba(225, 6, 0, 0.4);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9), 0 0 25px rgba(225, 6, 0, 0.15);
+}
+
+.card-nav-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.8rem 0.5rem 1rem;
+  z-index: 2;
+}
+
+.card-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hamburger-menu {
+  height: 38px;
+  width: 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 5px;
+  background: rgba(245, 245, 240, 0.04);
+  border: 1px solid rgba(245, 245, 240, 0.1);
+  border-radius: 6px;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.hamburger-menu:hover {
+  border-color: #E10600;
+  background: rgba(225, 6, 0, 0.1);
+}
+
+.hamburger-line {
+  width: 18px;
+  height: 2px;
+  background-color: currentColor;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.2s ease;
+  transform-origin: 50% 50%;
+}
+
+.hamburger-menu.open .hamburger-line:first-child {
+  transform: translateY(3.5px) rotate(45deg);
+}
+
+.hamburger-menu.open .hamburger-line:last-child {
+  transform: translateY(-3.5px) rotate(-45deg);
+}
+
+.card-nav-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  user-select: none;
+}
+
+.card-nav-logo-box {
+  width: 28px;
+  height: 28px;
+  background-color: #F5F5F0;
+  color: #0A0A0A;
+  font-family: 'Syne', sans-serif;
+  font-weight: 900;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card-nav-logo-link:hover .card-nav-logo-box {
+  background-color: #E10600;
+  color: #F5F5F0;
+}
+
+.card-nav-logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-nav-logo-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: #F5F5F0;
+  line-height: 1.1;
+}
+
+.card-nav-logo-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: #8E8E8E;
+  letter-spacing: 0.1em;
+}
+
+.card-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-nav-cta-button {
+  background-color: #E10600;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 0 1rem;
+  height: 38px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.card-nav-cta-button:hover {
+  background-color: #B00500;
+  transform: translateY(-1px);
+}
+
+.card-nav-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  padding: 0.75rem;
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.card-nav.open .card-nav-content {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.nav-card {
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  gap: 10px;
+  user-select: none;
+  border: 1px solid rgba(245, 245, 240, 0.08);
+  background: #141414;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-card:hover {
+  border-color: rgba(225, 6, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.nav-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(245, 245, 240, 0.08);
+  padding-bottom: 8px;
+}
+
+.nav-card-index {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: #E10600;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.nav-card-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: #8E8E8E;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.nav-card-label {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  color: #F5F5F0;
+  margin-top: 2px;
+}
+
+.nav-card-links {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-card-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #A3A39B;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.25s ease, transform 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 0;
+}
+
+.nav-card-link:hover {
+  color: #E10600;
+  transform: translateX(3px);
+}
+
+.nav-card-link-icon {
+  width: 12px;
+  height: 12px;
+  color: #8E8E8E;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.nav-card-link:hover .nav-card-link-icon {
+  color: #E10600;
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 768px) {
+  .card-nav-container {
+    width: 92%;
+    top: 0.8rem;
+  }
+
+  .card-nav-top {
+    padding: 0.5rem 0.8rem;
+  }
+
+  .card-nav-cta-button {
+    display: none;
+  }
+
+  .card-nav-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 0.6rem;
+    bottom: auto;
+  }
+
+  .nav-card {
+    height: auto;
+    min-height: 80px;
+    flex: 1 1 auto;
+    padding: 12px 14px;
+  }
+
+  .nav-card-label {
+    font-size: 17px;
+  }
+
+  .nav-card-link {
+    font-size: 11px;
+  }
+}
