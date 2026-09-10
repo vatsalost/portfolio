@@ -6,6 +6,7 @@ import { MagneticButton } from '../components/ui/MagneticButton';
 import { useAudio } from '../context/AudioContext';
 import { SpotlightCard } from '../components/bits/SpotlightCard';
 import { ParticleText } from '../components/bits/ParticleText';
+import { BorderGlow } from '../components/bits/BorderGlow';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -78,9 +79,14 @@ export function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-8">
           {/* Terminal Identity Card */}
           <div className="lg:col-span-5">
-            <SpotlightCard
-              spotlightColor="rgba(225, 6, 0, 0.2)"
-              className="p-6 bg-[#121212] border border-[#F5F5F0]/10 font-mono text-xs"
+            <BorderGlow
+              borderRadius={16}
+              glowRadius={36}
+              edgeSensitivity={24}
+              glowColor="0 100 50"
+              colors={['#E10600', '#FF3333', '#8B0000']}
+              backgroundColor="#121212"
+              className="p-6 font-mono text-xs"
             >
               {/* Terminal Window Chrome */}
               <div className="flex items-center justify-between border-b border-[#F5F5F0]/10 pb-3 mb-4">
@@ -152,7 +158,7 @@ export function AboutPage() {
                   <span>OPEN FOR: Hackathons & Collabs</span>
                 </div>
               </div>
-            </SpotlightCard>
+            </BorderGlow>
           </div>
 
           {/* Genuine Personal Introduction */}
@@ -230,7 +236,15 @@ export function AboutPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Languages */}
-          <div className="p-8 bg-[#121212] border border-[#F5F5F0]/10 rounded-xl space-y-4">
+          <BorderGlow
+            borderRadius={16}
+            glowRadius={36}
+            edgeSensitivity={24}
+            glowColor="0 100 50"
+            colors={['#E10600', '#FF3333', '#8B0000']}
+            backgroundColor="#121212"
+            className="p-8 space-y-4"
+          >
             <div className="flex items-center gap-3 border-b border-[#F5F5F0]/10 pb-3">
               <Terminal className="w-5 h-5 text-[#E10600]" />
               <h3 className="font-display font-bold text-xl text-[#F5F5F0]">
@@ -251,10 +265,18 @@ export function AboutPage() {
                 <span className="text-[#8E8E8E]">OOP Principles & Application Logic</span>
               </div>
             </div>
-          </div>
+          </BorderGlow>
 
           {/* Web Technologies */}
-          <div className="p-8 bg-[#121212] border border-[#F5F5F0]/10 rounded-xl space-y-4">
+          <BorderGlow
+            borderRadius={16}
+            glowRadius={36}
+            edgeSensitivity={24}
+            glowColor="0 100 50"
+            colors={['#E10600', '#FF3333', '#8B0000']}
+            backgroundColor="#121212"
+            className="p-8 space-y-4"
+          >
             <div className="flex items-center gap-3 border-b border-[#F5F5F0]/10 pb-3">
               <Layers className="w-5 h-5 text-[#E10600]" />
               <h3 className="font-display font-bold text-xl text-[#F5F5F0]">
@@ -271,7 +293,7 @@ export function AboutPage() {
                 <span className="text-[#8E8E8E]">Styling, Layouts & Responsive Design</span>
               </div>
             </div>
-          </div>
+          </BorderGlow>
         </div>
 
         <p className="mt-4 font-mono text-xs text-[#8E8E8E]">

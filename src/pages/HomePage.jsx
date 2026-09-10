@@ -15,6 +15,7 @@ import { useProjects } from '../context/ProjectContext';
 import { ShinyText } from '../components/bits/ShinyText';
 import { Badge } from '../components/untitled/Badge';
 import { SpotlightCard } from '../components/bits/SpotlightCard';
+import { BorderGlow } from '../components/bits/BorderGlow';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -240,9 +241,14 @@ export function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Languages */}
-          <SpotlightCard
-            spotlightColor="rgba(225, 6, 0, 0.2)"
-            className="p-8 bg-[#121212] border border-[#F5F5F0]/10 space-y-6"
+          <BorderGlow
+            borderRadius={16}
+            glowRadius={36}
+            edgeSensitivity={24}
+            glowColor="0 100 50"
+            colors={['#E10600', '#FF3333', '#8B0000']}
+            backgroundColor="#121212"
+            className="p-8 space-y-6"
           >
             <div className="flex items-center justify-between border-b border-[#F5F5F0]/10 pb-4">
               <div className="flex items-center gap-3">
@@ -273,12 +279,17 @@ export function HomePage() {
                 </div>
               ))}
             </div>
-          </SpotlightCard>
+          </BorderGlow>
 
           {/* Web Technologies */}
-          <SpotlightCard
-            spotlightColor="rgba(225, 6, 0, 0.2)"
-            className="p-8 bg-[#121212] border border-[#F5F5F0]/10 space-y-6"
+          <BorderGlow
+            borderRadius={16}
+            glowRadius={36}
+            edgeSensitivity={24}
+            glowColor="0 100 50"
+            colors={['#E10600', '#FF3333', '#8B0000']}
+            backgroundColor="#121212"
+            className="p-8 space-y-6"
           >
             <div className="flex items-center justify-between border-b border-[#F5F5F0]/10 pb-4">
               <div className="flex items-center gap-3">
@@ -308,7 +319,7 @@ export function HomePage() {
                 </div>
               ))}
             </div>
-          </SpotlightCard>
+          </BorderGlow>
         </div>
 
         <div className="mt-4 p-4 bg-[#0E0E0E] border border-[#F5F5F0]/5 font-mono text-[11px] text-[#8E8E8E] flex flex-col sm:flex-row sm:items-center justify-between gap-2">

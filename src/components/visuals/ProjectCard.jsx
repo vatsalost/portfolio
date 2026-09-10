@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, Github, Globe, Cpu } from 'lucide-react';
 import { useAudio } from '../../context/AudioContext';
 import { Badge } from '../untitled/Badge';
+import { BorderGlow } from '../bits/BorderGlow';
 
 export function ProjectCard({ project, index, layout = 'card' }) {
   const { playHover, playClick } = useAudio();
@@ -72,63 +73,48 @@ export function ProjectCard({ project, index, layout = 'card' }) {
               ))}
             </div>
 
-            {/* Direct Action Links */}
-            <div className="flex items-center gap-4 pt-3 font-mono text-xs">
+            {/* Link Actions */}
+            <div className="pt-2 flex items-center gap-4 font-mono text-xs">
               <Link
                 to={`/project/${project.id}`}
                 onClick={playClick}
-                className="inline-flex items-center gap-1.5 text-[#F5F5F0] hover:text-[#E10600] font-bold transition-colors"
+                className="inline-flex items-center gap-1.5 text-[#F5F5F0] hover:text-[#E10600] font-bold tracking-wider transition-colors"
+                data-cursor="explore"
               >
-                <span>VIEW CASE STUDY</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#E10600]" />
+                <span>EXPLORE CASE STUDY</span>
+                <ArrowUpRight className="w-4 h-4 text-[#E10600]" />
               </Link>
-
               {project.githubUrl && (
                 <a
                   href={project.githubUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1 text-[#8E8E8E] hover:text-[#F5F5F0] transition-colors"
-                  title="Source Code on GitHub"
                 >
                   <Github className="w-3.5 h-3.5" />
-                  <span>CODE</span>
-                </a>
-              )}
-
-              {project.liveUrl && (
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1 text-[#8E8E8E] hover:text-[#F5F5F0] transition-colors"
-                  title="Live Deployment"
-                >
-                  <Globe className="w-3.5 h-3.5" />
-                  <span>DEMO</span>
+                  <span>SRC</span>
                 </a>
               )}
             </div>
           </div>
 
-          {/* Col 3: Visual Preview */}
+          {/* Col 3: Visual Canvas Preview */}
           <div className="lg:col-span-4">
             <Link
               to={`/project/${project.id}`}
               onClick={playClick}
-              className="relative w-full block overflow-hidden bg-[#121212] border border-[#F5F5F0]/10 group-hover:border-[#E10600]/40 transition-colors"
+              className="relative block aspect-[16/10] overflow-hidden bg-[#141414] border border-[#F5F5F0]/10 group-hover:border-[#E10600] transition-colors"
+              data-cursor="view"
             >
-              <div className="relative w-full aspect-[16/10] overflow-hidden">
-                <img
-                  src={project.thumbnail}
-                  alt={project.title}
-                  className="w-full h-full object-cover object-center duotone-hover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent opacity-60 pointer-events-none" />
-                <div className="absolute bottom-3 right-3 p-2 bg-[#E10600] text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0 z-30">
-                  <ArrowUpRight className="w-4 h-4" />
-                </div>
+              <img
+                src={project.thumbnail}
+                alt={project.title}
+                className="w-full h-full object-cover duotone-hover group-hover:scale-105 transition-all duration-700 ease-out"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-[#0A0A0A]/40 group-hover:bg-[#E10600]/10 transition-colors duration-500" />
+              <div className="absolute top-3 right-3 p-2 bg-[#0A0A0A]/80 backdrop-blur-md border border-[#F5F5F0]/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                <ArrowUpRight className="w-4 h-4" />
               </div>
             </Link>
           </div>
@@ -139,10 +125,19 @@ export function ProjectCard({ project, index, layout = 'card' }) {
 
   // Standard Card layout (for /work archive grid)
   return (
-    <article
-      className="group relative flex flex-col h-full justify-between bg-[#101010] border border-[#F5F5F0]/10 overflow-hidden transition-all duration-300 hover:border-[#E10600]/50"
+    <BorderGlow
+      borderRadius={12}
+      glowRadius={32}
+      edgeSensitivity={22}
+      glowColor="0 100 50"
+      colors={['#E10600', '#FF3333', '#8B0000']}
+      backgroundColor="#101010"
+      className="group h-full"
       onMouseEnter={playHover}
     >
+      <article
+        className="relative flex flex-col h-full justify-between overflow-hidden"
+      >
       {/* Top Half: Visual Preview */}
       <div>
         <Link
@@ -240,5 +235,6 @@ export function ProjectCard({ project, index, layout = 'card' }) {
         </div>
       </div>
     </article>
-  );
+  </BorderGlow>
+);
 }
