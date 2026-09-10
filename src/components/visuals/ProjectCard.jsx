@@ -13,11 +13,11 @@ export function ProjectCard({ project, index, layout = 'card' }) {
   if (layout === 'stack') {
     return (
       <div 
-        className="group/card bg-[#111111] border border-[#F5F5F0]/12 hover:border-[#E10600]/50 transition-all duration-300 rounded-2xl overflow-hidden shadow-2xl"
+        className="group/card bg-[#111111] border border-[#F5F5F0]/12 hover:border-[#E10600]/50 transition-all duration-300 rounded-2xl overflow-hidden shadow-2xl flex flex-col w-full"
         onMouseEnter={playHover}
       >
         {/* Persistent Stack Header Bar (stays visible as top tab when subsequent cards stack) */}
-        <div className="flex items-center justify-between px-6 py-2.5 bg-[#161616] border-b border-[#F5F5F0]/10 font-mono text-xs select-none">
+        <div className="flex items-center justify-between px-6 py-2.5 bg-[#161616] border-b border-[#F5F5F0]/10 font-mono text-xs select-none h-10 flex-shrink-0">
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-[#E10600] animate-pulse" />
             <span className="font-bold text-[#F5F5F0] tracking-wider group-hover/card:text-[#E10600] transition-colors">
@@ -35,9 +35,9 @@ export function ProjectCard({ project, index, layout = 'card' }) {
           </div>
         </div>
 
-        {/* Main Card Body */}
-        <div className="p-6 md:p-10 bg-gradient-to-br from-[#131313] via-[#0F0F0F] to-[#0A0A0A]">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        {/* Main Card Body - Uniform Height for Exact Card Parity */}
+        <div className="p-6 md:p-8 lg:p-10 bg-gradient-to-br from-[#131313] via-[#0F0F0F] to-[#0A0A0A] flex-1 flex flex-col justify-center min-h-[380px] md:min-h-[360px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
             {/* Col 1: Index, Tag & Meta */}
             <div className="lg:col-span-3 flex flex-col justify-between space-y-4">
               <div>
@@ -50,18 +50,16 @@ export function ProjectCard({ project, index, layout = 'card' }) {
                   {project.year} // {project.role || "Developer"}
                 </p>
               </div>
-              {project.technicalHighlight && (
-                <div>
-                  <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#F5F5F0] bg-[#161616] px-3 py-1.5 border border-[#F5F5F0]/10">
-                    <Cpu className="w-3.5 h-3.5 text-[#E10600]" />
-                    <span>{project.technicalHighlight}</span>
-                  </span>
-                </div>
-              )}
+              <div>
+                <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#F5F5F0] bg-[#161616] px-3 py-1.5 border border-[#F5F5F0]/10">
+                  <Cpu className="w-3.5 h-3.5 text-[#E10600] flex-shrink-0" />
+                  <span className="truncate max-w-[200px]">{project.technicalHighlight || "Systems Architecture · Full Stack"}</span>
+                </span>
+              </div>
             </div>
 
             {/* Col 2: Title, Overview, Stack, Links */}
-            <div className="lg:col-span-5 space-y-4">
+            <div className="lg:col-span-5 space-y-3">
               <Link
                 to={`/project/${project.id}`}
                 onClick={playClick}
@@ -71,11 +69,11 @@ export function ProjectCard({ project, index, layout = 'card' }) {
                   {project.title}
                 </h3>
               </Link>
-              <p className="text-sm text-[#A3A39B] font-sans font-light leading-relaxed">
+              <p className="text-sm text-[#A3A39B] font-sans font-light leading-relaxed line-clamp-2 min-h-[2.75rem]">
                 {project.tagline || project.overview}
               </p>
-              <div className="flex flex-wrap gap-1.5 pt-1 font-mono text-xs text-[#8E8E8E]">
-                {project.stack?.map((tech, i) => (
+              <div className="flex flex-wrap gap-1.5 pt-1 font-mono text-xs text-[#8E8E8E] min-h-[26px]">
+                {project.stack?.slice(0, 5).map((tech, i) => (
                   <span key={i} className="px-2 py-0.5 bg-[#181818] border border-[#F5F5F0]/5 text-[11px] text-[#A3A39B]">
                     {tech}
                   </span>
@@ -110,7 +108,7 @@ export function ProjectCard({ project, index, layout = 'card' }) {
               <Link
                 to={`/project/${project.id}`}
                 onClick={playClick}
-                className="relative block aspect-[16/10] overflow-hidden bg-[#161616] border border-[#F5F5F0]/10 group-hover/card:border-[#E10600] transition-colors rounded-lg"
+                className="relative block aspect-[16/10] overflow-hidden bg-[#161616] border border-[#F5F5F0]/10 group-hover/card:border-[#E10600] transition-colors rounded-lg max-h-[240px]"
                 data-cursor="view"
               >
                 <img
