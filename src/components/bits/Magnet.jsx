@@ -6,6 +6,7 @@ export function Magnet({
   className = '',
   strength = 0.35,
   reach = 45,
+  disableOnMobile = true,
   as: Component = 'div',
   ...props
 }) {
@@ -15,6 +16,11 @@ export function Magnet({
     // Only check reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
+
+    // Disable on mobile/touch screens for reliable button tapping
+    if (disableOnMobile && (window.innerWidth < 768 || ('ontouchstart' in window && window.innerWidth < 1024))) {
+      return;
+    }
 
     const el = ref.current;
     if (!el) return;
