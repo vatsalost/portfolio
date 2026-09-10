@@ -90,10 +90,10 @@ export function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="font-display font-bold text-sm tracking-wider text-[#F5F5F0] uppercase">
-                VATSAL // CSE
+                VATSAL CHAUDHARY
               </span>
               <span className="font-mono text-[9px] text-[#8E8E8E] tracking-widest">
-                2ND YEAR UNDERGRAD
+                B.TECH CSE • SIT PUNE
               </span>
             </div>
           </Link>
@@ -104,7 +104,7 @@ export function Navbar() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E10600] opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E10600]" />
             </span>
-            <span className="tracking-wider">2ND YR CSE • OPEN FOR INTERNSHIPS & COLLABORATION</span>
+            <span className="tracking-wider">B.TECH CSE @ SIT PUNE • OPEN TO HACKATHONS & COLLABORATION</span>
           </div>
 
           {/* Right Controls: Audio + Nav Links + Menu Toggle */}
@@ -225,7 +225,7 @@ export function Navbar() {
           </div>
           <div>
             <span className="text-[#E10600] block mb-1">STATUS</span>
-            <span>2ND YEAR B.TECH CSE // CLASS OF 2027</span>
+            <span>B.TECH CSE // SYMBIOSIS INSTITUTE OF TECHNOLOGY, PUNE</span>
           </div>
           <div className="md:text-right">
             <span className="text-[#E10600] block mb-1">CHANNELS</span>

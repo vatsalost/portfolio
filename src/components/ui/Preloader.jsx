@@ -90,7 +90,7 @@ export function Preloader({ onComplete }) {
             <span className="w-1.5 h-1.5 rounded-full bg-[#E10600] animate-ping" />
             SYSTEM // INITIALIZING
           </span>
-          <span>B.TECH CSE // CLASS OF 2027</span>
+          <span>B.TECH CSE // SIT PUNE</span>
         </div>
 
         {/* Center Content: Monogram + Kinetic title */}
@@ -103,15 +103,15 @@ export function Preloader({ onComplete }) {
             <span className="font-display font-black text-5xl tracking-tighter text-[#F5F5F0]">
               V<span className="text-[#E10600]">.</span>
             </span>
-            <div className="absolute bottom-1 right-2 text-[8px] font-mono text-[#8E8E8E]">CSE.YR2</div>
+            <div className="absolute bottom-1 right-2 text-[8px] font-mono text-[#8E8E8E]">SIT.CSE</div>
           </div>
 
           <div ref={textRef} className="text-center">
             <h1 className="font-display font-extrabold text-2xl md:text-4xl tracking-tight text-[#F5F5F0]">
-              VATSAL // CSE LABS
+              VATSAL CHAUDHARY
             </h1>
-            <p className="font-mono text-xs tracking-widest text-[#8E8E8E] mt-2">
-              COMPUTER SCIENCE UNDERGRAD // 2ND YEAR
+            <p className="font-mono text-xs tracking-widest text-[#8E8E8E] mt-2 uppercase">
+              B.Tech Computer Science & Engineering // SIT Pune
             </p>
           </div>
         </div>
@@ -119,7 +119,7 @@ export function Preloader({ onComplete }) {
         {/* Bottom Bar: Monospace Progress & Counter */}
         <div className="flex items-end justify-between border-t border-[#F5F5F0]/10 pt-4">
           <div className="font-mono text-xs text-[#8E8E8E] hidden sm:block">
-            NODE: SYSTEMS // ALGORITHMIC GRAPHICS
+            SYMBIOSIS INSTITUTE OF TECHNOLOGY, PUNE
           </div>
           <div className="flex items-baseline gap-2 font-mono">
             <span className="text-xs text-[#E10600] tracking-widest">LOADING</span>

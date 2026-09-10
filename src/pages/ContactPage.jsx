@@ -10,7 +10,7 @@ export function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    topic: 'Summer 2026/2027 Internship',
+    topic: 'Hackathon Collaboration',
     message: ''
   });
 
@@ -19,10 +19,10 @@ export function ContactPage() {
   const [transmissionId, setTransmissionId] = useState('');
 
   const contactTopics = [
-    'Summer 2026/2027 Internship',
-    'Systems / Open-Source Collab',
-    'Hackathon Team Project',
-    'Engineering Chat / General'
+    'Hackathon Collaboration',
+    'Project Collaboration',
+    'Open Source & Coding',
+    'Tech Discussion / General'
   ];
 
   const handleCopyEmail = () => {
@@ -61,14 +61,14 @@ export function ContactPage() {
       {/* Header */}
       <div className="border-b border-[#F5F5F0]/10 pb-12 mb-16">
         <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase mb-2">
-          // INITIATE CONTACT // 2ND YEAR CSE
+          // INITIATE CONTACT
         </span>
         <h1 className="font-display font-black text-5xl sm:text-7xl md:text-8xl text-[#F5F5F0] tracking-tight uppercase leading-[0.9]">
-          LET'S CONNECT<br />
-          <span className="text-stroke-bone hover:text-[#E10600]">& COLLABORATE.</span>
+          LET'S BUILD<br />
+          <span className="text-stroke-bone hover:text-[#E10600]">SOMETHING.</span>
         </h1>
-        <p className="mt-6 text-base font-light text-[#8E8E8E] max-w-xl font-sans">
-          Open for Summer 2026/2027 Software Engineering internships, high-impact open-source systems projects, and competitive hackathons.
+        <p className="mt-6 text-base md:text-lg font-light text-[#8E8E8E] max-w-xl font-sans">
+          I'm open to hackathons, collaborations, and interesting projects.
         </p>
       </div>
 
@@ -339,20 +339,24 @@ export function ContactPage() {
             </span>
             <div className="space-y-3 text-[#8E8E8E]">
               <div className="flex justify-between border-b border-[#F5F5F0]/5 pb-2">
-                <span>STATUS:</span>
-                <span className="text-[#F5F5F0]">Full-Time Student</span>
+                <span>EDUCATION:</span>
+                <span className="text-[#F5F5F0]">B.Tech CSE</span>
               </div>
               <div className="flex justify-between border-b border-[#F5F5F0]/5 pb-2">
-                <span>INTERNSHIPS:</span>
-                <span className="text-[#E10600]">Summer 2026 / 2027</span>
+                <span>COLLEGE:</span>
+                <span className="text-[#F5F5F0]">SIT Pune</span>
+              </div>
+              <div className="flex justify-between border-b border-[#F5F5F0]/5 pb-2">
+                <span>AVAILABILITY:</span>
+                <span className="text-[#E10600]">Hackathons & Collabs</span>
               </div>
               <div className="flex justify-between border-b border-[#F5F5F0]/5 pb-2">
                 <span>TIMEZONE:</span>
                 <span className="text-[#F5F5F0]">IST (UTC+05:30)</span>
               </div>
               <div className="flex justify-between">
-                <span>RESPONSE TIME:</span>
-                <span className="text-[#F5F5F0]">Within 24–48 hours</span>
+                <span>RESPONSE:</span>
+                <span className="text-[#F5F5F0]">Within 24 hours</span>
               </div>
             </div>
           </div>
@@ -363,7 +367,7 @@ export function ContactPage() {
               COLLABORATION NOTE
             </span>
             <p className="text-[#8E8E8E] font-sans font-light text-xs leading-relaxed">
-              During active semester terms, I prioritize coursework and dedicated project windows on weekends and evenings. For hackathons or summer internships, I am fully available.
+              Always eager to join hackathons, brainstorm project ideas, and team up with people who like building things.
             </p>
           </div>
         </div>

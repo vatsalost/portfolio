@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowDown, ArrowUpRight, Sparkles, Terminal, Cpu, Layers, 
-  Github, FileText, FlaskConical, Compass, BookOpen, ChevronRight 
+  Github, FileText, FlaskConical, Compass, BookOpen, ChevronRight,
+  Code2, Trophy, Users, Zap, Mail
 } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -13,7 +14,7 @@ import { MarqueeTicker } from '../components/ui/MarqueeTicker';
 import { useProjects } from '../context/ProjectContext';
 import { ShinyText } from '../components/bits/ShinyText';
 import { Badge } from '../components/untitled/Badge';
-import { ReactDevCard } from '../components/bits/ReactDevCard';
+import { SpotlightCard } from '../components/bits/SpotlightCard';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,7 +22,7 @@ export function HomePage() {
   const { projects } = useProjects();
   const heroRef = useRef(null);
   const titleRef = useRef(null);
-  const philosophyRef = useRef(null);
+  const hackathonRef = useRef(null);
 
   // Focus strictly on the 3 strongest flagship builds
   const featuredProjects = projects.filter(p => p.featured).slice(0, 3);
@@ -47,25 +48,6 @@ export function HomePage() {
           }
         );
       }
-
-      // Philosophy cards reveal
-      if (philosophyRef.current) {
-        gsap.fromTo(
-          philosophyRef.current.querySelectorAll('.philosophy-card'),
-          { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            stagger: 0.12,
-            duration: 0.7,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: philosophyRef.current,
-              start: 'top 85%',
-            }
-          }
-        );
-      }
     });
 
     return () => ctx.revert();
@@ -78,29 +60,29 @@ export function HomePage() {
         ref={heroRef}
         className="relative min-h-[90vh] md:min-h-screen flex flex-col justify-between pt-28 md:pt-36 pb-12 md:pb-16 px-6 md:px-12 max-w-7xl mx-auto"
       >
-        {/* Generative Topographic Wave Canvas (pauses when offscreen) */}
+        {/* Generative Topographic Wave Canvas */}
         <ReactiveCanvas className="opacity-80" />
 
         {/* Hero Top Identification */}
         <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-xs text-[#8E8E8E] border-b border-[#F5F5F0]/10 pb-4">
           <div className="flex items-center gap-3">
             <Badge variant="crimson" size="sm">
-              VATSAL // CS UNDERGRAD
+              VATSAL CHAUDHARY
             </Badge>
+            <span className="text-[#8E8E8E] hidden sm:inline">B.TECH CSE</span>
           </div>
-          <div className="flex items-center gap-4 sm:gap-6 text-[11px] sm:text-xs">
-            <span>B.TECH COMPUTER SCIENCE</span>
-            <span className="hidden sm:inline text-[#A3A39B]">C++ · RUST · WEBGL · ALGORITHMS</span>
+          <div className="flex items-center gap-4 text-[11px] sm:text-xs">
+            <span className="text-[#F5F5F0]">SYMBIOSIS INSTITUTE OF TECHNOLOGY, PUNE</span>
           </div>
         </div>
 
-        {/* Hero Central Headline: Clear, Confident, Technical */}
+        {/* Hero Central Headline */}
         <div ref={titleRef} className="relative z-10 my-auto py-8 md:py-12 max-w-5xl">
           <div className="mb-4">
             <div className="reveal-line inline-flex items-center gap-2 px-3 py-1 bg-[#121212] border border-[#F5F5F0]/10 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#E10600]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E10600] animate-pulse" />
               <ShinyText
-                text="SYSTEMS & GRAPHICS ARCHITECT"
+                text="COMPUTER SCIENCE & ENGINEERING"
                 speed={3.5}
                 className="font-mono text-xs font-bold tracking-wider uppercase"
                 baseColor="#8E8E8E"
@@ -111,24 +93,51 @@ export function HomePage() {
 
           <div className="space-y-1">
             <h1 className="reveal-line font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] tracking-tight text-[#F5F5F0] uppercase leading-[0.95]">
-              SYSTEMS, GRAPHICS
+              VATSAL CHAUDHARY<span className="text-[#E10600]">.</span>
             </h1>
-            <h1 className="reveal-line font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] tracking-tight text-stroke-bone hover:text-[#E10600] uppercase leading-[0.95] transition-colors">
-              & ALGORITHMS<span className="text-[#E10600]">.</span>
-            </h1>
+            <h2 className="reveal-line font-display font-black text-2xl sm:text-4xl md:text-5xl text-stroke-bone hover:text-[#E10600] uppercase tracking-tight transition-colors">
+              BUILDING, EXPERIMENTING & LEARNING.
+            </h2>
           </div>
 
-          {/* Short, Confident Persona Description */}
-          <div className="mt-6 max-w-2xl">
-            <p className="text-base sm:text-lg font-light text-[#A3A39B] font-sans leading-relaxed">
-              Computer Science student building low-level systems in C++ & Rust, interactive GPU shaders in WebGL, and algorithmic developer tooling. Exploring mechanical sympathy, memory efficiency, and real-time kinetic interaction.
+          {/* Persona Statement */}
+          <div className="mt-6 max-w-2xl space-y-3">
+            <p className="text-base sm:text-lg font-light text-[#F5F5F0] font-sans leading-relaxed">
+              B.Tech Computer Science & Engineering student at <strong className="font-semibold text-white">Symbiosis Institute of Technology, Pune</strong>.
+            </p>
+            <p className="text-sm sm:text-base font-light text-[#A3A39B] font-sans leading-relaxed">
+              I like building things, experimenting with technology, and learning by doing.
             </p>
           </div>
 
-          {/* Clear, Obvious CTAs */}
+          {/* Technical Stack Pills */}
+          <div className="mt-6 flex flex-wrap items-center gap-2 font-mono text-xs">
+            <span className="text-[#E10600] font-bold mr-1">// STACK:</span>
+            {['C', 'C++', 'Java', 'HTML', 'CSS'].map((skill) => (
+              <span
+                key={skill}
+                className="px-3 py-1 bg-[#141414] border border-[#F5F5F0]/15 text-[#F5F5F0] font-medium tracking-wide"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+
+          {/* Hackathon Callout Line */}
+          <div className="mt-4 flex items-center gap-2 font-mono text-xs text-[#E10600]">
+            <span className="w-2 h-2 rounded-full bg-[#E10600]" />
+            <span className="tracking-wide font-bold uppercase">
+              Open to hackathons, collaborations, and interesting projects.
+            </span>
+          </div>
+
+          {/* Clear CTAs */}
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <MagneticButton href="#featured-work" variant="primary">
-              VIEW WORK <ArrowDown className="w-4 h-4" />
+              VIEW PROJECTS <ArrowDown className="w-4 h-4" />
+            </MagneticButton>
+            <MagneticButton href="/contact" variant="outline">
+              CONTACT ME <Mail className="w-3.5 h-3.5" />
             </MagneticButton>
             <a
               href="https://github.com/vatsalost"
@@ -139,15 +148,6 @@ export function HomePage() {
               <Github className="w-4 h-4" />
               <span>GITHUB</span>
             </a>
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-transparent text-[#8E8E8E] border border-[#F5F5F0]/10 font-mono text-xs tracking-wider uppercase hover:text-[#F5F5F0] hover:border-[#F5F5F0]/25 transition-colors"
-            >
-              <FileText className="w-4 h-4" />
-              <span>RÉSUMÉ</span>
-            </a>
           </div>
         </div>
 
@@ -155,133 +155,261 @@ export function HomePage() {
         <div className="relative z-10 flex items-center justify-between font-mono text-xs text-[#8E8E8E] pt-4 border-t border-[#F5F5F0]/10">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#E10600] animate-pulse" />
-            <span>SCROLL TO EXPLORE WORK</span>
+            <span>SCROLL TO EXPLORE</span>
           </div>
           <div className="text-[11px]">
-            <span>2ND YEAR UNDERGRAD // CS201 & CS202</span>
+            <span>SYMBIOSIS INSTITUTE OF TECHNOLOGY, PUNE</span>
           </div>
         </div>
       </section>
 
-      {/* 2. NOW // CURRENTLY BUILDING SECTION */}
+      {/* 2. "CURRENTLY" / "NOW" SECTION */}
       <section className="py-12 px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="p-6 md:p-8 bg-[#0D0D0D] border border-[#F5F5F0]/10 rounded-xl grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
-          <div className="space-y-2 border-b md:border-b-0 md:border-r border-[#F5F5F0]/10 pb-4 md:pb-0 md:pr-6">
+        <div className="p-6 md:p-8 bg-[#0D0D0D] border border-[#F5F5F0]/10 rounded-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs">
+          {/* Studying */}
+          <div className="space-y-2 border-b sm:border-b-0 sm:border-r border-[#F5F5F0]/10 pb-4 sm:pb-0 sm:pr-4">
             <div className="flex items-center gap-2 text-[#E10600] font-bold">
-              <span className="w-2 h-2 rounded-full bg-[#E10600]" />
-              <span>NOW // BUILDING</span>
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>CURRENTLY // STUDYING</span>
             </div>
-            <p className="text-sm font-sans font-normal text-[#F5F5F0]">
-              Procedural GLSL raymarcher & custom C++ memory pool allocator.
+            <p className="text-sm font-sans font-semibold text-[#F5F5F0]">
+              B.Tech Computer Science & Engineering
             </p>
-            <span className="text-[11px] text-[#8E8E8E]">Focusing on zero-copy memory buffers and SIMD vector math.</span>
+            <span className="text-[11px] text-[#8E8E8E] block">
+              Symbiosis Institute of Technology, Pune
+            </span>
           </div>
 
-          <div className="space-y-2 border-b md:border-b-0 md:border-r border-[#F5F5F0]/10 pb-4 md:pb-0 md:pr-6">
+          {/* Building */}
+          <div className="space-y-2 border-b lg:border-b-0 lg:border-r border-[#F5F5F0]/10 pb-4 sm:pb-0 sm:pr-4">
             <div className="flex items-center gap-2 text-[#F5F5F0] font-bold">
-              <BookOpen className="w-3.5 h-3.5 text-[#E10600]" />
-              <span>NOW // LEARNING</span>
+              <Code2 className="w-3.5 h-3.5 text-[#E10600]" />
+              <span>CURRENTLY // BUILDING</span>
             </div>
             <p className="text-sm font-sans font-normal text-[#F5F5F0]">
-              Computer Architecture (CS202) & OS kernel paging.
+              Projects and experiments
             </p>
-            <span className="text-[11px] text-[#8E8E8E]">Virtual memory tables, cache coherence, and WebGPU compute.</span>
+            <span className="text-[11px] text-[#8E8E8E] block">
+              Software tools, algorithms, and web applications.
+            </span>
           </div>
 
-          <div className="space-y-2">
+          {/* Learning */}
+          <div className="space-y-2 border-b sm:border-b-0 sm:border-r border-[#F5F5F0]/10 pb-4 sm:pb-0 sm:pr-4">
             <div className="flex items-center gap-2 text-[#F5F5F0] font-bold">
               <Compass className="w-3.5 h-3.5 text-[#E10600]" />
-              <span>NOW // EXPLORING</span>
+              <span>CURRENTLY // LEARNING</span>
             </div>
             <p className="text-sm font-sans font-normal text-[#F5F5F0]">
-              Data-Oriented Design (DOD) & cache locality.
+              Through hands-on development & hackathons
             </p>
-            <span className="text-[11px] text-[#8E8E8E]">Structuring data structures for L1/L2 cache hit rates.</span>
+            <span className="text-[11px] text-[#8E8E8E] block">
+              Tackling problems that challenge and teach me.
+            </span>
+          </div>
+
+          {/* Open to */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-[#E10600] font-bold">
+              <Zap className="w-3.5 h-3.5 text-[#E10600]" />
+              <span>CURRENTLY // OPEN TO</span>
+            </div>
+            <p className="text-sm font-sans font-semibold text-[#F5F5F0]">
+              Hackathons · Collaborations · Projects
+            </p>
+            <span className="text-[11px] text-[#8E8E8E] block">
+              Looking for teammates and interesting ideas.
+            </span>
           </div>
         </div>
       </section>
 
-      {/* 3. ENGINEERING PHILOSOPHY (< 20 SECONDS READ) */}
-      <section ref={philosophyRef} className="py-16 md:py-24 px-6 md:px-12 max-w-7xl mx-auto border-t border-[#F5F5F0]/10">
+      {/* 3. TECHNICAL SKILLS SECTION */}
+      <section className="py-16 md:py-24 px-6 md:px-12 max-w-7xl mx-auto border-t border-[#F5F5F0]/10">
         <div className="mb-12">
           <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase mb-2">
-            // ENGINEERING MINDSET
+            // TECHNICAL PROFILE
           </span>
-          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-[#F5F5F0] tracking-tight uppercase">
-            HOW I APPROACH SOFTWARE
+          <h2 className="font-display text-3xl sm:text-5xl font-black text-[#F5F5F0] tracking-tight uppercase">
+            TECHNICAL SKILLS
           </h2>
+          <p className="mt-2 text-sm text-[#8E8E8E] font-sans font-light max-w-xl">
+            Core programming languages and web technologies I work with.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              num: "01",
-              title: "Understand the Abstraction",
-              desc: "Don't treat compilers, memory allocators, or GPU drivers as black boxes. Inspect assembly and cache behavior."
-            },
-            {
-              num: "02",
-              title: "Measure Before Optimizing",
-              desc: "Profile memory lines and CPU bottlenecks with evidence before refactoring. Asymptotic complexity matters."
-            },
-            {
-              num: "03",
-              title: "Build Tools Worth Understanding",
-              desc: "Solve genuine engineering friction. Build software that deepens systems comprehension rather than making clones."
-            },
-            {
-              num: "04",
-              title: "Simplicity Over Ceremony",
-              desc: "Keep architectures minimal, readable, and mathematically sound. High performance and clean aesthetics coexist."
-            }
-          ].map((item, i) => (
-            <div
-              key={i}
-              className="philosophy-card p-6 bg-[#0E0E0E] border border-[#F5F5F0]/10 rounded-lg hover:border-[#E10600]/40 transition-colors space-y-3"
-            >
-              <span className="font-mono text-xs text-[#E10600] font-bold">
-                [ {item.num} ]
-              </span>
-              <h3 className="font-display font-bold text-lg text-[#F5F5F0]">
-                {item.title}
-              </h3>
-              <p className="text-xs font-sans font-light text-[#8E8E8E] leading-relaxed">
-                {item.desc}
-              </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Languages */}
+          <SpotlightCard
+            spotlightColor="rgba(225, 6, 0, 0.2)"
+            className="p-8 bg-[#121212] border border-[#F5F5F0]/10 space-y-6"
+          >
+            <div className="flex items-center justify-between border-b border-[#F5F5F0]/10 pb-4">
+              <div className="flex items-center gap-3">
+                <Terminal className="w-5 h-5 text-[#E10600]" />
+                <span className="font-mono text-xs font-bold text-[#F5F5F0] uppercase tracking-wider">
+                  01 // PROGRAMMING LANGUAGES
+                </span>
+              </div>
+              <span className="font-mono text-[10px] text-[#8E8E8E]">CORE SKILLS</span>
             </div>
-          ))}
+
+            <div className="grid grid-cols-3 gap-4">
+              {[
+                { name: 'C', level: 'Procedural Systems', desc: 'Pointers, memory management, algorithms' },
+                { name: 'C++', level: 'Object-Oriented', desc: 'OOP, STL, data structures, problem solving' },
+                { name: 'Java', level: 'Object-Oriented', desc: 'Core Java, OOP principles, application logic' }
+              ].map((skill, i) => (
+                <div key={i} className="p-4 bg-[#0A0A0A] border border-[#F5F5F0]/5 space-y-1">
+                  <div className="font-display font-black text-2xl text-[#F5F5F0]">
+                    {skill.name}
+                  </div>
+                  <div className="font-mono text-[10px] text-[#E10600]">
+                    {skill.level}
+                  </div>
+                  <p className="font-sans text-[11px] text-[#8E8E8E] pt-1">
+                    {skill.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </SpotlightCard>
+
+          {/* Web Technologies */}
+          <SpotlightCard
+            spotlightColor="rgba(225, 6, 0, 0.2)"
+            className="p-8 bg-[#121212] border border-[#F5F5F0]/10 space-y-6"
+          >
+            <div className="flex items-center justify-between border-b border-[#F5F5F0]/10 pb-4">
+              <div className="flex items-center gap-3">
+                <Layers className="w-5 h-5 text-[#E10600]" />
+                <span className="font-mono text-xs font-bold text-[#F5F5F0] uppercase tracking-wider">
+                  02 // WEB TECHNOLOGIES
+                </span>
+              </div>
+              <span className="font-mono text-[10px] text-[#8E8E8E]">MARKUP & STYLING</span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { name: 'HTML', role: 'Semantic Structure', desc: 'Accessible DOM structuring, forms, modern markup' },
+                { name: 'CSS', role: 'Styling & Layout', desc: 'Flexbox, Grid, responsive design, transitions' }
+              ].map((skill, i) => (
+                <div key={i} className="p-4 bg-[#0A0A0A] border border-[#F5F5F0]/5 space-y-1">
+                  <div className="font-display font-black text-2xl text-[#F5F5F0]">
+                    {skill.name}
+                  </div>
+                  <div className="font-mono text-[10px] text-[#E10600]">
+                    {skill.role}
+                  </div>
+                  <p className="font-sans text-[11px] text-[#8E8E8E] pt-1">
+                    {skill.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </SpotlightCard>
+        </div>
+
+        <div className="mt-4 p-4 bg-[#0E0E0E] border border-[#F5F5F0]/5 font-mono text-[11px] text-[#8E8E8E] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <span>* Note: Technologies used in specific project experiments (e.g. WebGL, frameworks) are documented in their respective case studies below.</span>
+          <span className="text-[#F5F5F0] font-bold">FOUNDATIONAL PROFICIENCY</span>
         </div>
       </section>
 
-      {/* 4. RUNNING SKILLS TICKER */}
+      {/* 4. HACKATHONS DEDICATED SECTION */}
+      <section ref={hackathonRef} className="py-16 md:py-24 px-6 md:px-12 max-w-7xl mx-auto border-t border-[#F5F5F0]/10">
+        <div className="p-8 md:p-14 bg-gradient-to-br from-[#121212] via-[#0E0E0E] to-[#0A0A0A] border-2 border-[#E10600]/40 rounded-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#E10600]/5 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div className="lg:col-span-8 space-y-6">
+              <div className="flex items-center gap-2 text-[#E10600] font-mono text-xs font-bold uppercase tracking-widest">
+                <Trophy className="w-4 h-4" />
+                <span>// HACKATHONS & COLLABORATION</span>
+              </div>
+
+              <h2 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-[#F5F5F0] uppercase tracking-tight leading-tight">
+                BUILDING UNDER PRESSURE.
+              </h2>
+
+              <blockquote className="text-base sm:text-xl font-light text-[#F5F5F0] font-sans leading-relaxed border-l-2 border-[#E10600] pl-4 italic">
+                "I enjoy building under pressure, experimenting with ideas, and working with people who like turning ideas into working projects."
+              </blockquote>
+
+              <div className="p-6 bg-[#0A0A0A] border border-[#F5F5F0]/10 rounded-xl space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#E10600] animate-ping" />
+                  <span className="font-mono text-xs font-bold text-[#E10600] uppercase tracking-wider">
+                    OPEN TO HACKATHONS
+                  </span>
+                </div>
+                <p className="font-sans text-sm text-[#8E8E8E] leading-relaxed">
+                  Looking for teammates, ideas, and opportunities to participate in upcoming hackathons. If you have an interesting challenge or need someone eager to build, let's team up.
+                </p>
+              </div>
+            </div>
+
+            <div className="lg:col-span-4 flex flex-col gap-4">
+              <div className="p-6 bg-[#0A0A0A] border border-[#F5F5F0]/10 rounded-xl space-y-3 font-mono text-xs">
+                <span className="text-[#8E8E8E] uppercase tracking-widest block">WHY I PARTICIPATE</span>
+                <ul className="space-y-2 text-[#F5F5F0]">
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#E10600]">✓</span> Fast-paced prototyping
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#E10600]">✓</span> Learning new tech in 24-48h
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#E10600]">✓</span> Working with collaborative teams
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[#E10600]">✓</span> Turning ideas into working builds
+                  </li>
+                </ul>
+              </div>
+
+              <Link
+                to="/contact"
+                className="w-full py-4 px-6 bg-[#E10600] text-white font-mono text-xs uppercase tracking-widest font-bold text-center hover:bg-[#B00500] transition-colors flex items-center justify-center gap-2"
+                data-cursor="team"
+              >
+                <span>TEAM UP FOR A HACKATHON</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. RUNNING SKILLS TICKER */}
       <div className="py-4 border-y border-[#F5F5F0]/10 bg-[#0A0A0A]">
         <MarqueeTicker
           items={[
-            "C++20 & RUST SYSTEMS",
-            "DATA STRUCTURES & ALGORITHMS",
-            "WEBGL & GLSL SHADERS",
-            "LINUX POSIX & SHELL",
-            "THREE.JS 3D SCENES",
-            "REACT 18 & WEBSOCKETS",
-            "COMPUTER ARCHITECTURE"
+            "VATSAL CHAUDHARY",
+            "B.TECH COMPUTER SCIENCE & ENGINEERING",
+            "SYMBIOSIS INSTITUTE OF TECHNOLOGY, PUNE",
+            "C · C++ · JAVA · HTML · CSS",
+            "OPEN TO HACKATHONS & COLLABORATIONS",
+            "LEARNING BY DOING"
           ]}
-          speed="32s"
+          speed="30s"
           highlightRed={true}
         />
       </div>
 
-      {/* 5. FEATURED WORK SHOWCASE (PRIMARY FOCUS) */}
+      {/* 6. FEATURED PROJECTS SHOWCASE */}
       <section id="featured-work" className="py-20 md:py-28 px-6 md:px-12 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 border-b border-[#F5F5F0]/10 pb-6 gap-6">
           <div>
             <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase mb-2">
-              // FLAGSHIP BUILDS
+              // HANDS-ON WORK
             </span>
             <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-[#F5F5F0] tracking-tight uppercase">
               FEATURED PROJECTS
             </h2>
             <p className="mt-2 text-sm text-[#8E8E8E] font-sans font-light max-w-xl">
-              Systems tools, 3D algorithm visualizers, and low-latency interaction engines built with C++, Rust, and WebGL.
+              Software tools, algorithm visualizers, and experiments built to learn by doing.
             </p>
           </div>
           <Link
@@ -293,7 +421,7 @@ export function HomePage() {
           </Link>
         </div>
 
-        {/* 3 Flagship Project Cards with Full Visual & Technical Detail */}
+        {/* Flagship Project Cards */}
         <div className="space-y-12">
           {featuredProjects.map((project, idx) => (
             <ProjectCard
@@ -312,169 +440,32 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 6. ACADEMIC & INDUSTRY TOOLKIT (REACT.DEV STYLE CODE CARDS) */}
-      <section className="py-20 md:py-28 px-6 md:px-12 max-w-7xl mx-auto border-t border-[#F5F5F0]/10">
-        <div className="mb-14">
-          <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase mb-2">
-            // CSE COMPETENCY MATRIX
+      {/* 7. CTA SECTION: BUILD SOMETHING? */}
+      <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto border-t border-[#F5F5F0]/10">
+        <div className="p-8 md:p-16 bg-[#121212] border border-[#F5F5F0]/10 text-center space-y-6">
+          <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase">
+            // NEXT STEP
           </span>
-          <h2 className="font-display text-3xl sm:text-5xl font-black text-[#F5F5F0] tracking-tight uppercase">
-            TECHNICAL TOOLKIT
+          <h2 className="font-display font-black text-4xl sm:text-6xl md:text-7xl text-[#F5F5F0] uppercase tracking-tight">
+            BUILD SOMETHING?
           </h2>
-          <p className="mt-3 font-mono text-xs text-[#8E8E8E] max-w-2xl">
-            Direct implementation patterns from university coursework (CS201/CS202), GPU shaders, and systems programming.
+          <p className="text-base sm:text-xl font-light text-[#8E8E8E] max-w-xl mx-auto font-sans">
+            I'm open to hackathons, collaborations, and interesting projects.
           </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-          <ReactDevCard
-            num="01"
-            icon={Cpu}
-            filename="dijkstra_graph.cpp"
-            runtimeBadge="O(E + V log V) • CS201"
-            language="cpp"
-            title="DATA STRUCTURES & ALGORITHMS"
-            description="Asymptotic bounds, self-balancing search trees (AVL, Red-Black), dynamic programming state spaces, and cache-aligned memory representations with C++20 STL."
-            code={`template <typename T>
-class PriorityGraph {
-  void dijkstra(int src, vector<int>& dist) {
-    priority_queue<Edge, vector<Edge>, greater<>> pq;
-    dist[src] = 0;
-    pq.push({0, src});
-  }
-};`}
-            tags={["C++20 STL", "Graph Theory", "DP State Spaces", "LeetCode"]}
-          />
-
-          <ReactDevCard
-            num="02"
-            icon={Sparkles}
-            filename="kinetic_shader.glsl"
-            runtimeBadge="60 FPS • WebGL 2.0"
-            language="glsl"
-            title="GPU GRAPHICS & WEBGL"
-            description="Interactive fragment raymarching, GPU vertex displacement shaders, Three.js instanced rendering, and spatial canvas simulations with GLSL."
-            code={`uniform float u_time;
-varying vec2 v_uv;
-void main() {
-  vec2 p = v_uv * 2.0 - 1.0;
-  float wave = sin(length(p) * 12.0 - u_time * 3.0);
-  gl_FragColor = vec4(vec3(0.88, 0.02, 0.0) * wave, 1.0);
-}`}
-            tags={["Three.js", "GLSL Shaders", "WebGPU", "Canvas 2D"]}
-          />
-
-          <ReactDevCard
-            num="03"
-            icon={Layers}
-            filename="titan_engine.rs"
-            runtimeBadge="Zero-Copy IPC • Linux"
-            language="rust"
-            title="SYSTEMS & TOOLING"
-            description="High-throughput asynchronous test runners, Linux POSIX memory mapping, automated Valgrind leak profiling, Docker, and responsive React 18 frontends."
-            code={`pub async fn dispatch_stream(mut socket: TcpStream) -> Result<()> {
-  let mut buffer = BytesMut::with_capacity(4096);
-  while socket.read_buf(&mut buffer).await? > 0 {
-    tokio::spawn(process_frame(buffer.split()));
-  }
-  Ok(())
-}`}
-            tags={["Rust", "C++ Systems", "Linux POSIX", "Valgrind", "Docker"]}
-          />
-
-          <ReactDevCard
-            num="04"
-            icon={Terminal}
-            filename="synthetix_agent.py"
-            runtimeBadge="WebGPU Stream • Latency Focused"
-            language="python"
-            title="AI & REAL-TIME INTERACTION"
-            description="Prototyping multimodal vision-audio pipelines, local tensor inference via WebGPU, and low-overhead binary WebSocket streaming."
-            code={`@router.websocket("/stream/agent")
-async def neural_loop(ws: WebSocket):
-  async for frame in ws.iter_bytes():
-    latent = vision_encoder.forward(frame)
-    action = policy_head.sample(latent, temp=0.2)
-    await ws.send_json({"intent": action.id})`}
-            tags={["WebGPU", "FastAPI", "WebSockets", "PyTorch", "Python"]}
-          />
-        </div>
-      </section>
-
-      {/* 7. ENGINEERING LAB / EXPERIMENTS AREA */}
-      <section className="py-16 md:py-24 px-6 md:px-12 max-w-7xl mx-auto border-t border-[#F5F5F0]/10">
-        <div className="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <span className="font-mono text-xs text-[#E10600] tracking-widest block uppercase mb-1">
-              // ENGINEERING NOTEBOOK
-            </span>
-            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-[#F5F5F0] tracking-tight uppercase flex items-center gap-3">
-              <FlaskConical className="w-6 h-6 text-[#E10600]" />
-              <span>THE LAB</span>
-            </h2>
-          </div>
-          <p className="font-mono text-xs text-[#8E8E8E]">
-            Micro-experiments, shader prototypes, and low-level prototypes.
-          </p>
-        </div>
-
-        <div className="divide-y divide-[#F5F5F0]/10 border-y border-[#F5F5F0]/10 font-mono text-xs">
-          {[
-            {
-              num: "01",
-              name: "GLSL Fragment Raymarcher",
-              tech: "GLSL · WebGL",
-              desc: "Procedural sphere distance estimation and surface normal calculation directly on the GPU.",
-              status: "PROTOTYPE"
-            },
-            {
-              num: "02",
-              name: "POSIX Shared Memory Ring Buffer",
-              tech: "C++20 · Linux",
-              desc: "Lock-free circular buffer streaming telemetry between decoupled background daemon threads.",
-              status: "SYSTEMS"
-            },
-            {
-              num: "03",
-              name: "Web Audio Spectral FFT Analyzer",
-              tech: "Web Audio API",
-              desc: "Real-time 1024-bin Fourier transform feeding frequency uniforms into vertex shaders.",
-              status: "AUDIO"
-            },
-            {
-              num: "04",
-              name: "AVL & Red-Black Tree Visualizer",
-              tech: "C++ · WebGL",
-              desc: "Interactive step-by-step tree rebalancing with left and right rotation animations.",
-              status: "ALGORITHM"
-            }
-          ].map((exp, idx) => (
-            <div
-              key={idx}
-              className="py-4 px-2 hover:bg-[#121212] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3 group"
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+            <MagneticButton href="/contact" variant="primary">
+              CONTACT ME <ArrowUpRight className="w-4 h-4" />
+            </MagneticButton>
+            <a
+              href="https://github.com/vatsalost"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-[#141414] text-[#F5F5F0] border border-[#F5F5F0]/15 font-mono text-xs tracking-wider uppercase font-bold hover:border-[#E10600] hover:text-[#E10600] transition-colors"
             >
-              <div className="flex items-baseline gap-4">
-                <span className="text-[#8E8E8E] group-hover:text-[#E10600] transition-colors">
-                  [ {exp.num} ]
-                </span>
-                <span className="font-display font-bold text-sm text-[#F5F5F0] group-hover:text-[#E10600] transition-colors">
-                  {exp.name}
-                </span>
-                <span className="text-[11px] text-[#A3A39B] hidden md:inline">
-                  {exp.desc}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-4 text-[11px] self-end sm:self-auto">
-                <span className="text-[#8E8E8E] bg-[#141414] px-2 py-0.5 border border-[#F5F5F0]/5">
-                  {exp.tech}
-                </span>
-                <span className="text-[#E10600] border border-[#E10600]/30 px-2 py-0.5">
-                  {exp.status}
-                </span>
-              </div>
-            </div>
-          ))}
+              <Github className="w-4 h-4" />
+              <span>GITHUB</span>
+            </a>
+          </div>
         </div>
       </section>
     </div>

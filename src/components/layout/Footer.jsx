@@ -40,14 +40,14 @@ export function Footer() {
       <div className="py-6 border-b border-[#F5F5F0]/10 mb-16">
         <MarqueeTicker
           items={[
-            "VATSAL // 2ND YEAR B.TECH CSE",
-            "DATA STRUCTURES & ALGORITHMS (CS201)",
-            "COMPUTER ORGANIZATION & ARCHITECTURE (CS202)",
-            "LOW LEVEL C++ & RUST SYSTEMS",
-            "GRAPHICS SHADERS & WEBGL",
-            "OPEN FOR SUMMER 2026/2027 INTERNSHIPS"
+            "VATSAL CHAUDHARY",
+            "B.TECH COMPUTER SCIENCE & ENGINEERING",
+            "SYMBIOSIS INSTITUTE OF TECHNOLOGY, PUNE",
+            "C · C++ · JAVA · HTML · CSS",
+            "OPEN TO HACKATHONS & COLLABORATIONS",
+            "BUILDING PROJECTS & EXPERIMENTING"
           ]}
-          speed="32s"
+          speed="30s"
           highlightRed={true}
         />
       </div>
@@ -61,22 +61,30 @@ export function Footer() {
               // COLLABORATION
             </span>
             <h2 className="font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-[#F5F5F0] leading-none">
-              LET'S BUILD SOMETHING <br />
-              <span className="text-stroke-bone hover:text-[#E10600]">EXCEPTIONAL.</span>
+              BUILD SOMETHING?
             </h2>
-            <p className="text-sm font-light text-[#8E8E8E] max-w-md font-sans">
-              2nd-year CSE student open for Summer 2026/2027 Software Engineering internships, open-source systems collaborations, and hackathon teams.
+            <p className="text-sm sm:text-base font-light text-[#8E8E8E] max-w-md font-sans">
+              I'm open to hackathons, collaborations, and interesting projects.
             </p>
-            <div className="pt-2">
+            <div className="pt-2 flex flex-wrap items-center gap-3">
               <Link
                 to="/contact"
                 onClick={playClick}
                 className="inline-flex items-center gap-3 px-6 py-3.5 bg-[#E10600] text-white font-mono text-xs tracking-widest uppercase font-bold hover:bg-[#B00500] transition-colors"
-                data-cursor="transmit"
+                data-cursor="contact"
               >
-                <span>GET IN TOUCH</span>
+                <span>CONTACT ME</span>
                 <ArrowUpRight className="w-4 h-4" />
               </Link>
+              <a
+                href="https://github.com/vatsalost"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#141414] text-[#F5F5F0] border border-[#F5F5F0]/15 font-mono text-xs tracking-wider uppercase font-bold hover:border-[#E10600] hover:text-[#E10600] transition-colors"
+              >
+                <Github className="w-4 h-4" />
+                <span>GITHUB</span>
+              </a>
             </div>
           </div>
 
@@ -147,7 +155,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-[#F5F5F0]/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[#8E8E8E]">
           <div>
-            © {new Date().getFullYear()} VATSAL // B.TECH COMPUTER SCIENCE & ENGINEERING (2ND YEAR)
+            © {new Date().getFullYear()} VATSAL CHAUDHARY // B.TECH COMPUTER SCIENCE & ENGINEERING — SYMBIOSIS INSTITUTE OF TECHNOLOGY, PUNE
           </div>
 
           <div className="flex items-center gap-6">
