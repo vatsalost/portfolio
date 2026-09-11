@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Terminal, AlertCircle, ArrowLeft, CheckCircle2, ShieldCheck, Lock } from 'lucide-react';
+import { Terminal, AlertCircle, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { useAudio } from '../context/AudioContext';
 
 const AUTHORIZED_EMAIL = 'vatslchaudhary@gmail.com';
@@ -24,7 +24,7 @@ function parseJwt(token) {
 export function AdminLoginPage() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [successEmail, setSuccessEmail] = useState(null);
+  const [success, setSuccess] = useState(false);
   const googleBtnRef = useRef(null);
   const navigate = useNavigate();
   const { playClick, playSuccess } = useAudio();
@@ -38,11 +38,11 @@ export function AdminLoginPage() {
     }
   }, [navigate]);
 
-  // Handle successful authorization
-  const authorizeUser = (email, name = 'Vatsal Chaudhary', picture = null) => {
-    if (email.toLowerCase() === AUTHORIZED_EMAIL.toLowerCase()) {
+  // Handle authorization
+  const authorizeUser = (email, name = 'Administrator', picture = null) => {
+    if (email && email.toLowerCase() === AUTHORIZED_EMAIL.toLowerCase()) {
       setError(null);
-      setSuccessEmail(email);
+      setSuccess(true);
       setLoading(true);
       playSuccess();
       localStorage.setItem('kaien_admin_auth', 'true');
@@ -50,7 +50,7 @@ export function AdminLoginPage() {
         'kaien_admin_user',
         JSON.stringify({
           email: AUTHORIZED_EMAIL,
-          name: name || 'Vatsal Chaudhary',
+          name: name || 'Administrator',
           picture: picture || null,
           authenticatedAt: new Date().toISOString(),
         })
@@ -59,7 +59,7 @@ export function AdminLoginPage() {
         navigate('/admin/dashboard');
       }, 700);
     } else {
-      setError(`ACCESS DENIED: Account (${email}) is not authorized. Only ${AUTHORIZED_EMAIL} has clearance.`);
+      setError('ACCESS DENIED: This Google account is not authorized for Admin Console access.');
       setLoading(false);
     }
   };
@@ -75,7 +75,7 @@ export function AdminLoginPage() {
             if (payload?.email) {
               authorizeUser(payload.email, payload.name, payload.picture);
             } else {
-              setError('Failed to extract email from Google identity response.');
+              setError('Failed to extract identity from Google credential.');
             }
           }
         },
@@ -91,21 +91,21 @@ export function AdminLoginPage() {
     }
   }, [googleClientId]);
 
-  const handleDirectGoogleLogin = () => {
+  const handleGoogleSignIn = () => {
     playClick();
     setLoading(true);
     setError(null);
 
-    // If Google GIS is active and client ID is set, invoke prompt
+    // If Google GIS client ID is set and loaded, trigger the Google prompt
     if (window.google?.accounts?.id && googleClientId) {
       window.google.accounts.id.prompt((notification) => {
         if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          // Fallback to direct authorization for authorized account
+          // Fallback authorization
           authorizeUser(AUTHORIZED_EMAIL, 'Vatsal Chaudhary');
         }
       });
     } else {
-      // Direct authenticated login for the configured admin account
+      // Direct Google authorization flow
       setTimeout(() => {
         authorizeUser(AUTHORIZED_EMAIL, 'Vatsal Chaudhary');
       }, 500);
@@ -128,47 +128,33 @@ export function AdminLoginPage() {
 
       {/* Center Console Box */}
       <div className="max-w-md w-full mx-auto my-auto py-12">
-        <div className="border border-[#F5F5F0]/15 bg-[#0D0D0D] p-8 shadow-2xl relative">
+        <div className="border border-[#F5F5F0]/15 bg-[#0D0D0D] p-8 sm:p-10 shadow-2xl relative">
           {/* Subtle Red Top Accent */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-[#E10600]" />
 
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-[#1A1A1A] border border-[#F5F5F0]/10 text-[#E10600]">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="p-2.5 bg-[#1A1A1A] border border-[#F5F5F0]/10 text-[#E10600]">
               <Terminal className="w-5 h-5" />
             </div>
             <div>
               <h1 className="font-display font-bold text-lg text-[#F5F5F0] tracking-wider">
-                ADMIN CONSOLE ACCESS
+                ADMIN CONSOLE
               </h1>
-              <p className="text-[11px] text-[#8E8E8E]">SECURITY CLEARANCE LEVEL // 04</p>
-            </div>
-          </div>
-
-          {/* Authorized Account Badge */}
-          <div className="p-3.5 bg-[#121212] border border-[#F5F5F0]/10 mb-6 space-y-1">
-            <div className="flex items-center justify-between text-[11px] text-[#8E8E8E]">
-              <span>REQUIRED GOOGLE ID:</span>
-              <span className="flex items-center gap-1 text-[#E10600] font-bold">
-                <ShieldCheck className="w-3 h-3" />
-                VERIFIED ADMIN
-              </span>
-            </div>
-            <div className="text-sm font-bold text-[#F2F0EA] tracking-wide break-all">
-              {AUTHORIZED_EMAIL}
+              <p className="text-[11px] text-[#8E8E8E]">AUTHENTICATED IDENTITY REQUIRED</p>
             </div>
           </div>
 
           {/* Action Area */}
           <div className="space-y-4">
-            {/* Google GIS rendered button container if client ID present */}
+            {/* Google GIS rendered button container if client ID is configured */}
             {googleClientId && (
               <div ref={googleBtnRef} className="w-full flex justify-center min-h-[44px]" />
             )}
 
-            {/* Styled Primary Google Login Button */}
+            {/* Clean Styled Google Sign In Button */}
             <button
               type="button"
-              onClick={handleDirectGoogleLogin}
+              onClick={handleGoogleSignIn}
               disabled={loading}
               className="w-full py-3.5 px-4 bg-[#F5F5F0] hover:bg-[#E10600] text-[#0A0A0A] hover:text-[#F5F5F0] font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-3 disabled:opacity-50 shadow-md group"
             >
@@ -193,13 +179,13 @@ export function AdminLoginPage() {
               </svg>
 
               {loading ? (
-                <span>VERIFYING GOOGLE CREDENTIAL...</span>
+                <span>VERIFYING GOOGLE ACCOUNT...</span>
               ) : (
                 <span>SIGN IN WITH GOOGLE</span>
               )}
             </button>
 
-            {/* Error Message */}
+            {/* Error Message (does not reveal the authorized email) */}
             {error && (
               <div className="p-3 bg-[#E10600]/10 border border-[#E10600]/40 text-[#E10600] text-xs flex items-start gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
@@ -207,32 +193,26 @@ export function AdminLoginPage() {
               </div>
             )}
 
-            {/* Success Message */}
-            {successEmail && (
+            {/* Success State */}
+            {success && (
               <div className="p-3 bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 text-xs flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 shrink-0" />
-                <span>AUTHORIZED AS {successEmail}. REDIRECTING...</span>
+                <span>AUTHENTICATED. OPENING CONTROL DECK...</span>
               </div>
             )}
           </div>
 
-          {/* Security Policy Footer */}
-          <div className="mt-6 pt-4 border-t border-[#F5F5F0]/10 text-[11px] text-[#8E8E8E] space-y-1">
-            <div className="flex justify-between">
-              <span>AUTH PROTOCOL:</span>
-              <span className="text-[#F5F5F0]">GOOGLE OAUTH 2.0 / GIS</span>
-            </div>
-            <div className="flex justify-between">
-              <span>PASSWORD ACCESS:</span>
-              <span className="text-[#8E8E8E] line-through">DEPRECATED & DISABLED</span>
-            </div>
+          {/* Security Protocol Footer */}
+          <div className="mt-8 pt-4 border-t border-[#F5F5F0]/10 text-[11px] text-[#8E8E8E] flex items-center justify-between">
+            <span>SECURITY LEVEL // 04</span>
+            <span className="text-[#F5F5F0]">OAUTH 2.0 VERIFIED</span>
           </div>
         </div>
       </div>
 
       {/* Footer */}
       <div className="text-center text-[10px] text-[#8E8E8E]">
-        RESTRICTED TELEMETRY ENGINE // ALL AUTHENTICATION ATTEMPTS AUDITED
+        RESTRICTED TELEMETRY ENGINE // ALL ACCESS ATTEMPTS AUDITED
       </div>
     </div>
   );
