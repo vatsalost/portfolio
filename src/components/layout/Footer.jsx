@@ -22,7 +22,7 @@ export function Footer() {
             </span>
             <p className="font-mono text-xs text-[#8E8E8E] leading-relaxed">
               B.Tech Computer Science & Engineering<br />
-              Symbiosis Institute of Technology, Pune · 2023–2027
+              Symbiosis Institute of Technology, Pune · 2025–2029
             </p>
             <div className="flex items-center gap-2 font-mono text-xs text-[#E10600] font-bold pt-1">
               <span className="w-2 h-2 rounded-full bg-[#E10600] animate-pulse" />

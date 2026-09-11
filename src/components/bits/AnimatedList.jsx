@@ -118,23 +118,27 @@ export function AnimatedList({
                   </td>
                   <td className="py-4 px-5 text-[#8E8E8E]">{project.year}</td>
                   <td className="py-4 px-5 font-display font-bold text-base text-[#F2F0EA] transition-all duration-200">
-                    <Link
-                      to={`/project/${project.id}`}
-                      onClick={() => {
-                        playClick();
-                        if (onItemClick) onItemClick(project);
-                      }}
-                      className="inline-flex items-center gap-2 hover:text-[#E10600]"
-                      style={{
-                        transform: isHovered ? 'translateX(4px)' : 'translateX(0px)',
-                        transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease',
-                      }}
-                    >
-                      <span>{project.title}</span>
-                    </Link>
+                    {project.inProgress || project.title === 'IN PROGRESS' ? (
+                      <span className="text-[#F2F0EA] tracking-wide">IN PROGRESS</span>
+                    ) : (
+                      <Link
+                        to={`/project/${project.id}`}
+                        onClick={() => {
+                          playClick();
+                          if (onItemClick) onItemClick(project);
+                        }}
+                        className="inline-flex items-center gap-2 hover:text-[#E10600]"
+                        style={{
+                          transform: isHovered ? 'translateX(4px)' : 'translateX(0px)',
+                          transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease',
+                        }}
+                      >
+                        <span>{project.title}</span>
+                      </Link>
+                    )}
                   </td>
                   <td className="py-4 px-5">
-                    <span className="px-2.5 py-0.5 bg-[#141414] border border-[#F2F0EA]/10 text-[#F2F0EA] text-[10px] uppercase font-semibold">
+                    <span className="px-2.5 py-0.5 bg-[#141414] border border-[#E10600]/30 text-[#E10600] text-[10px] uppercase font-semibold">
                       {project.category}
                     </span>
                   </td>
@@ -142,22 +146,26 @@ export function AnimatedList({
                     {project.stack?.slice(0, 3).join(' · ')}
                   </td>
                   <td className="py-4 px-5 text-right">
-                    <Link
-                      to={`/project/${project.id}`}
-                      onClick={() => {
-                        playClick();
-                        if (onItemClick) onItemClick(project);
-                      }}
-                      className="inline-flex items-center gap-1 text-[#F2F0EA] hover:text-[#E10600] font-bold transition-colors"
-                    >
-                      <span>CASE STUDY</span>
-                      <ArrowRight
-                        className="w-3.5 h-3.5 transition-transform duration-200"
-                        style={{
-                          transform: isHovered ? 'translateX(3px)' : 'translateX(0px)',
+                    {project.inProgress || project.title === 'IN PROGRESS' ? (
+                      <span className="text-[#8E8E8E] text-[11px] font-mono tracking-wider">COMING SOON</span>
+                    ) : (
+                      <Link
+                        to={`/project/${project.id}`}
+                        onClick={() => {
+                          playClick();
+                          if (onItemClick) onItemClick(project);
                         }}
-                      />
-                    </Link>
+                        className="inline-flex items-center gap-1 text-[#F2F0EA] hover:text-[#E10600] font-bold transition-colors"
+                      >
+                        <span>CASE STUDY</span>
+                        <ArrowRight
+                          className="w-3.5 h-3.5 transition-transform duration-200"
+                          style={{
+                            transform: isHovered ? 'translateX(3px)' : 'translateX(0px)',
+                          }}
+                        />
+                      </Link>
+                    )}
                   </td>
                 </tr>
               );

@@ -203,10 +203,10 @@ export function HomePage() {
                   FEATURED PROJECT
                 </span>
                 <span className="text-xs text-[#F2F0EA] font-semibold block truncate">
-                  {dominantProject?.title || "CHRONO-DS"}
+                  IN PROGRESS
                 </span>
                 <span className="text-[10px] text-[#8E8E8E] block truncate">
-                  {dominantProject?.tagline || "3D Algorithm Visualizer"}
+                  Documentation & builds underway
                 </span>
               </div>
             </div>
@@ -252,7 +252,7 @@ export function HomePage() {
               THINGS I'VE BUILT<span className="text-[#E10600]">.</span>
             </h2>
             <p className="mt-2 text-sm md:text-base text-[#8E8E8E] font-sans font-light max-w-xl">
-              A few projects I've built to explore algorithms, systems, and the web.
+              Project case studies and write-ups currently in progress. Updates coming soon.
             </p>
           </div>
           <Link
@@ -549,7 +549,7 @@ export function HomePage() {
                 B.Tech Computer Science
               </p>
               <span className="text-[11px] text-[#8E8E8E] block leading-relaxed">
-                Symbiosis Institute of Technology, Pune (2023–2027)
+                Symbiosis Institute of Technology, Pune (2025–2029)
               </span>
             </div>
 

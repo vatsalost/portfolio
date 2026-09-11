@@ -20,9 +20,18 @@ export function AdminDashboardPage() {
     }
   }, [navigate]);
 
+  const [adminUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('kaien_admin_user')) || { email: 'vatslchaudhary@gmail.com' };
+    } catch {
+      return { email: 'vatslchaudhary@gmail.com' };
+    }
+  });
+
   const handleLogout = () => {
     playClick();
     localStorage.removeItem('kaien_admin_auth');
+    localStorage.removeItem('kaien_admin_user');
     navigate('/admin');
   };
 
@@ -144,7 +153,10 @@ export function AdminDashboardPage() {
             <span className="text-sm font-bold tracking-wider text-[#F5F5F0] block">
               PORTFOLIO CONTROL DECK
             </span>
-            <span className="text-[10px] text-[#8E8E8E]">SESSION: AUTHENTICATED // ADMIN</span>
+            <span className="text-[10px] text-[#8E8E8E] flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span>GOOGLE ID: <strong className="text-[#F5F5F0]">{adminUser.email}</strong></span>
+            </span>
           </div>
         </div>
 
