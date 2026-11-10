@@ -198,17 +198,24 @@ export function HomePage() {
             </div>
 
             <div className="pt-2">
-              <div className="p-3 bg-[#111111] border border-[#F2F0EA]/10 rounded-sm space-y-1">
-                <span className="text-[10px] text-[#E10600] font-bold uppercase block">
-                  FEATURED PROJECT
-                </span>
-                <span className="text-xs text-[#F2F0EA] font-semibold block truncate">
-                  IN PROGRESS
+              <Link
+                to={`/project/${dominantProject?.id || 'hrte'}`}
+                onClick={playClick}
+                className="block p-3 bg-[#111111] hover:bg-[#151515] border border-[#F2F0EA]/10 hover:border-[#E10600]/40 transition-colors rounded-sm space-y-1 group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-[#E10600] font-bold uppercase block">
+                    FEATURED PROJECT
+                  </span>
+                  <ArrowUpRight className="w-3 h-3 text-[#8E8E8E] group-hover:text-[#E10600] transition-colors" />
+                </div>
+                <span className="text-xs text-[#F2F0EA] font-semibold block truncate group-hover:text-[#E10600] transition-colors">
+                  {dominantProject?.title || 'HRTE'}
                 </span>
                 <span className="text-[10px] text-[#8E8E8E] block truncate">
-                  Documentation & builds underway
+                  {dominantProject?.tagline || 'Autonomous Database & Neural SQL Engine'}
                 </span>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -252,7 +259,7 @@ export function HomePage() {
               THINGS I'VE BUILT<span className="text-[#E10600]">.</span>
             </h2>
             <p className="mt-2 text-sm md:text-base text-[#8E8E8E] font-sans font-light max-w-xl">
-              Project case studies and write-ups currently in progress. Updates coming soon.
+              Featured case study and architectural breakdown of systems and software I've built.
             </p>
           </div>
           <Link
@@ -387,7 +394,7 @@ export function HomePage() {
               {[
                 { name: 'C', level: 'Procedural', desc: 'Pointers, memory management, POSIX calls' },
                 { name: 'C++', level: 'OOP & STL', desc: 'Data structures, algorithm implementations' },
-                { name: 'Java', level: 'Object-Oriented', desc: 'Core Java, OOP design principles' }
+                { name: 'Java', level: 'Backend & Systems', desc: 'Java 21, Spring Boot, JDBC, HikariCP, OOP design' }
               ].map((skill, i) => (
                 <div key={i} className="p-4 bg-[#0A0A0A] border border-[#F2F0EA]/5 space-y-1 rounded-sm">
                   <div className="font-display font-black text-2xl text-[#F2F0EA]">
@@ -418,8 +425,8 @@ export function HomePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { name: 'HTML', role: 'Semantic Structure', desc: 'Clean DOM structure, forms, and accessible markup' },
-                { name: 'CSS', role: 'Layout & Styling', desc: 'Flexbox, Grid, responsive layouts, transitions' }
+                { name: 'HTML & CSS', role: 'Layout & Styling', desc: 'Semantic markup, Flexbox, Grid, and responsive UI' },
+                { name: 'MySQL & Spring', role: 'Backend & Data', desc: '3NF schema design, connection pooling, HikariCP, REST APIs' }
               ].map((skill, i) => (
                 <div key={i} className="p-4 bg-[#0A0A0A] border border-[#F2F0EA]/5 space-y-1 rounded-sm">
                   <div className="font-display font-black text-2xl text-[#F2F0EA]">
@@ -560,10 +567,10 @@ export function HomePage() {
                 <span>BUILDING</span>
               </div>
               <p className="text-sm font-sans font-bold text-[#F2F0EA]">
-                Projects + Experiments
+                HRTE + Systems
               </p>
               <span className="text-[11px] text-[#8E8E8E] block leading-relaxed">
-                Tools, algorithm visualizers, and web applications.
+                Autonomous database engines, systems tools, and web apps.
               </span>
             </div>
 

@@ -13,14 +13,10 @@ export function WorkPage() {
   const { playClick } = useAudio();
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
 
-  const inProgressListItems = useMemo(() => {
-    return projects.map((p, idx) => ({
+  const listItems = useMemo(() => {
+    return projects.map((p) => ({
       ...p,
-      title: 'IN PROGRESS',
-      category: 'IN PROGRESS',
-      year: '—',
-      stack: ['IN PROGRESS'],
-      inProgress: true,
+      inProgress: p.inProgress ?? false,
     }));
   }, [projects]);
 
@@ -37,7 +33,7 @@ export function WorkPage() {
           THINGS I'VE BUILT<span className="text-[#E10600]">.</span>
         </h1>
         <p className="mt-4 text-base md:text-lg font-sans font-light text-[#A3A39B] max-w-2xl leading-relaxed">
-          Project showcases and documentation are currently in progress. Updates coming soon.
+          Featured systems projects, architectural breakdowns, and software experiments.
         </p>
       </header>
 
@@ -46,7 +42,7 @@ export function WorkPage() {
         <div className="flex items-center gap-2.5">
           <span className="w-2 h-2 rounded-full bg-[#E10600] animate-pulse" />
           <span className="text-[#8E8E8E] uppercase tracking-wider">
-            STATUS: <strong className="text-[#F2F0EA]">ALL PROJECTS IN PROGRESS</strong> ({projects.length} SLOTS)
+            STATUS: <strong className="text-[#F2F0EA]">{projects.length === 1 ? '1 ACTIVE PROJECT' : `${projects.length} PROJECTS`}</strong>
           </span>
         </div>
 
@@ -110,7 +106,7 @@ export function WorkPage() {
       {/* 5. Work Index / List View (LIST Mode) using AnimatedList */}
       {viewMode === 'list' && (
         <section aria-label="Technical Project Directory">
-          <AnimatedList items={inProgressListItems} />
+          <AnimatedList items={listItems} />
         </section>
       )}
 

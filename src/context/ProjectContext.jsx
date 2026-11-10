@@ -3,7 +3,7 @@ import { INITIAL_PROJECTS, INITIAL_EXPERIMENTS } from '../data/initialProjects';
 
 const ProjectContext = createContext();
 
-const STORAGE_KEY = 'vatsal_portfolio_projects_v5';
+const STORAGE_KEY = 'vatsal_portfolio_projects_v6';
 
 export function ProjectProvider({ children }) {
   const [projects, setProjects] = useState(() => {

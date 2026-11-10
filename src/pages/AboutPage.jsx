@@ -11,7 +11,7 @@ const RIGHT_NOW_ITEMS = [
   {
     number: '01',
     label: 'BUILDING',
-    description: 'Small web projects and experiments.',
+    description: 'HRTE (Autonomous database synthesis engine) and web experiments.',
   },
   {
     number: '02',
@@ -191,7 +191,7 @@ export function AboutPage() {
                 LANGUAGES
               </span>
               <div className="flex flex-wrap gap-2 font-mono text-xs">
-                {['C', 'C++', 'Java'].map((lang) => (
+                {['Java', 'C', 'C++'].map((lang) => (
                   <span
                     key={lang}
                     className="px-3 py-1 bg-[#161616] border border-[#F2F0EA]/10 text-[#F2F0EA] rounded-sm"
@@ -204,10 +204,10 @@ export function AboutPage() {
 
             <div className="pt-4 border-t border-[#F2F0EA]/10">
               <span className="font-mono text-xs text-[#8E8E8E] uppercase tracking-wider block mb-3">
-                WEB
+                DATABASES & BACKEND
               </span>
               <div className="flex flex-wrap gap-2 font-mono text-xs">
-                {['HTML', 'CSS'].map((tech) => (
+                {['Spring Boot', 'MySQL', 'HikariCP', 'React', 'HTML', 'CSS'].map((tech) => (
                   <span
                     key={tech}
                     className="px-3 py-1 bg-[#161616] border border-[#F2F0EA]/10 text-[#F2F0EA] rounded-sm"
